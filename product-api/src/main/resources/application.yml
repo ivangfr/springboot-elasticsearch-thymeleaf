@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: product-api
+
+application:
+  elasticsearch:
+    clustername: docker-es-cluster
+    host: localhost
+    port: 9300
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      base-path: /
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always

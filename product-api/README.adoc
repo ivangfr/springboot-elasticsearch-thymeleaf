@@ -1,0 +1,125 @@
+= product-api
+
+== Goal
+
+The goal of this project is to create a simple REST API application to manage products. You can create, update, delete,
+get information about products and search for them. Besides, you can comment and rate products. The storage used is
+`Elasticsearch`.
+
+== Configure index, alias and insert some products in ES
+
+- Go to `/springboot-elasticsearch-thymeleaf/product-api/script` folder
+
+- Run the following script to create the index `ecommerce_v1` with the alias `ecommerce`
+```
+./create-index.sh
+```
+
+- If you want to insert some products, run
+```
+./insert-products.sh
+```
+
+- If you want to fix the `reference` property mapping error (explained bellow), run
+```
+./reindex.sh
+```
+
+===== Reindex
+
+The script `./reindex.sh` is used to reindex from an index to another index. The default will reindex from `ecommerce_v1`
+to `ecommerce_v2`. The only difference between `mapping-v1.json` (used by `ecommerce_v1`) to `mapping-v2.json` (used by
+`ecommerce_v2`) is the `type` of the `reference` property. In the former is set `text` and in the latter, `keyword`.
+
+It is interesting because, the `reference` property has some special characters. An example of `reference` code is
+`SBES@DDR4-10000`. As it is a `text`, ES (using the `standard` analyzer) splits the content in tokens ['SBES', 'DDR4',
+10000]. So, for example, if you are looking for a product with `DDR4` RAM and, for some reason, the string `DDR4` is
+present in the reference code of some product X, the product X will be selected, even if it doesn't have `DDR4` in its
+description. It is an error.
+
+So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem
+won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
+
+
+== Start application using Maven
+
+In `/springboot-elasticsearch-thymeleaf/product-api` root folder run
+----
+mvn spring-boot:run
+----
+
+== Using application
+
+In order to interact with the application, you can access `Swagger` website: http://localhost:8080/swagger-ui.html
+
+== Elasticsearch REST API
+
+- Alias: `ecommerce`
+- Index: `ecommerce_v1`
+- New Index: `ecommerce_v2`
+- Type: `product`
+- REST API Format: `http://host:port/index/type/_action-OR-id`
+
+==== Check ES is up and running
+```
+http://localhost:9200
+```
+
+==== Create _ecommerce_v1_ index
+```
+curl -X PUT localhost:9200/ecommerce_v1 \
+     -H "Content-Type: application/json" \
+     -d '{ "mappings": { "product": { "properties": { "name": { "type": "text" }, ... }'
+```
+
+==== Check indexes in ES
+```
+http://localhost:9200/_cat/indices?v
+```
+
+==== Check _ecommerce_v1_ index mapping
+```
+curl http://localhost:9200/ecommerce_v1/_mapping
+```
+
+==== Delete _ecommerce_v1_ index
+```
+curl -X DELETE http://localhost:9200/ecommerce_v1
+```
+
+==== Create alias for _ecommerce_v1_ index
+```
+curl -X POST localhost:9200/_aliases \
+     -H 'Content-Type: application/json' \
+     -d '{ "actions": [{ "add": {"alias": "ecommerce", "index": "ecommerce_v1" }}]}'
+```
+
+==== Check existing ES alias
+```
+curl http://localhost:9200/_aliases
+```
+
+==== Reindex from _ecommerce_v1_ to _ecommerce_v2_
+```
+curl -X POST localhost:9200/_reindex \
+     -H 'Content-Type: application/json' \
+     -d '{ "source": { "index": "ecommerce_v1" }, "dest": { "index": "ecommerce_v2" }}'
+```
+
+==== Adjust alias after reindex from _ecommerce_v1_ to _ecommerce_v2_
+```
+curl -X POST localhost:9200/_aliases \
+     -H 'Content-Type: application/json' \
+     -d '{ "actions": [{ "remove": {"alias": "ecommerce", "index": "ecommerce_v1" }}, { "add": {"alias": "ecommerce", "index": "ecommerce_v2" }}]}'
+```
+
+==== Simple search
+```
+curl http://localhost:9200/ecommerce/product/_search
+```
+
+== TODO
+
+== Reference
+
+Laptops names and descriptions: https://www.digit.in/laptops-reviews/

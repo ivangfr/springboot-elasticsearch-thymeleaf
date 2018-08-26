@@ -1,0 +1,35 @@
+{
+  "mappings": {
+    "product": {
+      "properties": {
+        "reference": {
+          "type": "text"
+        },
+        "name": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+        "price": {
+          "type": "float"
+        },
+        "categories": {
+          "type": "keyword"
+        },
+        "comments": {
+          "type": "nested",
+          "include_in_parent": true,
+          "properties": {
+            "numStar": {
+              "type": "short"
+            },
+            "text": {
+              "type": "text"
+            }
+          }
+        }
+      }
+    }
+  }
+}
