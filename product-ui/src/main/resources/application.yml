@@ -1,15 +1,9 @@
 spring:
   application:
-    name: product-api
+    name: product-ui
 
 server:
-  port: 8080
-
-application:
-  elasticsearch:
-    clustername: docker-es-cluster
-    host: localhost
-    port: 9300
+  port: 8081
 
 management:
   security:

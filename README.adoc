@@ -4,7 +4,7 @@
 
 The goal of this project is to implement two services: `product-api` and `product-ui`.
 `product-api` is a Restful Web Service that manages products. It uses https://www.elastic.co[Elasticsearch] as storage.
-`product-ui` is an UI application that consumes `product-api`. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
+`product-ui` is a `product-api` UI client. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
 
 == Start Environment
 
@@ -37,3 +37,7 @@ Please, refer to `product-api` documentation in order to get more information ab
 == product-ui
 
 Please, refer to `product-ui` documentation in order to get more information about how to start and use it.
+
+== Reference
+
+https://javaengineer.blog/2017/10/28/build-and-consume-a-rest-api-with-spring-boot-and-resttemplate-and-mongodb/
