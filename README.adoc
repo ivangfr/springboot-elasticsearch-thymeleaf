@@ -8,8 +8,6 @@ The goal of this project is to implement two services: `product-api` and `produc
 
 == Start Environment
 
-==== Docker Compose
-
 - Open one terminal
 
 - In `/springboot-elasticsearch-thymeleaf` root folder run
@@ -32,7 +30,7 @@ docker-compose ps
 
 == eureka-service
 
-=== Start eureka-service using Maven
+==== Start eureka-service using Maven
 
 In `/springboot-elasticsearch-thymeleaf/eureka-service` root folder run
 ----
@@ -41,7 +39,7 @@ mvn spring-boot:run
 
 == product-api
 
-=== Configure index, alias and insert some products in ES
+==== Configure index, alias and insert some products in ES
 
 - Go to `/springboot-elasticsearch-thymeleaf/product-api/scripts` folder
 
@@ -60,7 +58,7 @@ mvn spring-boot:run
 ./reindex.sh
 ```
 
-==== Reindex
+===== Reindex
 
 The script `./reindex.sh` is used to reindex from an index to another index. The default will reindex from `ecommerce_v1`
 to `ecommerce_v2`. The only difference between `mapping-v1.json` (used by `ecommerce_v1`) to `mapping-v2.json` (used by
@@ -76,27 +74,27 @@ So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `ref
 won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
 
-=== Start product-api using Maven
+==== Start product-api using Maven
 
 In `/springboot-elasticsearch-thymeleaf/product-api` root folder run
 ----
 mvn spring-boot:run
 ----
 
-=== Using product-api swagger
+==== Using product-api Swagger
 
 You can access the Swagger website http://localhost:8080/swagger-ui.html to have access to all endpoints.
 
 == product-ui
 
-=== Start product-ui using Maven
+==== Start product-ui using Maven
 
 In `/springboot-elasticsearch-thymeleaf/product-ui` root folder run
 ----
 mvn spring-boot:run
 ----
 
-=== Using product-ui
+==== Using product-ui
 
 Just access http://localhost:8081
 
@@ -172,5 +170,7 @@ curl http://localhost:9200/ecommerce/product/_search
 == Reference
 
 https://www.baeldung.com/spring-cloud-netflix-eureka
+
 https://javaengineer.blog/2017/10/28/build-and-consume-a-rest-api-with-spring-boot-and-resttemplate-and-mongodb
+
 https://www.digit.in/laptops-reviews
