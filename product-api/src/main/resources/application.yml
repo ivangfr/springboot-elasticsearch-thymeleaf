@@ -16,8 +16,14 @@ management:
     enabled: false
   endpoints:
     web:
-      base-path: /
       exposure.include: "*"
   endpoint:
     health:
       show-details: always
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
