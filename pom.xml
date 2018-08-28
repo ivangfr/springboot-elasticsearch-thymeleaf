@@ -21,7 +21,7 @@
     <modules>
         <module>/product-api</module>
         <module>/product-ui</module>
-        <module>/eureka-service</module>
+        <module>/eureka-server</module>
     </modules>
 
     <properties>

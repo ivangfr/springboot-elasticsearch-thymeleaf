@@ -28,11 +28,11 @@ docker-compose down -v
 docker-compose ps
 ----
 
-== eureka-service
+== eureka-server
 
-==== Start eureka-service using Maven
+==== Start eureka-server using Maven
 
-In `/springboot-elasticsearch-thymeleaf/eureka-service` root folder run
+In `/springboot-elasticsearch-thymeleaf/eureka-server` root folder run
 ----
 mvn spring-boot:run
 ----
