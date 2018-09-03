@@ -171,6 +171,6 @@ curl http://localhost:9200/ecommerce/product/_search
 
 https://www.baeldung.com/spring-cloud-netflix-eureka
 
-https://javaengineer.blog/2017/10/28/build-and-consume-a-rest-api-with-spring-boot-and-resttemplate-and-mongodb
+https://dzone.com/articles/microservice-architecture-with-spring-cloud-and-do
 
 https://www.digit.in/laptops-reviews

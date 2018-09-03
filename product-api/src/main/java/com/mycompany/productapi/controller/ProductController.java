@@ -1,7 +1,6 @@
 package com.mycompany.productapi.controller;
 
 import com.mycompany.productapi.dto.CreateProductDto;
-import com.mycompany.productapi.dto.ResponseProductDto;
 import com.mycompany.productapi.dto.SearchDto;
 import com.mycompany.productapi.dto.UpdateProductDto;
 import com.mycompany.productapi.exception.ProductNotFoundException;
@@ -12,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +38,17 @@ public class ProductController {
         this.mapperFacade = mapperFacade;
     }
 
+    @ApiOperation(value = "Get Products")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public Page<Product> getProducts(Pageable pageable) {
+        return productService.listAllByPage(pageable);
+    }
+
     @ApiOperation(value = "Get Product")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
@@ -46,8 +57,8 @@ public class ProductController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{productId}")
-    public ResponseProductDto getProduct(@PathVariable String productId) throws ProductNotFoundException {
-        return mapperFacade.map(productService.validateAndGetProductById(productId), ResponseProductDto.class);
+    public Product getProduct(@PathVariable String productId) throws ProductNotFoundException {
+        return productService.validateAndGetProductById(productId);
     }
 
     @ApiOperation(value = "Create Product", code = 201)
@@ -58,10 +69,9 @@ public class ProductController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseProductDto createProduct(@Valid @RequestBody CreateProductDto createProductDto) {
+    public Product createProduct(@Valid @RequestBody CreateProductDto createProductDto) {
         Product product = mapperFacade.map(createProductDto, Product.class);
-        product = productService.saveProduct(product);
-        return mapperFacade.map(product, ResponseProductDto.class);
+        return productService.saveProduct(product);
     }
 
     @ApiOperation(value = "Update Product")
@@ -73,12 +83,11 @@ public class ProductController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/{productId}")
-    public ResponseProductDto updateProduct(@PathVariable String productId, @Valid @RequestBody UpdateProductDto updateProductDto)
+    public Product updateProduct(@PathVariable String productId, @Valid @RequestBody UpdateProductDto updateProductDto)
             throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(productId);
         mapperFacade.map(updateProductDto, product);
-        product = productService.saveProduct(product);
-        return mapperFacade.map(product, ResponseProductDto.class);
+        return productService.saveProduct(product);
     }
 
     @ApiOperation(value = "Delete Product")
@@ -103,8 +112,8 @@ public class ProductController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/search")
-    public Page<Product> searchProducts(@Valid @RequestBody SearchDto searchDto) {
-        return productService.search(searchDto.getText());
+    public Page<Product> searchProducts(@Valid @RequestBody SearchDto searchDto, Pageable pageable) {
+        return productService.search(searchDto.getText(), pageable);
     }
 
 }

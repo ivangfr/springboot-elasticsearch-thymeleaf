@@ -7,6 +7,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,11 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    @Override
+    public Page<Product> listAllByPage(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     @Override
@@ -40,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> search(String text) {
+    public Page<Product> search(String text, Pageable pageable) {
         QueryBuilder queryBuilder = QueryBuilders.boolQuery()
                 .should(QueryBuilders.matchPhraseQuery("reference", text))
                 .should(QueryBuilders.matchPhraseQuery("name", text))
@@ -48,7 +54,11 @@ public class ProductServiceImpl implements ProductService {
 
 //        QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(text, "reference", "name", "description");
 
-        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder).build();
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(queryBuilder)
+                .withPageable(pageable)
+                .build();
+
         return productRepository.search(searchQuery);
     }
 

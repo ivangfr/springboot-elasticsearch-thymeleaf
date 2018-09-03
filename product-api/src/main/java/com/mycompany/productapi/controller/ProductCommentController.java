@@ -1,7 +1,6 @@
 package com.mycompany.productapi.controller;
 
 import com.mycompany.productapi.dto.AddCommentDto;
-import com.mycompany.productapi.dto.ResponseCommentDto;
 import com.mycompany.productapi.exception.ProductNotFoundException;
 import com.mycompany.productapi.model.Comment;
 import com.mycompany.productapi.model.Product;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products/{productId}/comments")
@@ -43,10 +41,9 @@ public class ProductCommentController {
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ResponseCommentDto> getProductComments(@PathVariable String productId) throws ProductNotFoundException {
+    public List<Comment> getProductComments(@PathVariable String productId) throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(productId);
-        return product.getComments().stream()
-                .map(c -> mapperFacade.map(c, ResponseCommentDto.class)).collect(Collectors.toList());
+        return product.getComments();
     }
 
     @ApiOperation(value = "Add comment about the product", code = 201)
@@ -58,7 +55,7 @@ public class ProductCommentController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseCommentDto addProductComment(@PathVariable String productId, @Valid @RequestBody AddCommentDto addCommentDto)
+    public Comment addProductComment(@PathVariable String productId, @Valid @RequestBody AddCommentDto addCommentDto)
             throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(productId);
 
@@ -66,7 +63,7 @@ public class ProductCommentController {
         product.getComments().add(comment);
         productService.saveProduct(product);
 
-        return mapperFacade.map(comment, ResponseCommentDto.class);
+        return comment;
     }
 
 }

@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 </head>
 <body>
-    <h1 th:text="${products}"></h1>
+<table class="highlight">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${products.content.empty}">
+        <td colspan="3"> No Products Available</td>
+    </tr>
+    <tr th:each="product : ${products.content}">
+        <td><span th:text="${product.id}"> Id </span></td>
+        <td><span th:text="${product.name}"> Name </span></td>
+        <td><span th:text="${product.description}"> Description </span></td>
+    </tr>
+    </tbody>
+</table>
+<p>First <span th:text="${products.first}"></span></p>
+<p>Last <span th:text="${products.last}"></span></p>
 </body>
 </html>
