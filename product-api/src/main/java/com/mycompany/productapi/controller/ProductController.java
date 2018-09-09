@@ -56,9 +56,9 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{productId}")
-    public Product getProduct(@PathVariable String productId) throws ProductNotFoundException {
-        return productService.validateAndGetProductById(productId);
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable String id) throws ProductNotFoundException {
+        return productService.validateAndGetProductById(id);
     }
 
     @ApiOperation(value = "Create Product", code = 201)
@@ -82,10 +82,10 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{productId}")
-    public Product updateProduct(@PathVariable String productId, @Valid @RequestBody UpdateProductDto updateProductDto)
+    @PatchMapping("/{id}")
+    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto)
             throws ProductNotFoundException {
-        Product product = productService.validateAndGetProductById(productId);
+        Product product = productService.validateAndGetProductById(id);
         mapperFacade.map(updateProductDto, product);
         return productService.saveProduct(product);
     }
@@ -97,11 +97,11 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{productId}")
-    public String deleteProduct(@PathVariable String productId) throws ProductNotFoundException {
-        Product product = productService.validateAndGetProductById(productId);
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable String id) throws ProductNotFoundException {
+        Product product = productService.validateAndGetProductById(id);
         productService.deleteProduct(product);
-        return productId;
+        return id;
     }
 
     @ApiOperation(value = "Search for Products", notes = "This endpoint does a multi_match query for the 'text' informed in the fields 'names' and 'description' ")

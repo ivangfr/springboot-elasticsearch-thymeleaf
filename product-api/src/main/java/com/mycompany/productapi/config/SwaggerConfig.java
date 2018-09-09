@@ -1,6 +1,7 @@
 package com.mycompany.productapi.config;
 
 import com.fasterxml.classmate.TypeResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -10,11 +11,13 @@ import springfox.documentation.builders.AlternateTypePropertyBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.AlternateTypeRuleConvention;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -25,6 +28,9 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    @Value("${spring.application.name}")
+    private String appName;
+
     @Bean
     Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -32,7 +38,12 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(regex("/api/.*"))
-                .build();
+                .build()
+                .apiInfo(getApiInfo());
+    }
+
+    private ApiInfo getApiInfo() {
+        return new ApiInfo(appName, null, null, null, null, null, null, new ArrayList<>());
     }
 
     // --

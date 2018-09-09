@@ -20,6 +20,6 @@ public class Product {
     private String description;
     private BigDecimal price;
     private Set<String> categories;
-    private List<Comment> comments = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
 }

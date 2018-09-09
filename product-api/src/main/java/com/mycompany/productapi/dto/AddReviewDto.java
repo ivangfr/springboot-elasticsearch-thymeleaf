@@ -9,17 +9,17 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class AddCommentDto {
+public class AddReviewDto {
 
-    @ApiModelProperty(value = "comment about the product", example = "This product is very good!")
+    @ApiModelProperty(value = "comment about product", example = "This product is very good!")
     @NotNull
     @NotEmpty
-    private String text;
+    private String comment;
 
-    @ApiModelProperty(value = "product rate", example = "5")
+    @ApiModelProperty(value = "product evaluation (from 0 to 5)", example = "5")
     @NotNull
     @Min(0)
     @Max(5)
-    private Integer numStar;
+    private Integer stars;
 
 }

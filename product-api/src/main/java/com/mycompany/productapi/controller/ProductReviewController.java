@@ -1,8 +1,8 @@
 package com.mycompany.productapi.controller;
 
-import com.mycompany.productapi.dto.AddCommentDto;
+import com.mycompany.productapi.dto.AddReviewDto;
 import com.mycompany.productapi.exception.ProductNotFoundException;
-import com.mycompany.productapi.model.Comment;
+import com.mycompany.productapi.model.Review;
 import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.service.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -22,18 +22,18 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/products/{productId}/comments")
-public class ProductCommentController {
+@RequestMapping("/api/v1/products/{id}/reviews")
+public class ProductReviewController {
 
     private final ProductService productService;
     private final MapperFacade mapperFacade;
 
-    public ProductCommentController(ProductService productService, MapperFacade mapperFacade) {
+    public ProductReviewController(ProductService productService, MapperFacade mapperFacade) {
         this.productService = productService;
         this.mapperFacade = mapperFacade;
     }
 
-    @ApiOperation(value = "Get comments about the product")
+    @ApiOperation(value = "Get reviews about product")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Not Found"),
@@ -41,12 +41,12 @@ public class ProductCommentController {
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Comment> getProductComments(@PathVariable String productId) throws ProductNotFoundException {
-        Product product = productService.validateAndGetProductById(productId);
-        return product.getComments();
+    public List<Review> getProductReviews(@PathVariable String id) throws ProductNotFoundException {
+        Product product = productService.validateAndGetProductById(id);
+        return product.getReviews();
     }
 
-    @ApiOperation(value = "Add comment about the product", code = 201)
+    @ApiOperation(value = "Add review about product", code = 201)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -55,15 +55,15 @@ public class ProductCommentController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment addProductComment(@PathVariable String productId, @Valid @RequestBody AddCommentDto addCommentDto)
+    public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewDto addReviewDto)
             throws ProductNotFoundException {
-        Product product = productService.validateAndGetProductById(productId);
+        Product product = productService.validateAndGetProductById(id);
 
-        Comment comment = mapperFacade.map(addCommentDto, Comment.class);
-        product.getComments().add(comment);
+        Review review = mapperFacade.map(addReviewDto, Review.class);
+        product.getReviews().add(review);
         productService.saveProduct(product);
 
-        return comment;
+        return review;
     }
 
 }

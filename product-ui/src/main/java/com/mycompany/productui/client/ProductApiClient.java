@@ -13,7 +13,7 @@ public interface ProductApiClient {
     @GetMapping("/api/v1/products")
     MyPage<Product> listAllByPage(@RequestParam Integer page, @RequestParam Integer size);
 
-    @GetMapping("/api/v1/products/{productId}")
-    Product getProduct(@PathVariable String productId);
+    @GetMapping("/api/v1/products/{id}")
+    Product getProduct(@PathVariable String id);
 
 }

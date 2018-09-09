@@ -17,14 +17,14 @@
         "categories": {
           "type": "keyword"
         },
-        "comments": {
+        "reviews": {
           "type": "nested",
           "include_in_parent": true,
           "properties": {
-            "numStar": {
+            "stars": {
               "type": "short"
             },
-            "text": {
+            "comment": {
               "type": "text"
             }
           }

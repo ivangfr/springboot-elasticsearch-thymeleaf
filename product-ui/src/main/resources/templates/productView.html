@@ -29,11 +29,11 @@
         <div class="row">
             <form class="col s12">
                 <div class="row">
-                    <div class="input-field col s3">
+                    <div class="input-field col s4">
                         <input id="id" type="text" th:value="${product.id}" readonly>
                         <label for="id">Id</label>
                     </div>
-                    <div class="input-field col s9">
+                    <div class="input-field col s8">
                         <input placeholder="Placeholder" id="categories" type="text" readonly>
                         <label for="categories">Categories</label>
                     </div>
@@ -66,7 +66,7 @@
             <h5>Reviews</h5>
             <div class="row">
                 <form class="col s12">
-                    <div class="row">
+                    <div class="row grey lighten-5">
                         <div class="input-field col s9">
                             <i class="material-icons prefix">comment</i>
                             <input id="comment" type="text" class="validate">
@@ -74,8 +74,8 @@
                         </div>
                         <div class="input-field col s2">
                             <i class="material-icons prefix">star</i>
-                            <input id="numStar" type="number" min="0" max="5" class="validate">
-                            <label for="numStar">Stars</label>
+                            <input id="stars" type="number" min="0" max="5" class="validate">
+                            <label for="stars">Stars</label>
                         </div>
                         <div class="input-field col s1">
                             <button class="btn waves-effect waves-light right" type="submit" name="action" disabled>
@@ -89,12 +89,12 @@
                 <div class="col s12">
                     <table class="highlight">
                         <tbody>
-                        <tr th:if="${product.comments.empty}">
+                        <tr th:if="${product.reviews.empty}">
                             <td colspan="2"> No Reviews</td>
                         </tr>
-                        <tr th:each="comment : ${product.comments}">
-                            <td><span th:text="${comment.text}">Comment</span></td>
-                            <td><span th:text="${comment.numStar}">Stars</span></td>
+                        <tr th:each="review : ${product.reviews}">
+                            <td><span th:text="${review.comment}">Comment</span></td>
+                            <td><span th:text="${review.stars}">Stars</span></td>
                         </tr>
                         </tbody>
                     </table>

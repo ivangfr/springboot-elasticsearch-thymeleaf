@@ -3,9 +3,9 @@ package com.mycompany.productui.client.dto;
 import lombok.Data;
 
 @Data
-public class Comment {
+public class Review {
 
-    private String text;
-    private Short numStar;
+    private String comment;
+    private Short stars;
 
 }
