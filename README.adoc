@@ -165,7 +165,10 @@ curl http://localhost:9200/ecommerce/product/_search
 ```
 
 == TODO
-...
+
+- add functionality to the search of products field;
+- add pagination. now, it is just returning all products;
+- add functionality to edit/add/delete products;
 
 == Reference
 

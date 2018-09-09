@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Product-UI</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -18,7 +18,7 @@
     <div class="nav-wrapper light-blue darken-3">
         <div class="row">
             <div class="col s6">
-                <label class="brand-logo center">Products</label>
+                <label class="brand-logo center">Product-UI</label>
             </div>
         </div>
     </div>
@@ -42,17 +42,26 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Price</th>
+                    <th>Price (€)</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${products.content.empty}">
-                    <td colspan="3"> No Products Available</td>
+                    <td colspan="4"> No Products Available</td>
                 </tr>
-                <tr th:id="${product.id}" th:each="product : ${products.content}">
+                <tr th:each="product : ${products.content}">
                     <td><span th:text="${product.name}"> Name </span></td>
-                    <td><span th:text="${product.description}"> Description </span></td>
+                    <td><span th:text="${#strings.abbreviate(product.description,200)}"> Description </span></td>
                     <td><span th:text="${product.price}"> Price </span></td>
+                    <td>
+                        <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}"><i class="material-icons">menu</i></a>
+                        <ul th:id="'dropdown_' + ${product.id}" class='dropdown-content'>
+                            <li><a th:href="@{/products/{id}(id=${product.id},action=view)}"><i class="material-icons">open_in_browser</i></a></li>
+                            <li><a th:href="@{/products/{id}(id=${product.id},action=edit)}"><i class="material-icons">edit</i></a></li>
+                            <li><a href="#!"><i class="material-icons">delete</i></a></li>
+                        </ul>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -62,5 +71,13 @@
 
 <!--JavaScript at end of body for optimized loading-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var dropdownElems = document.querySelectorAll('.dropdown-trigger');
+  var instances = M.Dropdown.init(dropdownElems);
+});
+</script>
+
 </body>
 </html>
