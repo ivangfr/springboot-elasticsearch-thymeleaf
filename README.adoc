@@ -11,9 +11,9 @@ The goal of this project is to implement two services: `product-api` and `produc
 - Open one terminal
 
 - In `/springboot-elasticsearch-thymeleaf` root folder run
-----
+```
 docker-compose up -d
-----
+```
 
 [NOTE]
 ====
@@ -24,18 +24,18 @@ docker-compose down -v
 ====
 
 - Wait a little bit to docker containers be up and healthy. To check it, run
-----
+```
 docker-compose ps
-----
+```
 
 == eureka-server
 
 ==== Start eureka-server using Maven
 
 In `/springboot-elasticsearch-thymeleaf/eureka-server` root folder run
-----
+```
 mvn spring-boot:run
-----
+```
 
 == product-api
 
@@ -77,9 +77,9 @@ won't happen again because, from now on, ES won't tokenize the content present i
 ==== Start product-api using Maven
 
 In `/springboot-elasticsearch-thymeleaf/product-api` root folder run
-----
+```
 mvn spring-boot:run
-----
+```
 
 ==== Using product-api Swagger
 
@@ -90,9 +90,9 @@ You can access the Swagger website http://localhost:8080/swagger-ui.html to have
 ==== Start product-ui using Maven
 
 In `/springboot-elasticsearch-thymeleaf/product-ui` root folder run
-----
+```
 mvn spring-boot:run
-----
+```
 
 ==== Using product-ui
 
@@ -108,7 +108,7 @@ Just access http://localhost:8081
 
 ==== Check ES is up and running
 ```
-http://localhost:9200
+curl http://localhost:9200
 ```
 
 ==== Create _ecommerce_v1_ index
@@ -120,7 +120,7 @@ curl -X PUT localhost:9200/ecommerce_v1 \
 
 ==== Check indexes in ES
 ```
-http://localhost:9200/_cat/indices?v
+curl http://localhost:9200/_cat/indices?v
 ```
 
 ==== Check _ecommerce_v1_ index mapping
@@ -166,14 +166,12 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == TODO
 
+- add functionality to edit/create/delete products; to "create product" see http://www.riptutorial.com/thymeleaf
 - add functionality to the search of products field;
 - add pagination. now, it is just returning all products;
-- add functionality to edit/add/delete products;
 
 == Reference
 
 https://www.baeldung.com/spring-cloud-netflix-eureka
-
 https://dzone.com/articles/microservice-architecture-with-spring-cloud-and-do
-
 https://www.digit.in/laptops-reviews

@@ -38,7 +38,9 @@ public class ProductController {
         this.mapperFacade = mapperFacade;
     }
 
-    @ApiOperation(value = "Get Products")
+    @ApiOperation(
+            value = "Get Products",
+            notes = "To sort the results by a specified field, use in 'sort' field a string like: fieldname,[asc|desc]")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Internal Server Error")
@@ -46,7 +48,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public Page<Product> getProducts(Pageable pageable) {
-        return productService.listAllByPage(pageable);
+        return productService.listAllProductsByPage(pageable);
     }
 
     @ApiOperation(value = "Get Product")
@@ -104,7 +106,10 @@ public class ProductController {
         return id;
     }
 
-    @ApiOperation(value = "Search for Products", notes = "This endpoint does a multi_match query for the 'text' informed in the fields 'names' and 'description' ")
+    @ApiOperation(
+            value = "Search for Products",
+            notes = "This endpoint does a query for the 'text' informed in the fields 'reference', 'name' and 'description'\n" +
+                    "To sort the results by a specified field, use in 'sort' field a string like: fieldname,[asc|desc]")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),

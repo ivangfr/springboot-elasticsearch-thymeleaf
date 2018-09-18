@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-    Page<Product> listAllByPage(Pageable pageable);
+    Page<Product> listAllProductsByPage(Pageable pageable);
 
     Product validateAndGetProductById(String id) throws ProductNotFoundException;
 
