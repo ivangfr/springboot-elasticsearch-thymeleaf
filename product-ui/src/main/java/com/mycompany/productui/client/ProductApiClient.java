@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ProductApiClient {
 
     @GetMapping("/api/v1/products")
-    MyPage<Product> listAllByPage(@RequestParam Integer page, @RequestParam Integer size);
+    MyPage<Product> listAllByPage(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String sort);
 
     @GetMapping("/api/v1/products/{id}")
     Product getProduct(@PathVariable String id);

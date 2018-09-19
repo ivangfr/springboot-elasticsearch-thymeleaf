@@ -23,8 +23,10 @@ public class ProductController {
 
     @GetMapping(value = {"/products", "/"})
     public String getProducts(@RequestParam(required = false) Integer page,
-                              @RequestParam(required = false) Integer size, Model model) {
-        model.addAttribute("products", productApiClient.listAllByPage(page, size));
+                              @RequestParam(required = false) Integer size,
+                              @RequestParam(required = false, defaultValue = "created,desc") String sort,
+                              Model model) {
+        model.addAttribute("products", productApiClient.listAllByPage(page, size, sort));
         return "products";
     }
 

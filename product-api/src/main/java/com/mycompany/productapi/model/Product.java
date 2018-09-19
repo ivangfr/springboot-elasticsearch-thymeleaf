@@ -1,5 +1,6 @@
 package com.mycompany.productapi.model;
 
+import com.mycompany.productapi.util.DateTimeUtil;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -13,6 +14,10 @@ import java.util.Set;
 @Document(indexName = "ecommerce", type = "product")
 public class Product {
 
+    public Product() {
+        this.created = DateTimeUtil.createCurrentDateAsString();
+    }
+
     @Id
     private String id;
     private String reference;
@@ -21,5 +26,6 @@ public class Product {
     private BigDecimal price;
     private Set<String> categories;
     private List<Review> reviews = new ArrayList<>();
+    private String created;
 
 }

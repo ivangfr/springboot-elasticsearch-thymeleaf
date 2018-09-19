@@ -31,7 +31,6 @@
                   onsubmit="return beforeSubmit()">
                 <div class="row">
                     <div class="col s12">
-                        <label>Categories</label>
                         <div class="chips"></div>
                         <input id="categories" type="hidden" th:field="*{categories}">
                     </div>
@@ -71,7 +70,26 @@
 <script th:inline="javascript">
 document.addEventListener('DOMContentLoaded', function() {
   var chipsElems = document.querySelectorAll('.chips');
-  var chipsInstances = M.Chips.init(chipsElems);
+  var chipsInstances = M.Chips.init(chipsElems, {
+    placeholder: 'Category',
+    secondaryPlaceholder: '+category',
+    data: [{
+      tag: 'laptops',
+    }],
+    autocompleteOptions: {
+      data: {
+        'laptops': null,
+        'apple': null,
+        'microsoft': null,
+        'dell': null,
+        'acer': null,
+        'asus': null,
+        'toshiba': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
+  });
 
   beforeSubmit = function() {
     var chipElems = document.querySelectorAll('.chip');

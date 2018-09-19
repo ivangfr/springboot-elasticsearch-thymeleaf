@@ -34,7 +34,6 @@
                         <label for="id">Id</label>
                     </div>
                     <div class="col s8">
-                        <label>Categories</label>
                         <div class="chips"></div>
                     </div>
                 </div>
@@ -88,7 +87,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var chipsElems = document.querySelectorAll('.chips');
   var chipsInstances = M.Chips.init(chipsElems, {
-    data: categories
+    data: categories,
+    placeholder: 'Category',
+    secondaryPlaceholder: '+category',
+    autocompleteOptions: {
+      data: {
+        'laptops': null,
+        'apple': null,
+        'microsoft': null,
+        'dell': null,
+        'acer': null,
+        'asus': null,
+        'toshiba': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
   });
 });
 /*]]>*/

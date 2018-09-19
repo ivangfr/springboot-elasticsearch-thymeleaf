@@ -3,7 +3,7 @@ package com.mycompany.productui.client.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +16,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private Set<String> categories;
-    private List<Review> reviews = new ArrayList<>();
+    private List<Review> reviews;
+    private Date created;
 
 }

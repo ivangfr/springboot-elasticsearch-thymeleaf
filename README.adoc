@@ -28,20 +28,9 @@ docker-compose down -v
 docker-compose ps
 ```
 
-== eureka-server
+== Configure index, alias and insert some products in ES
 
-==== Start eureka-server using Maven
-
-In `/springboot-elasticsearch-thymeleaf/eureka-server` root folder run
-```
-mvn spring-boot:run
-```
-
-== product-api
-
-==== Configure index, alias and insert some products in ES
-
-- Go to `/springboot-elasticsearch-thymeleaf/product-api/scripts` folder
+- Go to `/springboot-elasticsearch-thymeleaf/scripts` folder
 
 - Run the following script to create the index `ecommerce_v1` with the alias `ecommerce`
 ```
@@ -73,6 +62,16 @@ description. It is an error.
 So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem
 won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
+== eureka-server
+
+==== Start eureka-server using Maven
+
+In `/springboot-elasticsearch-thymeleaf/eureka-server` root folder run
+```
+mvn spring-boot:run
+```
+
+== product-api
 
 ==== Start product-api using Maven
 

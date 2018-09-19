@@ -3,7 +3,7 @@
     "product": {
       "properties": {
         "reference": {
-          "type": "keyword"
+          "type": "text"
         },
         "name": {
           "type": "text"
@@ -28,6 +28,9 @@
               "type": "text"
             }
           }
+        },
+        "created": {
+          "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
         }
       }
     }
