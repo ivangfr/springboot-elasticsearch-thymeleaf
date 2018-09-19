@@ -1,11 +1,14 @@
 package com.mycompany.productui.controller;
 
 import com.mycompany.productui.client.ProductApiClient;
+import com.mycompany.productui.client.dto.ProductDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
@@ -25,10 +28,35 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping(value = "/products/{id}", params = "action")
-    public String getProducts(@PathVariable String id, @RequestParam String action, Model model) {
+    @GetMapping(value = "/products/{id}/edit")
+    public String editProductForm(@PathVariable String id, Model model) {
         model.addAttribute("product", productApiClient.getProduct(id));
-        return action.equals("edit") ? "productEdit" : "productView";
+        return "productEdit";
     }
+
+    @GetMapping(value = "/products/{id}/view")
+    public String viewProductForm(@PathVariable String id, Model model) {
+        model.addAttribute("product", productApiClient.getProduct(id));
+        return "productView";
+    }
+
+    @GetMapping(value = "/products/create")
+    public String createProductForm(Model model) {
+        model.addAttribute("productDto", new ProductDto());
+        return "productCreate";
+    }
+
+    @PostMapping("/products")
+    public String createProduct(@ModelAttribute ProductDto productDto) {
+        productApiClient.createProduct(productDto);
+        return "redirect:/";
+    }
+
+    // TODO
+//    @PutMapping("/products/{id}")
+//    public String updateProduct(@PathVariable String id, @ModelAttribute ProductDto productDto) {
+//        productApiClient.updateProduct(id, productDto);
+//        return "redirect:/";
+//    }
 
 }

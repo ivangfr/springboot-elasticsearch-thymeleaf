@@ -27,41 +27,32 @@
     <div class="section">
         <h5>Details</h5>
         <div class="row">
-            <form class="col s12">
+            <form action="#" th:action="@{/products}" th:object="${productDto}" method="post" class="col s12">
                 <div class="row">
-                    <div class="input-field col s4">
-                        <input id="id" type="text" th:value="${product.id}" disabled>
-                        <label for="id">Id</label>
-                    </div>
-                    <div class="col s8">
+                    <div class="col s12">
                         <label>Categories</label>
                         <div class="chips"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s3">
-                        <input id="reference" type="text" th:value="${product.reference}" disabled>
-                        <label for="reference">Reference</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="name" type="text" th:value="${product.name}" class="validate">
+                    <div class="input-field col s9">
+                        <input id="name" type="text" th:field="*{name}" class="validate">
                         <label for="name">Name</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="price" type="number" th:value="${product.price}" class="validate">
+                        <input id="price" type="number" th:field="*{price}" class="validate">
                         <label for="price">Price (€)</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="description" th:text="${product.description}"
-                                  class="materialize-textarea"></textarea>
+                        <textarea id="description" th:field="*{description}" class="materialize-textarea"></textarea>
                         <label for="description">Description</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <button class="btn waves-effect waves-light right" type="submit" name="action" disabled>Save
+                        <button class="btn waves-effect waves-light right" type="submit" name="action">Save
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
@@ -77,19 +68,8 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
 document.addEventListener('DOMContentLoaded', function() {
-  var product = /*[[${product}]]*/;
-  var categoriesLength = product.categories.length;
-  var categories = [];
-  for (var i = 0; i < categoriesLength; i++) {
-    categories.push({
-      tag: product.categories[i]
-    });
-  }
-
   var chipsElems = document.querySelectorAll('.chips');
-  var chipsInstances = M.Chips.init(chipsElems, {
-    data: categories
-  });
+  var chipsInstances = M.Chips.init(chipsElems);
 });
 /*]]>*/
 

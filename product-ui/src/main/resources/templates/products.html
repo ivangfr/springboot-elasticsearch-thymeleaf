@@ -55,10 +55,13 @@
                     <td><span th:text="${#strings.abbreviate(product.description,200)}"> Description </span></td>
                     <td><span th:text="${product.price}"> Price </span></td>
                     <td>
-                        <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}"><i class="material-icons">menu</i></a>
+                        <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}"><i
+                                class="material-icons">menu</i></a>
                         <ul th:id="'dropdown_' + ${product.id}" class='dropdown-content'>
-                            <li><a th:href="@{/products/{id}(id=${product.id},action=view)}"><i class="material-icons">open_in_browser</i></a></li>
-                            <li><a th:href="@{/products/{id}(id=${product.id},action=edit)}"><i class="material-icons">edit</i></a></li>
+                            <li><a th:href="@{/products/{id}/view(id=${product.id})}"><i class="material-icons">open_in_browser</i></a>
+                            </li>
+                            <li><a th:href="@{/products/{id}/edit(id=${product.id})}"><i class="material-icons">edit</i></a>
+                            </li>
                             <li><a href="#!"><i class="material-icons">delete</i></a></li>
                         </ul>
                     </td>
@@ -66,6 +69,12 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="fixed-action-btn">
+        <a th:href="@{/products/create}" class="btn-floating btn-large blue">
+            <i class="large material-icons">add</i>
+        </a>
     </div>
 </div>
 
@@ -75,8 +84,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var dropdownElems = document.querySelectorAll('.dropdown-trigger');
-  var instances = M.Dropdown.init(dropdownElems);
+  var dropdownInstances = M.Dropdown.init(dropdownElems);
+
+  var fabElems = document.querySelectorAll('.fixed-action-btn');
+  var fabInstances = M.FloatingActionButton.init(fabElems);
 });
+
 </script>
 
 </body>
