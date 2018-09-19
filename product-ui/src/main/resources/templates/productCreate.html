@@ -27,11 +27,13 @@
     <div class="section">
         <h5>Details</h5>
         <div class="row">
-            <form action="#" th:action="@{/products}" th:object="${productDto}" method="post" class="col s12">
+            <form class="col s12" action="#" th:action="@{/products}" th:object="${productDto}" method="post"
+                  onsubmit="return beforeSubmit()">
                 <div class="row">
                     <div class="col s12">
                         <label>Categories</label>
                         <div class="chips"></div>
+                        <input id="categories" type="hidden" th:field="*{categories}">
                     </div>
                 </div>
                 <div class="row">
@@ -53,7 +55,8 @@
                 <div class="row">
                     <div class="col s12">
                         <button class="btn waves-effect waves-light right" type="submit" name="action">Save
-                            <i class="material-icons right">send</i>
+                            <i class=" material-icons right
+                        ">send</i>
                         </button>
                     </div>
                 </div>
@@ -66,16 +69,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 
 <script th:inline="javascript">
-/*<![CDATA[*/
 document.addEventListener('DOMContentLoaded', function() {
   var chipsElems = document.querySelectorAll('.chips');
   var chipsInstances = M.Chips.init(chipsElems);
+
+  beforeSubmit = function() {
+    var chipElems = document.querySelectorAll('.chip');
+    var categories = [];
+    for (var i = 0; i < chipElems.length; i++) {
+      categories.push(chipElems[i].firstChild.nodeValue);
+    }
+    document.getElementById('categories').value = categories;
+    return true;
+  }
 });
-/*]]>*/
-
-
-
-
 </script>
 
 </body>
