@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/products/{id}/reviews")
+@RequestMapping("/api/products/{id}/reviews")
 public class ProductReviewController {
 
     private final ProductService productService;

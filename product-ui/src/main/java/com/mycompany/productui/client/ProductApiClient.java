@@ -15,22 +15,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("product-api")
 public interface ProductApiClient {
 
-    @GetMapping("/api/v1/products")
+    @GetMapping("/api/products")
     MyPage<Product> listProductsByPage(@RequestParam Integer page, @RequestParam Integer size,
                                        @RequestParam String sort);
 
-    @PutMapping("/api/v1/products/search")
+    @PutMapping("/api/products/search")
     MyPage<Product> searchProductsByPage(@RequestBody SearchDto searchDto, @RequestParam Integer page,
                                          @RequestParam Integer size, @RequestParam String sort);
 
-    @GetMapping("/api/v1/products/{id}")
+    @GetMapping("/api/products/{id}")
     Product getProduct(@PathVariable String id);
 
-    @PostMapping("/api/v1/products")
+    @PostMapping("/api/products")
     Product createProduct(@RequestBody ProductDto productDto);
 
     // TODO
-//    @PatchMapping("/api/v1/products/{id}")
+//    @PatchMapping("/api/products/{id}")
 //    Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
 
 }
