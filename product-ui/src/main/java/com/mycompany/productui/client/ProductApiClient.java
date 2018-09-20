@@ -3,10 +3,12 @@ package com.mycompany.productui.client;
 import com.mycompany.productui.client.dto.MyPage;
 import com.mycompany.productui.client.dto.Product;
 import com.mycompany.productui.client.dto.ProductDto;
+import com.mycompany.productui.client.dto.SearchDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,7 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ProductApiClient {
 
     @GetMapping("/api/v1/products")
-    MyPage<Product> listAllByPage(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String sort);
+    MyPage<Product> listProductsByPage(@RequestParam Integer page, @RequestParam Integer size,
+                                       @RequestParam String sort);
+
+    @PutMapping("/api/v1/products/search")
+    MyPage<Product> searchProductsByPage(@RequestBody SearchDto searchDto, @RequestParam Integer page,
+                                         @RequestParam Integer size, @RequestParam String sort);
 
     @GetMapping("/api/v1/products/{id}")
     Product getProduct(@PathVariable String id);
