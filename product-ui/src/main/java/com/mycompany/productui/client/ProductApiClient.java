@@ -29,8 +29,7 @@ public interface ProductApiClient {
     @PostMapping("/api/products")
     Product createProduct(@RequestBody ProductDto productDto);
 
-    // TODO
-//    @PatchMapping("/api/products/{id}")
-//    Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
+    @PutMapping("/api/products/{id}")
+    Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
 
 }

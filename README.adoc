@@ -165,8 +165,9 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == TODO
 
-- add functionality to edit/delete products; see https://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html (7 Creating a Form)
+- add functionality to add comment;
 - add pagination. now, it is just returning all products;
+- add functionality to delete products;
 
 == Reference
 

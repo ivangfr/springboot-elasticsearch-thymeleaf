@@ -25,10 +25,9 @@
 </nav>
 <div class="container">
     <div class="row">
-        <form th:action="@{/products/search}" th:object="${searchDto}" method="post" id="searchForm" onsubmit="return validateSearchForm()">
+        <form th:action="@{/products/search}" th:object="${searchDto}" method="post" id="searchForm">
             <div class="valign-wrapper">
                 <div class="input-field col s11">
-                    <!--<i class="material-icons prefix">search</i>-->
                     <input type="text" id="searchInput" th:field="*{text}">
                     <label for="searchInput">Search</label>
                 </div>
@@ -93,11 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var fabElems = document.querySelectorAll('.fixed-action-btn');
   var fabInstances = M.FloatingActionButton.init(fabElems);
-
-  var searchInput = document.getElementById("searchInput");
-  validateSearchForm = function() {
-    return searchInput.value.trim() == '' ? false : true;
-  };
 });
 </script>
 

@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -84,7 +83,7 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto)
             throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(id);

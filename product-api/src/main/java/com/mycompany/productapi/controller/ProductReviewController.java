@@ -2,8 +2,8 @@ package com.mycompany.productapi.controller;
 
 import com.mycompany.productapi.dto.AddReviewDto;
 import com.mycompany.productapi.exception.ProductNotFoundException;
-import com.mycompany.productapi.model.Review;
 import com.mycompany.productapi.model.Product;
+import com.mycompany.productapi.model.Review;
 import com.mycompany.productapi.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -39,8 +39,8 @@ public class ProductReviewController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping
     public List<Review> getProductReviews(@PathVariable String id) throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(id);
         return product.getReviews();
@@ -53,8 +53,8 @@ public class ProductReviewController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
     public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewDto addReviewDto)
             throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(id);
