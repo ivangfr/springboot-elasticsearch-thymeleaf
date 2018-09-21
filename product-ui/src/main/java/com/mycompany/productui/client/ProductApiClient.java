@@ -3,6 +3,7 @@ package com.mycompany.productui.client;
 import com.mycompany.productui.client.dto.MyPage;
 import com.mycompany.productui.client.dto.Product;
 import com.mycompany.productui.client.dto.ProductDto;
+import com.mycompany.productui.client.dto.Review;
 import com.mycompany.productui.client.dto.SearchDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,5 +32,8 @@ public interface ProductApiClient {
 
     @PutMapping("/api/products/{id}")
     Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
+
+    @PostMapping("/api/products/{id}/reviews")
+    Product addProductReview(@PathVariable String id, @RequestBody Review review);
 
 }

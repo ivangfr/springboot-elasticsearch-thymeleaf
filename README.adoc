@@ -165,7 +165,7 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == TODO
 
-- add functionality to add comment;
+- add date to review;
 - add pagination. now, it is just returning all products;
 - add functionality to delete products;
 

@@ -4,6 +4,7 @@ import com.mycompany.productui.client.ProductApiClient;
 import com.mycompany.productui.client.dto.MyPage;
 import com.mycompany.productui.client.dto.Product;
 import com.mycompany.productui.client.dto.ProductDto;
+import com.mycompany.productui.client.dto.Review;
 import com.mycompany.productui.client.dto.SearchDto;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -65,6 +66,7 @@ public class ProductController {
 
     @GetMapping("/products/{id}/view")
     public String viewProductForm(@PathVariable String id, Model model) {
+        model.addAttribute("review", new Review());
         model.addAttribute("product", productApiClient.getProduct(id));
         return "productView";
     }
