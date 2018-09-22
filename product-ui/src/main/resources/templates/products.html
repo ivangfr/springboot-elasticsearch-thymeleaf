@@ -25,15 +25,15 @@
 </nav>
 <div class="container">
     <div class="row">
-        <form th:action="@{/products/search}" th:object="${searchDto}" method="post" id="searchForm">
+        <form th:action="@{/products/search}" th:object="${searchDto}" method="post">
             <div class="valign-wrapper">
                 <div class="input-field col s11">
                     <input type="text" id="searchInput" th:field="*{text}">
                     <label for="searchInput">Search</label>
                 </div>
                 <div class="col s1">
-                    <button id="searchBtn" class="btn btn-floating waves-effect waves-light" type="submit"
-                            form="searchForm"><i class=" material-icons right">search</i>
+                    <button class="btn btn-floating waves-effect waves-light" type="submit">
+                        <i class=" material-icons right">search</i>
                     </button>
                 </div>
             </div>
@@ -59,12 +59,19 @@
                     <td><span th:text="${#strings.abbreviate(product.description,200)}"> Description </span></td>
                     <td><span th:text="${product.price}"> Price </span></td>
                     <td>
-                        <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}"><i
-                                class="material-icons">menu</i></a>
+                        <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}">
+                            <i class="material-icons">menu</i>
+                        </a>
                         <ul th:id="'dropdown_' + ${product.id}" class='dropdown-content'>
-                            <li><a th:href="@{/products/{id}/view(id=${product.id})}"><i class="material-icons">open_in_browser</i></a>
+                            <li>
+                                <a th:href="@{/products/{id}/view(id=${product.id})}">
+                                    <i class="material-icons">open_in_browser</i>
+                                </a>
                             </li>
-                            <li><a th:href="@{/products/{id}/edit(id=${product.id})}"><i class="material-icons">edit</i></a>
+                            <li>
+                                <a th:href="@{/products/{id}/edit(id=${product.id})}">
+                                    <i class="material-icons">edit</i>
+                                </a>
                             </li>
                             <li><a href="#!"><i class="material-icons">delete</i></a></li>
                         </ul>

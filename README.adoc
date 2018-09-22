@@ -165,7 +165,7 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == TODO
 
-- add date to review;
+- add same nav bar to all pages & add home button;
 - add pagination. now, it is just returning all products;
 - add functionality to delete products;
 

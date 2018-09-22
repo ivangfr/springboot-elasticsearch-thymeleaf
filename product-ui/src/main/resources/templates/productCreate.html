@@ -27,38 +27,42 @@
     <div class="section">
         <h5>Details</h5>
         <div class="row">
-            <form class="col s12" th:action="@{/products}" th:object="${productDto}" method="post"
-                  onsubmit="return beforeSubmit()">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="chips"></div>
-                        <input id="categories" type="hidden" th:field="*{categories}">
+            <div class="col s12">
+                <form th:action="@{/products}" th:object="${productDto}" method="post"
+                      onsubmit="return beforeSubmit()">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="chips"></div>
+                            <input id="categories" type="hidden" th:field="*{categories}">
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s9">
-                        <input id="name" type="text" th:field="*{name}" class="validate">
-                        <label for="name">Name</label>
+                    <div class="row">
+                        <div class="input-field col s9">
+                            <input id="name" type="text" th:field="*{name}" class="validate" required>
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="price" type="number" th:field="*{price}" min="0" step="any" class="validate"
+                                   required>
+                            <label for="price">Price (€)</label>
+                        </div>
                     </div>
-                    <div class="input-field col s3">
-                        <input id="price" type="number" th:field="*{price}" min="0" step="any" class="validate">
-                        <label for="price">Price (€)</label>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="description" th:field="*{description}" class="materialize-textarea"
+                                      required></textarea>
+                            <label for="description">Description</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <textarea id="description" th:field="*{description}" class="materialize-textarea"></textarea>
-                        <label for="description">Description</label>
+                    <div class="row">
+                        <div class="col s12">
+                            <a class="btn waves-effect waves-light right" style="margin-left:10px"
+                               th:href="@{/products}">Cancel</a>
+                            <button class="btn waves-effect waves-light right" type="submit">Save</button>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <button class="btn waves-effect waves-light right" type="submit" name="action">Save
-                            <i class=" material-icons right">send</i>
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -100,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return true;
   }
 });
-
 </script>
 
 </body>
