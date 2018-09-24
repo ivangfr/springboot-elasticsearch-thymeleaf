@@ -47,7 +47,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public Page<Product> getProducts(Pageable pageable) {
-        return productService.listAllProductsByPage(pageable);
+        return productService.listProductsByPage(pageable);
     }
 
     @ApiOperation(value = "Get Product")
