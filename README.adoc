@@ -165,6 +165,18 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == TODO
 
+- make sure if it is needed
+```
+<div class="row">
+    <div class="col s12">
+        <form ...
+```
+or can be
+```
+<div class="row">
+    <form class="col s12" ...
+```
+
 - add same nav bar to all pages & add home button;
 - add pagination. now, it is just returning all products;
 - add functionality to delete products;
