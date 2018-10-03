@@ -97,6 +97,20 @@ mvn spring-boot:run
 
 Just access http://localhost:8081
 
+==== Screenshots
+
+- Product list screen
+
+image::images/product-list.png[]
+
+- Product edit screen
+
+image::images/product-edit.png[]
+
+- Product view/comment screen
+
+image::images/product-view-comment.png[]
+
 == Elasticsearch REST API
 
 - Alias: `ecommerce`
