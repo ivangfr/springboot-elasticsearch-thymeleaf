@@ -27,51 +27,49 @@
     <div class="section">
         <h5>Details</h5>
         <div class="row">
-            <div class="col s12">
-                <form th:action="@{/products/{id}(id=${product.id})}" th:object="${productDto}"
-                      method="post" onsubmit="return beforeSubmit()">
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <input id="id" type="text" th:value="${product.id}" disabled>
-                            <label for="id">Id</label>
-                        </div>
-                        <div class="col s8">
-                            <div class="chips"></div>
-                            <input id="categories" type="hidden" th:field="*{categories}">
-                        </div>
+            <form class="col s12" th:action="@{/products/{id}(id=${product.id})}" th:object="${productDto}"
+                  method="post" onsubmit="return beforeSubmit()">
+                <div class="row">
+                    <div class="input-field col s4">
+                        <input id="id" type="text" th:value="${product.id}" disabled>
+                        <label for="id">Id</label>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s3">
-                            <input id="reference" type="text" th:value="${product.reference}" disabled>
-                            <label for="reference">Reference</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="name" type="text" th:value="${product.name}" th:field="*{name}" class="validate"
-                                   required>
-                            <label for="name">Name</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <input id="price" type="number" th:value="${product.price}" th:field="*{price}" min="0"
-                                   step="any" class="validate" required>
-                            <label for="price">Price (€)</label>
-                        </div>
+                    <div class="col s8">
+                        <div class="chips"></div>
+                        <input id="categories" type="hidden" th:field="*{categories}">
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input id="reference" type="text" th:value="${product.reference}" disabled>
+                        <label for="reference">Reference</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="name" type="text" th:value="${product.name}" th:field="*{name}" class="validate"
+                               required>
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="price" type="number" th:value="${product.price}" th:field="*{price}" min="0"
+                               step="any" class="validate" required>
+                        <label for="price">Price (€)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
                         <textarea id="description" th:text="${product.description}" th:field="*{description}"
                                   class="materialize-textarea" required></textarea>
-                            <label for="description">Description</label>
-                        </div>
+                        <label for="description">Description</label>
                     </div>
-                    <div class="row">
-                        <div class="col s12 center">
-                            <a class="btn waves-effect waves-light right" style="margin-left:10px"
-                               th:href="@{/products}">Cancel</a>
-                            <button class="btn waves-effect waves-light right" type="submit">Save</button>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center">
+                        <a class="btn waves-effect waves-light right" style="margin-left:10px"
+                           th:href="@{/products}">Cancel</a>
+                        <button class="btn waves-effect waves-light right" type="submit">Save</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -122,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 /*]]>*/
-
 </script>
 
 </body>

@@ -65,26 +65,25 @@
         <div class="section">
             <h5>Reviews</h5>
             <div class="row">
-                <div class="col s12">
-                    <form th:action="@{/products/{id}/review(id=${product.id})}" th:object="${review}" method="post">
-                        <div class="row grey lighten-5 valign-wrapper">
-                            <div class="input-field col s9">
-                                <i class="material-icons prefix">comment</i>
-                                <input id="comment" type="text" th:field="*{comment}" class="validate" required>
-                                <label for="comment">Comment</label>
-                            </div>
-                            <div class="input-field col s2">
-                                <i class="material-icons prefix">star</i>
-                                <input id="stars" type="number" min="0" max="5" th:field="*{stars}" class="validate"
-                                       required>
-                                <label for="stars">Stars</label>
-                            </div>
-                            <div class="input-field col s1">
-                                <button class="btn waves-effect waves-light right" type="submit">Add</button>
-                            </div>
+                <form class="col s12" th:action="@{/products/{id}/review(id=${product.id})}" th:object="${review}"
+                      method="post">
+                    <div class="row grey lighten-5 valign-wrapper">
+                        <div class="input-field col s9">
+                            <i class="material-icons prefix">comment</i>
+                            <input id="comment" type="text" th:field="*{comment}" class="validate" required>
+                            <label for="comment">Comment</label>
                         </div>
-                    </form>
-                </div>
+                        <div class="input-field col s2">
+                            <i class="material-icons prefix">star</i>
+                            <input id="stars" type="number" min="0" max="5" th:field="*{stars}" class="validate"
+                                   required>
+                            <label for="stars">Stars</label>
+                        </div>
+                        <div class="input-field col s1">
+                            <button class="btn waves-effect waves-light right" type="submit">Add</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="row">
                 <div class="col s12">
