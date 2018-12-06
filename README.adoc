@@ -186,6 +186,6 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == Reference
 
-https://www.baeldung.com/spring-cloud-netflix-eureka
-https://dzone.com/articles/microservice-architecture-with-spring-cloud-and-do
-https://www.digit.in/laptops-reviews
+- https://www.baeldung.com/spring-cloud-netflix-eureka
+- https://dzone.com/articles/microservice-architecture-with-spring-cloud-and-do
+- https://www.digit.in/laptops-reviews
