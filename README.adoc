@@ -1,23 +1,21 @@
-= springboot-elasticsearch-thymeleaf
-
-== Goal
+= `springboot-elasticsearch-thymeleaf`
 
 The goal of this project is to implement two services: `product-api` and `product-ui`.
 `product-api` is a Restful Web Service that manages products. It uses https://www.elastic.co[Elasticsearch] as storage.
-`product-ui` is a `product-api` UI client. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
+`product-ui` is a `product-api`'s client. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
 
-== Start Environment
+= Start Environment
 
 - Open one terminal
 
-- In `/springboot-elasticsearch-thymeleaf` root folder run
+- In `springboot-elasticsearch-thymeleaf` root folder run
 ```
 docker-compose up -d
 ```
 
 [NOTE]
 ====
-To stop and remove containers, networks, images, and volumes
+To stop and remove containers, networks and volumes
 ```
 docker-compose down -v
 ```
@@ -28,9 +26,9 @@ docker-compose down -v
 docker-compose ps
 ```
 
-== Configure index, alias and insert some products in ES
+= Configure index, alias and insert some products in ES
 
-- Go to `/springboot-elasticsearch-thymeleaf/scripts` folder
+- Go to `springboot-elasticsearch-thymeleaf/scripts` folder
 
 - Run the following script to create the index `ecommerce_v1` with the alias `ecommerce`
 ```
@@ -42,12 +40,12 @@ docker-compose ps
 ./insert-products.sh
 ```
 
-- If you want to fix the `reference` property mapping error (explained bellow), run
+- If you want to fix the `reference` property mapping error (explained below), run
 ```
 ./reindex.sh
 ```
 
-===== Reindex
+=== Reindex
 
 The script `./reindex.sh` is used to reindex from an index to another index. The default will reindex from `ecommerce_v1`
 to `ecommerce_v2`. The only difference between `mapping-v1.json` (used by `ecommerce_v1`) to `mapping-v2.json` (used by
@@ -62,35 +60,41 @@ description. It is an error.
 So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem
 won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
+= Microservices
+
 == eureka-server
 
 ==== Start eureka-server using Maven
 
-In `/springboot-elasticsearch-thymeleaf/eureka-server` root folder run
+- Open a new terminal
+
+- In `springboot-elasticsearch-thymeleaf` root folder run
 ```
-mvn spring-boot:run
+./mvnw spring-boot:run --projects eureka-server
 ```
 
 == product-api
 
 ==== Start product-api using Maven
 
-In `/springboot-elasticsearch-thymeleaf/product-api` root folder run
+- Open a new terminal
+
+- In `springboot-elasticsearch-thymeleaf` root folder run
 ```
-mvn spring-boot:run
+./mvnw spring-boot:run --projects product-api
 ```
 
 ==== Using product-api Swagger
 
-You can access the Swagger website http://localhost:8080/swagger-ui.html to have access to all endpoints.
+You can access the Swagger website http://localhost:8080/swagger-ui.html
 
 == product-ui
 
 ==== Start product-ui using Maven
 
-In `/springboot-elasticsearch-thymeleaf/product-ui` root folder run
+In `springboot-elasticsearch-thymeleaf` root folder run
 ```
-mvn spring-boot:run
+./mvnw spring-boot:run --projects product-ui
 ```
 
 ==== Using product-ui

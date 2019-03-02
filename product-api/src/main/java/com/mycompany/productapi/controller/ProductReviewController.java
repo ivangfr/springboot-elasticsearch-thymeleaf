@@ -39,7 +39,6 @@ public class ProductReviewController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<Review> getProductReviews(@PathVariable String id) throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(id);

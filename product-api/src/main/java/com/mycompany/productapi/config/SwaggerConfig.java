@@ -47,7 +47,7 @@ public class SwaggerConfig {
     }
 
     // --
-    // The bean bellow is needed for fix Pageable in Swagger. Otherwise, the arguments page, size and sort won't be shown.
+    // The bean below is needed for fix Pageable in Swagger. Otherwise, the arguments page, size and sort won't be shown.
 
     @Bean
     public AlternateTypeRuleConvention pageableConvention(final TypeResolver resolver) {

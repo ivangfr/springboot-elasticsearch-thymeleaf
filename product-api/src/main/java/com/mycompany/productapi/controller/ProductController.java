@@ -44,7 +44,6 @@ public class ProductController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public Page<Product> getProducts(Pageable pageable) {
         return productService.listProductsByPage(pageable);
@@ -56,7 +55,6 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable String id) throws ProductNotFoundException {
         return productService.validateAndGetProductById(id);
@@ -82,7 +80,6 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto)
             throws ProductNotFoundException {
@@ -97,7 +94,6 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable String id) throws ProductNotFoundException {
         Product product = productService.validateAndGetProductById(id);
@@ -114,7 +110,6 @@ public class ProductController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/search")
     public Page<Product> searchProducts(@Valid @RequestBody SearchDto searchDto, Pageable pageable) {
         return productService.search(searchDto.getText(), pageable);
