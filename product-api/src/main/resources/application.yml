@@ -1,15 +1,10 @@
 spring:
   application:
     name: product-api
-
-server:
-  port: 8080
-
-application:
-  elasticsearch:
-    clustername: docker-es-cluster
-    host: localhost
-    port: 9300
+  data:
+    elasticsearch:
+      cluster-name: docker-es-cluster
+      cluster-nodes: ${ELASTICSEARCH_HOST:localhost}:${ELASTICSEARCH_PORT:9300}
 
 management:
   security:

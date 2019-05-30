@@ -2,9 +2,9 @@
 
 The goal of this project is to implement two services: `product-api` and `product-ui`.
 `product-api` is a Restful Web Service that manages products. It uses https://www.elastic.co[Elasticsearch] as storage.
-`product-ui` is a `product-api`'s client. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
+`product-ui` is a client of `product-api`. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
 
-= Start Environment
+== Start Environment
 
 - Open one terminal
 
@@ -21,12 +21,12 @@ docker-compose down -v
 ```
 ====
 
-- Wait a little bit to docker containers be up and healthy. To check it, run
+- Wait a little bit until the docker containers are up and healthy. To check it, run
 ```
 docker-compose ps
 ```
 
-= Configure index, alias and insert some products in ES
+== Configure index, alias and insert some products in ES
 
 - Go to `springboot-elasticsearch-thymeleaf/scripts` folder
 
@@ -60,48 +60,37 @@ description. It is an error.
 So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem
 won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
-= Microservices
+== Microservices
 
-== eureka-server
+=== eureka-server
 
-==== Start eureka-server using Maven
-
-- Open a new terminal
-
-- In `springboot-elasticsearch-thymeleaf` root folder run
+In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
+`eureka-server`
 ```
 ./mvnw spring-boot:run --projects eureka-server
 ```
 
-== product-api
+=== product-api
 
-==== Start product-api using Maven
-
-- Open a new terminal
-
-- In `springboot-elasticsearch-thymeleaf` root folder run
+In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
+`product-api`
 ```
 ./mvnw spring-boot:run --projects product-api
 ```
 
-==== Using product-api Swagger
+You can access its Swagger website http://localhost:8080/swagger-ui.html
 
-You can access the Swagger website http://localhost:8080/swagger-ui.html
+=== product-ui
 
-== product-ui
-
-==== Start product-ui using Maven
-
-In `springboot-elasticsearch-thymeleaf` root folder run
+In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
+`product-ui`
 ```
 ./mvnw spring-boot:run --projects product-ui
 ```
 
-==== Using product-ui
+You can access `product-ui` website at http://localhost:8081
 
-Just access http://localhost:8081
-
-==== Screenshots
+**Some screenshots**
 
 - Product list screen
 
@@ -123,60 +112,60 @@ image::images/product-view-comment.png[]
 - Type: `product`
 - REST API Format: `http://host:port/index/type/_action-OR-id`
 
-==== Check ES is up and running
+=== Check ES is up and running
 ```
 curl http://localhost:9200
 ```
 
-==== Create _ecommerce_v1_ index
+=== Create _ecommerce_v1_ index
 ```
 curl -X PUT localhost:9200/ecommerce_v1 \
      -H "Content-Type: application/json" \
      -d '{ "mappings": { "product": { "properties": { "name": { "type": "text" }, ... }'
 ```
 
-==== Check indexes in ES
+=== Check indexes in ES
 ```
 curl http://localhost:9200/_cat/indices?v
 ```
 
-==== Check _ecommerce_v1_ index mapping
+=== Check _ecommerce_v1_ index mapping
 ```
 curl http://localhost:9200/ecommerce_v1/_mapping
 ```
 
-==== Delete _ecommerce_v1_ index
+=== Delete _ecommerce_v1_ index
 ```
 curl -X DELETE http://localhost:9200/ecommerce_v1
 ```
 
-==== Create alias for _ecommerce_v1_ index
+=== Create alias for _ecommerce_v1_ index
 ```
 curl -X POST localhost:9200/_aliases \
      -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "add": {"alias": "ecommerce", "index": "ecommerce_v1" }}]}'
 ```
 
-==== Check existing ES alias
+=== Check existing ES alias
 ```
 curl http://localhost:9200/_aliases
 ```
 
-==== Reindex from _ecommerce_v1_ to _ecommerce_v2_
+=== Reindex from _ecommerce_v1_ to _ecommerce_v2_
 ```
 curl -X POST localhost:9200/_reindex \
      -H 'Content-Type: application/json' \
      -d '{ "source": { "index": "ecommerce_v1" }, "dest": { "index": "ecommerce_v2" }}'
 ```
 
-==== Adjust alias after reindex from _ecommerce_v1_ to _ecommerce_v2_
+=== Adjust alias after reindex from _ecommerce_v1_ to _ecommerce_v2_
 ```
 curl -X POST localhost:9200/_aliases \
      -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "remove": {"alias": "ecommerce", "index": "ecommerce_v1" }}, { "add": {"alias": "ecommerce", "index": "ecommerce_v2" }}]}'
 ```
 
-==== Simple search
+=== Simple search
 ```
 curl http://localhost:9200/ecommerce/product/_search
 ```

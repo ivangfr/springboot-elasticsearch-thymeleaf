@@ -94,11 +94,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var dropdownElems = document.querySelectorAll('.dropdown-trigger');
-  var dropdownInstances = M.Dropdown.init(dropdownElems);
-
-  var fabElems = document.querySelectorAll('.fixed-action-btn');
-  var fabInstances = M.FloatingActionButton.init(fabElems);
+  M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
+  M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'));
 });
 </script>
 
