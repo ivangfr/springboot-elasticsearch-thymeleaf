@@ -19,8 +19,7 @@
     <properties>
         <java.version>1.8</java.version>
         <springfox.version>2.9.2</springfox.version>
-        <orika.version>1.5.2</orika.version>
-        <common.lang.version>2.6</common.lang.version>
+        <orika.version>1.5.4</orika.version>
     </properties>
 
     <dependencies>
@@ -58,13 +57,6 @@
             <groupId>ma.glasnost.orika</groupId>
             <artifactId>orika-core</artifactId>
             <version>${orika.version}</version>
-        </dependency>
-
-        <!-- To use RandomStringUtils -->
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>${common.lang.version}</version>
         </dependency>
 
         <dependency>

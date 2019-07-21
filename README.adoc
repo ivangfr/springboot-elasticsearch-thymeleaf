@@ -1,36 +1,25 @@
 = `springboot-elasticsearch-thymeleaf`
 
-The goal of this project is to implement two services: `product-api` and `product-ui`.
+The goal of this project is to implement two Spring-Boot applications: `product-api` and `product-ui`.
 `product-api` is a Restful Web Service that manages products. It uses https://www.elastic.co[Elasticsearch] as storage.
 `product-ui` is a client of `product-api`. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
 
 == Start Environment
 
-- Open one terminal
-
-- In `springboot-elasticsearch-thymeleaf` root folder run
+Open a terminal and inside `springboot-elasticsearch-thymeleaf` root folder run
 ```
 docker-compose up -d
 ```
 
-[NOTE]
-====
-To stop and remove containers, networks and volumes
-```
-docker-compose down -v
-```
-====
-
-- Wait a little bit until the docker containers are up and healthy. To check it, run
+Wait a little bit until the docker containers are up and healthy. To check it, run
 ```
 docker-compose ps
 ```
 
 == Configure index, alias and insert some products in ES
 
-- Go to `springboot-elasticsearch-thymeleaf/scripts` folder
-
-- Run the following script to create the index `ecommerce_v1` with the alias `ecommerce`
+- In a terminal and inside `springboot-elasticsearch-thymeleaf/scripts`, run the following script to create the
+index `ecommerce_v1` with the alias `ecommerce`
 ```
 ./create-index.sh
 ```
@@ -64,7 +53,7 @@ won't happen again because, from now on, ES won't tokenize the content present i
 
 === eureka-server
 
-In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
+In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
 `eureka-server`
 ```
 ./mvnw spring-boot:run --projects eureka-server
@@ -72,36 +61,45 @@ In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run t
 
 === product-api
 
-In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
+In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
 `product-api`
 ```
 ./mvnw spring-boot:run --projects product-api
 ```
 
-You can access its Swagger website http://localhost:8080/swagger-ui.html
-
 === product-ui
 
-In a terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
+In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
 `product-ui`
 ```
 ./mvnw spring-boot:run --projects product-ui
 ```
 
-You can access `product-ui` website at http://localhost:8081
+== Microservices URLs
 
-**Some screenshots**
+|===
+|Microservice |URL
 
-- Product list screen
+|`eureka-server`
+|http://localhost:8761
 
+|`product-api`
+|http://localhost:8080/swagger-ui.html
+
+|`product-ui`
+|http://localhost:8081
+|===
+
+
+== Some screenshots of product-ui
+
+Product list screen
 image::images/product-list.png[]
 
-- Product edit screen
-
+Product edit screen
 image::images/product-edit.png[]
 
-- Product view/comment screen
-
+Product view/comment screen
 image::images/product-view-comment.png[]
 
 == Elasticsearch REST API
@@ -168,6 +166,13 @@ curl -X POST localhost:9200/_aliases \
 === Simple search
 ```
 curl http://localhost:9200/ecommerce/product/_search
+```
+
+== Shutdown
+
+Run the following command to stop and remove containers, networks and volumes
+```
+docker-compose down -v
 ```
 
 == TODO

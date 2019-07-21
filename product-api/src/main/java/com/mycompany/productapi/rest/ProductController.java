@@ -1,8 +1,8 @@
-package com.mycompany.productapi.controller;
+package com.mycompany.productapi.rest;
 
-import com.mycompany.productapi.dto.CreateProductDto;
-import com.mycompany.productapi.dto.SearchDto;
-import com.mycompany.productapi.dto.UpdateProductDto;
+import com.mycompany.productapi.rest.dto.CreateProductDto;
+import com.mycompany.productapi.rest.dto.SearchDto;
+import com.mycompany.productapi.rest.dto.UpdateProductDto;
 import com.mycompany.productapi.exception.ProductNotFoundException;
 import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.service.ProductService;
