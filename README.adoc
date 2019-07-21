@@ -18,18 +18,18 @@ docker-compose ps
 
 == Configure index, alias and insert some products in ES
 
-- In a terminal and inside `springboot-elasticsearch-thymeleaf/scripts`, run the following script to create the
+In a terminal and inside `springboot-elasticsearch-thymeleaf/scripts`, run the following script to create the
 index `ecommerce_v1` with the alias `ecommerce`
 ```
 ./create-index.sh
 ```
 
-- If you want to insert some products, run
+If you want to insert some products, run
 ```
 ./insert-products.sh
 ```
 
-- If you want to fix the `reference` property mapping error (explained below), run
+If you want to fix the `reference` property mapping error (explained below), run
 ```
 ./reindex.sh
 ```
@@ -93,13 +93,16 @@ In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, r
 
 == Some screenshots of product-ui
 
-Product list screen
+==== Product list screen
+
 image::images/product-list.png[]
 
-Product edit screen
+==== Product edit screen
+
 image::images/product-edit.png[]
 
-Product view/comment screen
+==== Product view/comment screen
+
 image::images/product-view-comment.png[]
 
 == Elasticsearch REST API
@@ -110,60 +113,60 @@ image::images/product-view-comment.png[]
 - Type: `product`
 - REST API Format: `http://host:port/index/type/_action-OR-id`
 
-=== Check ES is up and running
+==== Check ES is up and running
 ```
 curl http://localhost:9200
 ```
 
-=== Create _ecommerce_v1_ index
+==== Create _ecommerce_v1_ index
 ```
 curl -X PUT localhost:9200/ecommerce_v1 \
      -H "Content-Type: application/json" \
      -d '{ "mappings": { "product": { "properties": { "name": { "type": "text" }, ... }'
 ```
 
-=== Check indexes in ES
+==== Check indexes in ES
 ```
 curl http://localhost:9200/_cat/indices?v
 ```
 
-=== Check _ecommerce_v1_ index mapping
+==== Check _ecommerce_v1_ index mapping
 ```
 curl http://localhost:9200/ecommerce_v1/_mapping
 ```
 
-=== Delete _ecommerce_v1_ index
+==== Delete _ecommerce_v1_ index
 ```
 curl -X DELETE http://localhost:9200/ecommerce_v1
 ```
 
-=== Create alias for _ecommerce_v1_ index
+==== Create alias for _ecommerce_v1_ index
 ```
 curl -X POST localhost:9200/_aliases \
      -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "add": {"alias": "ecommerce", "index": "ecommerce_v1" }}]}'
 ```
 
-=== Check existing ES alias
+==== Check existing ES alias
 ```
 curl http://localhost:9200/_aliases
 ```
 
-=== Reindex from _ecommerce_v1_ to _ecommerce_v2_
+==== Reindex from _ecommerce_v1_ to _ecommerce_v2_
 ```
 curl -X POST localhost:9200/_reindex \
      -H 'Content-Type: application/json' \
      -d '{ "source": { "index": "ecommerce_v1" }, "dest": { "index": "ecommerce_v2" }}'
 ```
 
-=== Adjust alias after reindex from _ecommerce_v1_ to _ecommerce_v2_
+==== Adjust alias after reindex from _ecommerce_v1_ to _ecommerce_v2_
 ```
 curl -X POST localhost:9200/_aliases \
      -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "remove": {"alias": "ecommerce", "index": "ecommerce_v1" }}, { "add": {"alias": "ecommerce", "index": "ecommerce_v2" }}]}'
 ```
 
-=== Simple search
+==== Simple search
 ```
 curl http://localhost:9200/ecommerce/product/_search
 ```
