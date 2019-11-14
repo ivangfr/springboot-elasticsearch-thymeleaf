@@ -11,8 +11,6 @@ eureka:
     fetchRegistry: false
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure.include: "*"

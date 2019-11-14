@@ -1,38 +1,49 @@
 = `springboot-elasticsearch-thymeleaf`
 
-The goal of this project is to implement two Spring-Boot applications: `product-api` and `product-ui`.
-`product-api` is a Restful Web Service that manages products. It uses https://www.elastic.co[Elasticsearch] as storage.
-`product-ui` is a client of `product-api`. It uses https://www.thymeleaf.org/[Thymeleaf] as HTML template.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`Spring Boot`]
+applications: `product-api` and `product-ui`. `product-api` is a Restful Web Service that manages products. It uses
+https://www.elastic.co[`Elasticsearch`] as storage. `product-ui` is a client of `product-api`. It uses
+https://www.thymeleaf.org/[`Thymeleaf`] as HTML template.
 
 == Start Environment
 
 Open a terminal and inside `springboot-elasticsearch-thymeleaf` root folder run
-```
+
+[source]
+----
 docker-compose up -d
-```
+----
 
 Wait a little bit until the docker containers are up and healthy. To check it, run
-```
+
+[source]
+----
 docker-compose ps
-```
+----
 
 == Configure index, alias and insert some products in ES
 
 In a terminal and inside `springboot-elasticsearch-thymeleaf/scripts`, run the following script to create the
 index `ecommerce_v1` with the alias `ecommerce`
-```
+
+[source]
+----
 ./create-index.sh
-```
+----
 
 If you want to insert some products, run
-```
+
+[source]
+----
 ./insert-products.sh
-```
+----
 
 If you want to fix the `reference` property mapping error (explained below), run
-```
+
+[source]
+----
 ./reindex.sh
-```
+----
 
 === Reindex
 
@@ -49,47 +60,52 @@ description. It is an error.
 So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem
 won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
-== Microservices
+== Applications
 
 === eureka-server
 
 In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
 `eureka-server`
-```
+
+[source]
+----
 ./mvnw spring-boot:run --projects eureka-server
-```
+----
 
 === product-api
 
 In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
 `product-api`
-```
+
+[source]
+----
 ./mvnw spring-boot:run --projects product-api
-```
+----
 
 === product-ui
 
 In a new terminal and inside `springboot-elasticsearch-thymeleaf` root folder, run the following command to start
 `product-ui`
-```
-./mvnw spring-boot:run --projects product-ui
-```
 
-== Microservices URLs
+[source]
+----
+./mvnw spring-boot:run --projects product-ui
+----
+
+== Applications URLs
 
 |===
-|Microservice |URL
+|Application |URL
 
-|`eureka-server`
+|eureka-server
 |http://localhost:8761
 
-|`product-api`
+|product-api
 |http://localhost:8080/swagger-ui.html
 
-|`product-ui`
+|product-ui
 |http://localhost:8081
 |===
-
 
 == Some screenshots of product-ui
 
@@ -114,69 +130,91 @@ image::images/product-view-comment.png[]
 - REST API Format: `http://host:port/index/type/_action-OR-id`
 
 ==== Check ES is up and running
-```
+
+[source]
+----
 curl http://localhost:9200
-```
+----
 
 ==== Create _ecommerce_v1_ index
-```
+
+[source]
+----
 curl -X PUT localhost:9200/ecommerce_v1 \
      -H "Content-Type: application/json" \
      -d '{ "mappings": { "product": { "properties": { "name": { "type": "text" }, ... }'
-```
+----
 
 ==== Check indexes in ES
-```
+
+[source]
+----
 curl http://localhost:9200/_cat/indices?v
-```
+----
 
 ==== Check _ecommerce_v1_ index mapping
-```
+
+[source]
+----
 curl http://localhost:9200/ecommerce_v1/_mapping
-```
+----
 
 ==== Delete _ecommerce_v1_ index
-```
+
+[source]
+----
 curl -X DELETE http://localhost:9200/ecommerce_v1
-```
+----
 
 ==== Create alias for _ecommerce_v1_ index
-```
+
+[source]
+----
 curl -X POST localhost:9200/_aliases \
      -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "add": {"alias": "ecommerce", "index": "ecommerce_v1" }}]}'
-```
+----
 
 ==== Check existing ES alias
-```
+
+[source]
+----
 curl http://localhost:9200/_aliases
-```
+----
 
 ==== Reindex from _ecommerce_v1_ to _ecommerce_v2_
-```
+
+[source]
+----
 curl -X POST localhost:9200/_reindex \
      -H 'Content-Type: application/json' \
      -d '{ "source": { "index": "ecommerce_v1" }, "dest": { "index": "ecommerce_v2" }}'
-```
+----
 
 ==== Adjust alias after reindex from _ecommerce_v1_ to _ecommerce_v2_
-```
+
+[source]
+----
 curl -X POST localhost:9200/_aliases \
      -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "remove": {"alias": "ecommerce", "index": "ecommerce_v1" }}, { "add": {"alias": "ecommerce", "index": "ecommerce_v2" }}]}'
-```
+----
 
 ==== Simple search
-```
+
+[source]
+----
 curl http://localhost:9200/ecommerce/product/_search
-```
+----
 
 == Shutdown
 
 Run the following command to stop and remove containers, networks and volumes
-```
+
+[source]
+----
 docker-compose down -v
-```
+----
 
 == TODO
 

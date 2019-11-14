@@ -7,8 +7,6 @@ spring:
       cluster-nodes: ${ELASTICSEARCH_HOST:localhost}:${ELASTICSEARCH_PORT:9300}
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure.include: "*"

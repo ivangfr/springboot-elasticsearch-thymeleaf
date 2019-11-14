@@ -22,11 +22,11 @@ public class CreateProductDto {
     @NotBlank
     private String description;
 
-    @ApiModelProperty(position = 2, value = "product price", example = "1099.90")
+    @ApiModelProperty(position = 1, value = "product price", example = "1099.90")
     @NotNull
     private BigDecimal price;
 
-    @ApiModelProperty(position = 3, value = "product categories", example = "[\"laptops\", \"apple\"]")
+    @ApiModelProperty(position = 2, value = "product categories", example = "[\"laptops\", \"apple\"]")
     private Set<String> categories;
 
 }

@@ -15,7 +15,7 @@ public class AddReviewDto {
     @NotBlank
     private String comment;
 
-    @ApiModelProperty(position = 2, value = "product evaluation (from 0 to 5)", example = "5")
+    @ApiModelProperty(position = 1, value = "product evaluation (from 0 to 5)", example = "5")
     @NotNull
     @Min(0)
     @Max(5)
