@@ -209,7 +209,9 @@ curl http://localhost:9200/ecommerce/product/_search
 
 == Shutdown
 
-Run the following command to stop and remove containers, networks and volumes
+Go to `eureka-server`, `product-api` and `product-ui` terminals and press `ctrl-c`
+
+Then, to stop and remove containers, networks and volumes
 
 [source]
 ----

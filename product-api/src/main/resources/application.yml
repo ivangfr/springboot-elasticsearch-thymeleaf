@@ -5,6 +5,9 @@ spring:
     elasticsearch:
       cluster-name: docker-es-cluster
       cluster-nodes: ${ELASTICSEARCH_HOST:localhost}:${ELASTICSEARCH_PORT:9300}
+  elasticsearch:
+    rest:
+      uris: http://${ELASTICSEARCH_HOST:localhost}:${ELASTICSEARCH_REST_PORT:9200}
 
 management:
   endpoints:
