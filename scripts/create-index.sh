@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-read -p "Type index alias (ecommerce): " index_alias
-index_alias=${index_alias:-ecommerce}
+read -p "Type index alias (ecommerce.products): " index_alias
+index_alias=${index_alias:-ecommerce.products}
 
-read -p "Type index name (ecommerce_v1): " index_name
-index_name=${index_name:-ecommerce_v1}
+read -p "Type index name (ecommerce.products.v1): " index_name
+index_name=${index_name:-ecommerce.products.v1}
 
 read -p  "Inform the path to mapping json file (mapping-v1.json): " mapping_file
 mapping_file=${mapping_file:-mapping-v1.json}

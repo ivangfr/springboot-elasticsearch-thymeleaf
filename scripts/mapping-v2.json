@@ -1,39 +1,35 @@
 {
   "mappings": {
-    "product": {
-      "properties": {
-        "reference": {
-          "type": "keyword"
-        },
-        "name": {
-          "type": "text"
-        },
-        "description": {
-          "type": "text"
-        },
-        "price": {
-          "type": "float"
-        },
-        "categories": {
-          "type": "keyword"
-        },
-        "reviews": {
-          "type": "nested",
-          "include_in_parent": true,
-          "properties": {
-            "stars": {
-              "type": "short"
-            },
-            "comment": {
-              "type": "text"
-            },
-            "created": {
-              "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
-            }
+    "properties": {
+      "categories": {
+        "type": "keyword"
+      },
+      "created": {
+        "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
+      },
+      "description": {
+        "type": "text"
+      },
+      "name": {
+        "type": "text"
+      },
+      "price": {
+        "type": "float"
+      },
+      "reference": {
+        "type": "keyword"
+      },
+      "reviews": {
+        "properties": {
+          "comment": {
+            "type": "text"
+          },
+          "created": {
+            "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
+          },
+          "stars": {
+            "type": "short"
           }
-        },
-        "created": {
-          "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
         }
       }
     }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Product-UI</title>
@@ -8,88 +7,91 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body { display: flex; min-height: 100vh; flex-direction: column; }
+        main { flex: 1 0 auto; }
+    </style>
 </head>
 
 <body>
-<nav>
-    <div class="nav-wrapper light-blue darken-3">
+
+<!-- Header -->
+<div th:insert="fragments/header :: header"></div>
+
+<main>
+    <div class="container">
         <div class="row">
-            <div class="col s6">
-                <label class="brand-logo center">Product-UI</label>
+            <form th:action="@{/products/search}" th:object="${searchDto}" method="post">
+                <div class="valign-wrapper">
+                    <div class="input-field col s11">
+                        <input type="text" id="searchInput" th:field="*{text}">
+                        <label for="searchInput">Search</label>
+                    </div>
+                    <div class="col s1">
+                        <button class="btn btn-floating waves-effect waves-light" type="submit">
+                            <i class=" material-icons right">search</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price (€)</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${products.content.empty}">
+                        <td colspan="4"> No Products Available</td>
+                    </tr>
+                    <tr th:each="product : ${products.content}">
+                        <td><span th:text="${product.name}"> Name </span></td>
+                        <td><span th:text="${#strings.abbreviate(product.description,200)}"> Description </span></td>
+                        <td><span th:text="${product.price}"> Price </span></td>
+                        <td>
+                            <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}">
+                                <i class="material-icons">menu</i>
+                            </a>
+                            <ul th:id="'dropdown_' + ${product.id}" class='dropdown-content'>
+                                <li>
+                                    <a th:href="@{/products/{id}/view(id=${product.id})}">
+                                        <i class="material-icons">open_in_browser</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/products/{id}/edit(id=${product.id})}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                </li>
+                                <li><a href="#!"><i class="material-icons">delete</i></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-</nav>
-<div class="container">
-    <div class="row">
-        <form th:action="@{/products/search}" th:object="${searchDto}" method="post">
-            <div class="valign-wrapper">
-                <div class="input-field col s11">
-                    <input type="text" id="searchInput" th:field="*{text}">
-                    <label for="searchInput">Search</label>
-                </div>
-                <div class="col s1">
-                    <button class="btn btn-floating waves-effect waves-light" type="submit">
-                        <i class=" material-icons right">search</i>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <table class="highlight">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price (€)</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${products.content.empty}">
-                    <td colspan="4"> No Products Available</td>
-                </tr>
-                <tr th:each="product : ${products.content}">
-                    <td><span th:text="${product.name}"> Name </span></td>
-                    <td><span th:text="${#strings.abbreviate(product.description,200)}"> Description </span></td>
-                    <td><span th:text="${product.price}"> Price </span></td>
-                    <td>
-                        <a class='dropdown-trigger btn' href='#' th:attr="data-target='dropdown_' + ${product.id}">
-                            <i class="material-icons">menu</i>
-                        </a>
-                        <ul th:id="'dropdown_' + ${product.id}" class='dropdown-content'>
-                            <li>
-                                <a th:href="@{/products/{id}/view(id=${product.id})}">
-                                    <i class="material-icons">open_in_browser</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a th:href="@{/products/{id}/edit(id=${product.id})}">
-                                    <i class="material-icons">edit</i>
-                                </a>
-                            </li>
-                            <li><a href="#!"><i class="material-icons">delete</i></a></li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+        <div class="fixed-action-btn">
+            <a th:href="@{/products/create}" class="btn-floating btn-large blue darken-3 waves-effect waves-light">
+                <i class="large material-icons">add</i>
+            </a>
         </div>
     </div>
+</main>
 
-    <div class="fixed-action-btn">
-        <a th:href="@{/products/create}" class="btn-floating btn-large blue darken-3 waves-effect waves-light">
-            <i class="large material-icons">add</i>
-        </a>
-    </div>
-</div>
+<!-- Footer -->
+<div th:insert="fragments/footer :: footer"></div>
 
-<!--JavaScript at end of body for optimized loading-->
+<!-- JavaScript at end of body for optimized loading -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
