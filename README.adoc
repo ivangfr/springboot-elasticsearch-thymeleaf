@@ -113,11 +113,13 @@ image::images/load-balancer-error.png[]
 
 * Below is a simple demo that shows a user interacting with `product-ui`
 +
-image::images/demo.gif[]
+image::images/demo-user-interaction.gif[]
 
 == Creating indexes and reindexing them using Elasticsearch REST API
 
-In the following steps, we are going to, manually and using Elasticsearch REST API, create an index called `ecommerce.products.v1`, associate an alias called `ecommerce.products` for it and then reindex to another index called `ecommerce.products.v2`.
+In the following steps, we are going to, manually and using `Elasticsearch` REST API, create an index called `ecommerce.products.v1`, associate an alias called `ecommerce.products` for it and then reindex to another index called `ecommerce.products.v2`.
+
+Make sure you have a clean `Elasticsearch` without the indexes and alias mentioned previously. Also, the following `curl` commands must be executed in `springboot-elasticsearch-thymeleaf` root folder.
 
 . Check ES is up and running
 +
@@ -156,14 +158,14 @@ It should return something like
 curl -X PUT localhost:9200/ecommerce.products.v1 -H "Content-Type: application/json" -d @scripts/mapping-v1.json
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
 { "acknowledged":true, "shards_acknowledged":true, "index":"ecommerce.products.v1" }
 ----
 
-. Check indexes in ES
+. Check indexes
 +
 [source]
 ----
@@ -185,7 +187,7 @@ yellow open   ecommerce.products.v1 1B3JXm6zQnKolob4mtwRUg   1   1          0   
 curl http://localhost:9200/ecommerce.products.v1/_mapping
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
@@ -220,21 +222,21 @@ curl -X POST localhost:9200/_aliases -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "add": {"alias": "ecommerce.products", "index": "ecommerce.products.v1" }}]}'
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
 { "acknowledged":true }
 ----
 
-. Check existing ES alias
+. Check aliases
 +
 [source]
 ----
 curl http://localhost:9200/_aliases
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
@@ -250,14 +252,14 @@ It should return something like
 curl -X PUT localhost:9200/ecommerce.products.v2 -H "Content-Type: application/json" -d @scripts/mapping-v2.json
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
 { "acknowledged":true, "shards_acknowledged":true, "index":"ecommerce.products.v2" }
 ----
 +
-By checking the indexed again
+Checking indexes again
 +
 [source]
 ----
@@ -311,14 +313,14 @@ curl -X POST localhost:9200/_aliases -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "remove": {"alias": "ecommerce.products", "index": "ecommerce.products.v1" }}, { "add": {"alias": "ecommerce.products", "index": "ecommerce.products.v2" }}]}'
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
 { "acknowledged":true }
 ----
 +
-By checking the alias
+Checking aliases again
 +
 [source]
 ----
@@ -342,21 +344,21 @@ It should return something like
 curl -X DELETE http://localhost:9200/ecommerce.products.v1
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
 { "acknowledged":true }
 ----
 +
-By checking the alias
+Checking aliases again
 +
 [source]
 ----
 curl http://localhost:9200/_aliases
 ----
 +
-It should return something like
+It should return
 +
 [source]
 ----
