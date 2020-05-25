@@ -103,7 +103,7 @@ public class ProductController {
 
     @ApiOperation(
             value = "Search for Products",
-            notes = "This endpoint does a query for the 'text' informed in the fields 'reference', 'name' and 'description'\n" +
+            notes = "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'\n" +
                     "To sort the results by a specified field, use in 'sort' field a string like: fieldname,[asc|desc]")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),

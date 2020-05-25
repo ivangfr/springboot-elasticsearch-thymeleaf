@@ -405,6 +405,7 @@ docker-compose down -v
 
 == TODO
 
+* FIX: in `ProductServiceImpl`, the call `return productRepository.search(query)` in `search` method is deprecated
 * add some Ajax calls, for example, when adding a comment, so the page doesn't need to be refreshed (https://grokonez.com/java-integration/integrate-jquery-ajax-post-get-spring-boot-web-service);
 * add pagination. now, it is just returning all products;
 * add functionality to delete products;

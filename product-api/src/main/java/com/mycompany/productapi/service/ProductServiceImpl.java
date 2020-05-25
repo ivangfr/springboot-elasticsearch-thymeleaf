@@ -8,8 +8,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
@@ -54,12 +54,12 @@ public class ProductServiceImpl implements ProductService {
 
 //        QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(text, "reference", "name", "description");
 
-        NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder()
+        Query query = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder)
                 .withPageable(pageable)
                 .build();
 
-        return productRepository.search(nativeSearchQuery);
+        return productRepository.search(query);
     }
 
 }
