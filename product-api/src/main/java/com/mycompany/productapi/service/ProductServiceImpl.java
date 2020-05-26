@@ -4,12 +4,8 @@ import com.mycompany.productapi.exception.ProductNotFoundException;
 import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.repository.ProductRepository;
 import org.apache.commons.lang.RandomStringUtils;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
@@ -47,19 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> search(String text, Pageable pageable) {
-        QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-                .should(QueryBuilders.matchPhraseQuery("reference", text))
-                .should(QueryBuilders.matchPhraseQuery("name", text))
-                .should(QueryBuilders.matchPhraseQuery("description", text));
-
-//        QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(text, "reference", "name", "description");
-
-        Query query = new NativeSearchQueryBuilder()
-                .withQuery(queryBuilder)
-                .withPageable(pageable)
-                .build();
-
-        return productRepository.search(query);
+        return productRepository.findByReferenceOrNameOrDescription(text, text, text, pageable);
     }
 
 }
