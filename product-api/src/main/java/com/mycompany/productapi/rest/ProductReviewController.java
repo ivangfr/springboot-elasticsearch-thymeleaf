@@ -1,14 +1,14 @@
 package com.mycompany.productapi.rest;
 
-import com.mycompany.productapi.rest.dto.AddReviewDto;
-import com.mycompany.productapi.exception.ProductNotFoundException;
+import com.mycompany.productapi.mapper.ProductMapper;
 import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.model.Review;
+import com.mycompany.productapi.rest.dto.AddReviewDto;
 import com.mycompany.productapi.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import ma.glasnost.orika.MapperFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,17 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products/{id}/reviews")
 public class ProductReviewController {
 
     private final ProductService productService;
-    private final MapperFacade mapperFacade;
-
-    public ProductReviewController(ProductService productService, MapperFacade mapperFacade) {
-        this.productService = productService;
-        this.mapperFacade = mapperFacade;
-    }
+    private final ProductMapper productMapper;
 
     @ApiOperation(value = "Get reviews about product")
     @ApiResponses(value = {
@@ -40,7 +36,7 @@ public class ProductReviewController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @GetMapping
-    public List<Review> getProductReviews(@PathVariable String id) throws ProductNotFoundException {
+    public List<Review> getProductReviews(@PathVariable String id) {
         Product product = productService.validateAndGetProductById(id);
         return product.getReviews();
     }
@@ -54,11 +50,10 @@ public class ProductReviewController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewDto addReviewDto)
-            throws ProductNotFoundException {
+    public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewDto addReviewDto) {
         Product product = productService.validateAndGetProductById(id);
 
-        Review review = mapperFacade.map(addReviewDto, Review.class);
+        Review review = productMapper.toReview(addReviewDto);
         product.getReviews().add(review);
         productService.saveProduct(product);
 

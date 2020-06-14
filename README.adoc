@@ -16,6 +16,12 @@ The goal of this project is to implement an application called `product-app`. It
 +
 `Spring Boot` application, used as service discovery in this project
 
+== Prerequisites
+
+- `Java 11+`
+- `Docker`
+- `Docker-Compose`
+
 == Start Environment
 
 * Open a terminal and navigate to `springboot-elasticsearch-thymeleaf` root folder run

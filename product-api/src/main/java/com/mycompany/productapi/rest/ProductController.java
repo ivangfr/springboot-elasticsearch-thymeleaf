@@ -1,15 +1,15 @@
 package com.mycompany.productapi.rest;
 
+import com.mycompany.productapi.mapper.ProductMapper;
+import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.rest.dto.CreateProductDto;
 import com.mycompany.productapi.rest.dto.SearchDto;
 import com.mycompany.productapi.rest.dto.UpdateProductDto;
-import com.mycompany.productapi.exception.ProductNotFoundException;
-import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import ma.glasnost.orika.MapperFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,17 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
-    private final MapperFacade mapperFacade;
-
-    public ProductController(ProductService productService, MapperFacade mapperFacade) {
-        this.productService = productService;
-        this.mapperFacade = mapperFacade;
-    }
+    private final ProductMapper productMapper;
 
     @ApiOperation(
             value = "Get Products",
@@ -56,7 +52,7 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable String id) throws ProductNotFoundException {
+    public Product getProduct(@PathVariable String id) {
         return productService.validateAndGetProductById(id);
     }
 
@@ -69,7 +65,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Product createProduct(@Valid @RequestBody CreateProductDto createProductDto) {
-        Product product = mapperFacade.map(createProductDto, Product.class);
+        Product product = productMapper.toProduct(createProductDto);
         return productService.saveProduct(product);
     }
 
@@ -81,10 +77,9 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto)
-            throws ProductNotFoundException {
+    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto) {
         Product product = productService.validateAndGetProductById(id);
-        mapperFacade.map(updateProductDto, product);
+        productMapper.updateProductFromDto(updateProductDto, product);
         return productService.saveProduct(product);
     }
 
@@ -95,7 +90,7 @@ public class ProductController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable String id) throws ProductNotFoundException {
+    public String deleteProduct(@PathVariable String id) {
         Product product = productService.validateAndGetProductById(id);
         productService.deleteProduct(product);
         return id;

@@ -6,8 +6,8 @@ import com.mycompany.productui.client.dto.Product;
 import com.mycompany.productui.client.dto.ProductDto;
 import com.mycompany.productui.client.dto.Review;
 import com.mycompany.productui.client.dto.SearchDto;
-import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
+import com.mycompany.productui.mapper.ProductMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Slf4j
+@RequiredArgsConstructor
 @Controller
 public class ProductController {
 
     private final ProductApiClient productApiClient;
-    private final MapperFacade mapperFacade;
-
-    public ProductController(ProductApiClient productApiClient, MapperFacade mapperFacade) {
-        this.productApiClient = productApiClient;
-        this.mapperFacade = mapperFacade;
-    }
+    private final ProductMapper productMapper;
 
     @GetMapping(value = {"/products", "/"})
     public String getProducts(@RequestParam(required = false) Integer page,
@@ -57,7 +52,7 @@ public class ProductController {
     @GetMapping("/products/{id}/edit")
     public String editProductForm(@PathVariable String id, Model model) {
         Product product = productApiClient.getProduct(id);
-        ProductDto productDto = mapperFacade.map(product, ProductDto.class);
+        ProductDto productDto = productMapper.toProductDto(product);
 
         model.addAttribute("productDto", productDto);
         model.addAttribute("product", product);
