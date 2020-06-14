@@ -131,7 +131,7 @@ Make sure you have a clean `Elasticsearch` without the indexes and alias mention
 +
 [source]
 ----
-curl http://localhost:9200
+curl localhost:9200
 ----
 +
 It should return something like
@@ -175,7 +175,7 @@ It should return
 +
 [source]
 ----
-curl http://localhost:9200/_cat/indices?v
+curl "localhost:9200/_cat/indices?v"
 ----
 +
 It should return something like
@@ -190,7 +190,7 @@ yellow open   ecommerce.products.v1 1B3JXm6zQnKolob4mtwRUg   1   1          0   
 +
 [source]
 ----
-curl http://localhost:9200/ecommerce.products.v1/_mapping
+curl "localhost:9200/ecommerce.products.v1/_mapping?pretty"
 ----
 +
 It should return
@@ -239,16 +239,14 @@ It should return
 +
 [source]
 ----
-curl http://localhost:9200/_aliases
+curl localhost:9200/_aliases
 ----
 +
 It should return
 +
 [source]
 ----
-{
-  "ecommerce.products.v1": { "aliases": { "ecommerce.products": {} } }
-}
+{ "ecommerce.products.v1": { "aliases": { "ecommerce.products": {} } } }
 ----
 
 . Create `ecommerce.products.v2` index
@@ -269,7 +267,7 @@ Checking indexes again
 +
 [source]
 ----
-curl http://localhost:9200/_cat/indices?v
+curl "localhost:9200/_cat/indices?v"
 ----
 +
 It should return something like
@@ -330,7 +328,7 @@ Checking aliases again
 +
 [source]
 ----
-curl http://localhost:9200/_aliases
+curl localhost:9200/_aliases
 ----
 +
 It should return something like
@@ -347,7 +345,7 @@ It should return something like
 +
 [source]
 ----
-curl -X DELETE http://localhost:9200/ecommerce.products.v1
+curl -X DELETE localhost:9200/ecommerce.products.v1
 ----
 +
 It should return
@@ -361,23 +359,21 @@ Checking aliases again
 +
 [source]
 ----
-curl http://localhost:9200/_aliases
+curl localhost:9200/_aliases
 ----
 +
 It should return
 +
 [source]
 ----
-{
-  "ecommerce.products.v2": { "aliases": { "ecommerce.products": {} } }
-}
+{ "ecommerce.products.v2": { "aliases": { "ecommerce.products": {} } } }
 ----
 
 . Simple search
 +
 [source]
 ----
-curl http://localhost:9200/ecommerce.products/_search
+curl "localhost:9200/ecommerce.products/_search?pretty"
 ----
 +
 It should return something like
