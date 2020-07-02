@@ -5,9 +5,7 @@ import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.model.Review;
 import com.mycompany.productapi.rest.dto.AddReviewDto;
 import com.mycompany.productapi.service.ProductService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,25 +27,14 @@ public class ProductReviewController {
     private final ProductService productService;
     private final ProductMapper productMapper;
 
-    @ApiOperation(value = "Get reviews about product")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Get reviews about product")
     @GetMapping
     public List<Review> getProductReviews(@PathVariable String id) {
         Product product = productService.validateAndGetProductById(id);
         return product.getReviews();
     }
 
-    @ApiOperation(value = "Add review about product", code = 201)
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Add review about product")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewDto addReviewDto) {

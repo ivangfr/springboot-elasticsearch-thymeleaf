@@ -9,8 +9,8 @@ old_index_name=${old_index_name:-ecommerce.products.v1}
 read -p "Type new index name (ecommerce.products.v2): " new_index_name
 new_index_name=${new_index_name:-ecommerce.products.v2}
 
-read -p "Inform the path to the new mapping json file (mapping-v2.json): " new_mapping_file
-new_mapping_file=${new_mapping_file:-mapping-v2.json}
+read -p "Inform the path to the new mapping json file (elasticsearch/mapping-v2.json): " new_mapping_file
+new_mapping_file=${new_mapping_file:-elasticsearch/mapping-v2.json}
 
 echo "----------------"
 echo "Create new index"

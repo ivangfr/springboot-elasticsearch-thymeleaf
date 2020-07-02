@@ -6,10 +6,9 @@ import com.mycompany.productapi.rest.dto.CreateProductDto;
 import com.mycompany.productapi.rest.dto.SearchDto;
 import com.mycompany.productapi.rest.dto.UpdateProductDto;
 import com.mycompany.productapi.service.ProductService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -33,35 +32,19 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
 
-    @ApiOperation(
-            value = "Get Products",
-            notes = "To sort the results by a specified field, use in 'sort' field a string like: fieldname,[asc|desc]")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Get Products")
     @GetMapping
-    public Page<Product> getProducts(Pageable pageable) {
+    public Page<Product> getProducts(@ParameterObject Pageable pageable) {
         return productService.listProductsByPage(pageable);
     }
 
-    @ApiOperation(value = "Get Product")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Get Product")
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable String id) {
         return productService.validateAndGetProductById(id);
     }
 
-    @ApiOperation(value = "Create Product", code = 201)
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Create Product")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Product createProduct(@Valid @RequestBody CreateProductDto createProductDto) {
@@ -69,13 +52,7 @@ public class ProductController {
         return productService.saveProduct(product);
     }
 
-    @ApiOperation(value = "Update Product")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Update Product")
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto) {
         Product product = productService.validateAndGetProductById(id);
@@ -83,12 +60,7 @@ public class ProductController {
         return productService.saveProduct(product);
     }
 
-    @ApiOperation(value = "Delete Product")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(summary = "Delete Product")
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable String id) {
         Product product = productService.validateAndGetProductById(id);
@@ -96,17 +68,11 @@ public class ProductController {
         return id;
     }
 
-    @ApiOperation(
-            value = "Search for Products",
-            notes = "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'\n" +
-                    "To sort the results by a specified field, use in 'sort' field a string like: fieldname,[asc|desc]")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
+    @Operation(
+            summary = "Search for Products",
+            description = "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'")
     @PutMapping("/search")
-    public Page<Product> searchProducts(@Valid @RequestBody SearchDto searchDto, Pageable pageable) {
+    public Page<Product> searchProducts(@Valid @RequestBody SearchDto searchDto, @ParameterObject Pageable pageable) {
         return productService.search(searchDto.getText(), pageable);
     }
 

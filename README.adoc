@@ -18,9 +18,9 @@ The goal of this project is to implement an application called `product-app`. It
 
 == Prerequisites
 
-- `Java 11+`
-- `Docker`
-- `Docker-Compose`
+* https://www.oracle.com/java/technologies/javase-jdk11-downloads.html[`Java 11+`]
+* https://www.docker.com/[`Docker`]
+* https://docs.docker.com/compose/install/[`Docker-Compose`]
 
 == Start Environment
 
@@ -40,7 +40,7 @@ docker-compose ps
 
 == Configure an index, alias and insert some products in ES
 
-* In a terminal, make sure you are inside `scripts` folder, i.e, `springboot-elasticsearch-thymeleaf/scripts`
+* In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder
 
 * Run the following script to create the index `ecommerce.products.v1` with the alias `ecommerce.products` (you can use the default values by just pressing `Enter` on every user input)
 +
@@ -65,7 +65,7 @@ docker-compose ps
 
 === Reindex
 
-The script `./reindex.sh` is used to reindex from an index to another index. The default will reindex from `ecommerce.products.v1` to `ecommerce.products.v2`. The only difference between `mapping-v1.json` (used by `ecommerce.products.v1`) to `mapping-v2.json` (used by `ecommerce.products.v2`) is the `type` of the `reference` property. In the former is set `text` and in the latter, `keyword`.
+The script `./reindex.sh` is used to reindex from an index to another index. The default will reindex from `ecommerce.products.v1` to `ecommerce.products.v2`. The only difference between `elasticsearch/mapping-v1.json` (used by `ecommerce.products.v1`) to `elasticsearch/mapping-v2.json` (used by `ecommerce.products.v2`) is the `type` of the `reference` property. In the former is set `text` and in the latter, `keyword`.
 
 It's interesting because the `reference` property has some special characters. An example of `reference` code is `SBES@DDR4-10000`. As it is a `text`, ES (using the `standard` analyzer) splits the content in tokens ['SBES', 'DDR4', 10000]. So, for example, if you are looking for a product with `DDR4` RAM and, for some reason, the string `DDR4` is present in the reference code of some product X, the product X will be selected, even if it doesn't have `DDR4` in its description. It is an error.
 
@@ -121,13 +121,24 @@ image::images/load-balancer-error.png[]
 +
 image::images/demo-user-interaction.gif[]
 
+== Shutdown
+
+* Go to `eureka-server`, `product-api` and `product-ui` terminals and press `Ctrl+C`
+
+* In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder and run the command below to stop and remove docker-compose containers, networks and volumes
++
+[source]
+----
+docker-compose down -v
+----
+
 == Creating indexes and reindexing them using Elasticsearch REST API
 
 In the following steps, we are going to, manually and using `Elasticsearch` REST API, create an index called `ecommerce.products.v1`, associate an alias called `ecommerce.products` for it and then reindex to another index called `ecommerce.products.v2`.
 
 Make sure you have a clean `Elasticsearch` without the indexes and alias mentioned previously. Also, the following `curl` commands must be executed in `springboot-elasticsearch-thymeleaf` root folder.
 
-. Check ES is up and running
+* Check ES is up and running
 +
 [source]
 ----
@@ -157,11 +168,11 @@ It should return something like
 }
 ----
 
-. Create `ecommerce.products.v1` index
+* Create `ecommerce.products.v1` index
 +
 [source]
 ----
-curl -X PUT localhost:9200/ecommerce.products.v1 -H "Content-Type: application/json" -d @scripts/mapping-v1.json
+curl -X PUT localhost:9200/ecommerce.products.v1 -H "Content-Type: application/json" -d @elasticsearch/mapping-v1.json
 ----
 +
 It should return
@@ -171,7 +182,7 @@ It should return
 { "acknowledged":true, "shards_acknowledged":true, "index":"ecommerce.products.v1" }
 ----
 
-. Check indexes
+* Check indexes
 +
 [source]
 ----
@@ -186,7 +197,7 @@ health status index                 uuid                   pri rep docs.count do
 yellow open   ecommerce.products.v1 1B3JXm6zQnKolob4mtwRUg   1   1          0            0       230b           230b
 ----
 
-. Check `ecommerce.products.v1` index mapping
+* Check `ecommerce.products.v1` index mapping
 +
 [source]
 ----
@@ -220,7 +231,7 @@ It should return
 }
 ----
 
-. Create alias for `ecommerce.products.v1` index
+* Create alias for `ecommerce.products.v1` index
 +
 [source]
 ----
@@ -235,11 +246,11 @@ It should return
 { "acknowledged":true }
 ----
 
-. Check aliases
+* Check aliases
 +
 [source]
 ----
-curl localhost:9200/_aliases
+curl "localhost:9200/_aliases?pretty"
 ----
 +
 It should return
@@ -249,11 +260,11 @@ It should return
 { "ecommerce.products.v1": { "aliases": { "ecommerce.products": {} } } }
 ----
 
-. Create `ecommerce.products.v2` index
+* Create `ecommerce.products.v2` index
 +
 [source]
 ----
-curl -X PUT localhost:9200/ecommerce.products.v2 -H "Content-Type: application/json" -d @scripts/mapping-v2.json
+curl -X PUT localhost:9200/ecommerce.products.v2 -H "Content-Type: application/json" -d @elasticsearch/mapping-v2.json
 ----
 +
 It should return
@@ -279,7 +290,7 @@ yellow open   ecommerce.products.v2 Iq0adLgEQSaCTIOISIW4DA   1   1          0   
 yellow open   ecommerce.products.v1 1B3JXm6zQnKolob4mtwRUg   1   1          0            0       283b           283b
 ----
 
-. Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
+* Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
 +
 [source]
 ----
@@ -309,7 +320,7 @@ It should return something like
 }
 ----
 
-. Adjust alias after reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
+* Adjust alias after reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
 +
 [source]
 ----
@@ -328,7 +339,7 @@ Checking aliases again
 +
 [source]
 ----
-curl localhost:9200/_aliases
+curl "localhost:9200/_aliases?pretty"
 ----
 +
 It should return something like
@@ -341,7 +352,7 @@ It should return something like
 }
 ----
 
-. Delete `ecommerce.products.v1` index
+* Delete `ecommerce.products.v1` index
 +
 [source]
 ----
@@ -359,7 +370,7 @@ Checking aliases again
 +
 [source]
 ----
-curl localhost:9200/_aliases
+curl "localhost:9200/_aliases?pretty"
 ----
 +
 It should return
@@ -369,7 +380,7 @@ It should return
 { "ecommerce.products.v2": { "aliases": { "ecommerce.products": {} } } }
 ----
 
-. Simple search
+* Simple search
 +
 [source]
 ----
@@ -393,17 +404,6 @@ It should return something like
 ----
 +
 > As I don't have any products, the `hits` array field is empty
-
-== Shutdown
-
-* Go to `eureka-server`, `product-api` and `product-ui` terminals and press `Ctrl+C`
-
-* In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder and run the command below to stop and remove docker-compose containers, networks and volumes
-+
-[source]
-----
-docker-compose down -v
-----
 
 == TODO
 
