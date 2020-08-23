@@ -31,7 +31,7 @@ The goal of this project is to implement an application called `product-app`. It
 docker-compose up -d
 ----
 
-* Wait a little bit until the docker containers are up and healthy. To check it, run
+* Wait a bit until the docker containers are up and healthy. To check it, run
 +
 [source]
 ----
