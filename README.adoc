@@ -71,9 +71,9 @@ It's interesting because the `reference` property has some special characters. A
 
 So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
-== Start applications
+== Running applications using Maven
 
-Below are the steps to start and run the applications. We will need to open a terminal for each one. Make sure you are in `springboot-elasticsearch-thymeleaf` root folder while running the commands.
+Below are the steps to start and run the applications using `Maven`. We will need to open a terminal for each one. Make sure you are in `springboot-elasticsearch-thymeleaf` root folder while running the commands.
 
 * **eureka-server**
 +
@@ -94,6 +94,66 @@ Below are the steps to start and run the applications. We will need to open a te
 [source]
 ----
 ./mvnw clean spring-boot:run --projects product-ui -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+----
+
+== Running applications as Docker containers
+
+* Build Docker Images
++
+** JVM
++
+[source]
+----
+./docker-build.sh
+----
++
+** Native (it's not working yet)
++
+[source]
+----
+./build-docker-images.sh native
+----
+
+* Environment Variables
++
+** **product-api**
++
+|===
+|Environment Variable |Description
+
+|`EUREKA_HOST`
+|Specify host of the `Eureka` service discovery to use (default `localhost`)
+
+|`EUREKA_PORT`
+|Specify port of the `Eureka` service discovery to use (default `8761`)
+
+|`ELASTICSEARCH_HOST`
+|Specify host of the `Elasticsearch` search engine to use (default `localhost`)
+
+|`ELASTICSEARCH_NODES_PORT`
+|Specify nodes port of the `Elasticsearch` search engine to use (default `9300`)
+
+|`ELASTICSEARCH_REST_PORT`
+|Specify rest port of the `Elasticsearch` search engine to use (default `9200`)
+|===
++
+** **product-ui**
++
+|===
+|Environment Variable |Description
+
+|`EUREKA_HOST`
+|Specify host of the `Eureka` service discovery to use (default `localhost`)
+
+|`EUREKA_PORT`
+|Specify port of the `Eureka` service discovery to use (default `8761`)
+|===
+
+* Start Docker containers
++
+[source]
+----
+./start-apps.sh
 ----
 
 == Applications URLs
@@ -123,9 +183,15 @@ image::images/demo-user-interaction.gif[]
 
 == Shutdown
 
-* Go to `eureka-server`, `product-api` and `product-ui` terminals and press `Ctrl+C`
-
-* In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder and run the command below to stop and remove docker-compose containers, networks and volumes
+* Stop applications
+** If they were started with `Maven`, go to `eureka-server`, `product-api` and `product-ui` terminals and press `Ctrl+C`
+** If they were started as Docker containers, make sure you are in `springboot-elasticsearch-thymeleaf` and run the script below
++
+[source]
+----
+./stop-apps.sh
+----
+* Stop and remove docker-compose containers, network and volumes by running the command below. Make sure you are in `springboot-elasticsearch-thymeleaf` root folder
 +
 [source]
 ----

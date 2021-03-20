@@ -5,13 +5,18 @@
     <parent>
         <groupId>com.mycompany</groupId>
         <artifactId>springboot-elasticsearch-thymeleaf</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>eureka-server</artifactId>
     <name>eureka-server</name>
     <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <jib.maven-plugin.version>2.8.0</jib.maven-plugin.version>
+        <docker.image.prefix>docker.mycompany.com</docker.image.prefix>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -35,6 +40,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib.maven-plugin.version}</version>
+                <configuration>
+                    <to>
+                        <image>${docker.image.prefix}/${project.artifactId}:${project.version}</image>
+                    </to>
+                </configuration>
             </plugin>
         </plugins>
     </build>
