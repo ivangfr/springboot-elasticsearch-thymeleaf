@@ -99,23 +99,21 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 == Running applications as Docker containers
 
 * Build Docker Images
-+
 ** JVM
 +
 [source]
 ----
 ./docker-build.sh
 ----
-+
 ** Native (it's not working yet)
 +
 [source]
 ----
-./build-docker-images.sh native
+./build-docker.sh native
 ----
 
 * Environment Variables
-+
+
 ** **product-api**
 +
 |===
@@ -136,7 +134,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |`ELASTICSEARCH_REST_PORT`
 |Specify rest port of the `Elasticsearch` search engine to use (default `9200`)
 |===
-+
+
 ** **product-ui**
 +
 |===
@@ -156,7 +154,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 ./start-apps.sh
 ----
 
-== Applications URLs
+== Application URLs
 
 |===
 |Application |URL
