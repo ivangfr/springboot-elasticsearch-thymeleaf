@@ -99,13 +99,15 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 == Running applications as Docker containers
 
 * Build Docker Images
-** JVM
+** In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder
+** Run the following script
+*** JVM
 +
 [source]
 ----
 ./docker-build.sh
 ----
-** Native (it's not working yet)
+*** Native (it's not working yet)
 +
 [source]
 ----
@@ -148,6 +150,8 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |===
 
 * Start Docker containers
+** In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder
+** Run the following script
 +
 [source]
 ----
