@@ -9,7 +9,7 @@ docker run -d --rm --name eureka \
   -p 8761:8761 \
   --network springboot-elasticsearch-thymeleaf_default \
   --health-cmd="curl -f http://localhost:8761/actuator/health || exit 1" --health-start-period=30s \
-  docker.mycompany.com/eureka-server:1.0.0
+  ivanfranchin/eureka-server:1.0.0
 
 wait_for_container_log "eureka" "Started"
 
@@ -21,7 +21,7 @@ docker run -d --rm --name product-api \
   -e EUREKA_HOST=eureka -e ELASTICSEARCH_HOST=elasticsearch \
   --network springboot-elasticsearch-thymeleaf_default \
   --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" --health-start-period=30s \
-  docker.mycompany.com/product-api:1.0.0
+  ivanfranchin/product-api:1.0.0
 
 wait_for_container_log "product-api" "Started"
 
@@ -33,7 +33,7 @@ docker run -d --rm --name product-ui \
   -e EUREKA_HOST=eureka \
   --network springboot-elasticsearch-thymeleaf_default \
   --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" --health-start-period=30s \
-  docker.mycompany.com/product-ui:1.0.0
+  ivanfranchin/product-ui:1.0.0
 
 wait_for_container_log "product-ui" "Started"
 

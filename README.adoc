@@ -149,7 +149,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |Specify port of the `Eureka` service discovery to use (default `8761`)
 |===
 
-* Start Docker containers
+* Run Docker containers
 ** In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder
 ** Run the following script
 +
