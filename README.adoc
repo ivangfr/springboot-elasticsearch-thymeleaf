@@ -31,7 +31,7 @@ The goal of this project is to implement an application called `product-app`. It
 docker-compose up -d
 ----
 
-* Wait until the `Elasticsearch` docker container is up and healthy. To check it, run
+* Wait until `Elasticsearch` docker container is up and healthy. To check it, run
 +
 [source]
 ----
@@ -199,6 +199,11 @@ image::images/demo-user-interaction.gif[]
 ----
 docker-compose down -v
 ----
+* To remove the Docker images created by this project, run
+[source]
+----
+./remove-docker-images.sh
+----
 
 == Creating indexes and reindexing them using Elasticsearch REST API
 
@@ -218,17 +223,17 @@ It should return something like
 [source]
 ----
 {
-  "name" : "fadee0b011b7",
+  "name" : "e7f07cc75f5c",
   "cluster_name" : "docker-es-cluster",
-  "cluster_uuid" : "iO1Ne0WXRDeQYZyGp3DaWQ",
+  "cluster_uuid" : "RthzZuf2QHKxPX--9cLWtg",
   "version" : {
-    "number" : "7.6.2",
-    "build_flavor" : "oss",
+    "number" : "7.12.1",
+    "build_flavor" : "default",
     "build_type" : "docker",
-    "build_hash" : "ef48eb35cf30adf4db14086e8aabd07ef6fb113f",
-    "build_date" : "2020-03-26T06:34:37.794943Z",
+    "build_hash" : "3186837139b9c6b6d23c3200870651f10d3343b7",
+    "build_date" : "2021-04-20T20:56:39.040728659Z",
     "build_snapshot" : false,
-    "lucene_version" : "8.4.0",
+    "lucene_version" : "8.8.0",
     "minimum_wire_compatibility_version" : "6.8.0",
     "minimum_index_compatibility_version" : "6.0.0-beta1"
   },
@@ -247,7 +252,7 @@ It should return
 +
 [source]
 ----
-{ "acknowledged":true, "shards_acknowledged":true, "index":"ecommerce.products.v1" }
+{"acknowledged":true,"shards_acknowledged":true,"index":"ecommerce.products.v1"}
 ----
 
 * Check indexes
@@ -262,7 +267,7 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-yellow open   ecommerce.products.v1 1B3JXm6zQnKolob4mtwRUg   1   1          0            0       230b           230b
+yellow open   ecommerce.products.v1 1cgjRUxQQVW_uFfc3nYFcg   1   1          0            0       208b           208b
 ----
 
 * Check `ecommerce.products.v1` index mapping
@@ -277,20 +282,40 @@ It should return
 [source]
 ----
 {
-  "ecommerce.products.v1": {
-    "mappings": {
-      "properties": {
-        "categories": { "type": "keyword" },
-        "created": { "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ" },
-        "description": { "type": "text" },
-        "name": { "type": "text" },
-        "price": { "type": "float" },
-        "reference": { "type": "text" },
-        "reviews": {
-          "properties": {
-            "comment": { "type": "text" },
-            "created": { "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ" },
-            "stars": { "type": "short" }
+  "ecommerce.products.v1" : {
+    "mappings" : {
+      "properties" : {
+        "categories" : {
+          "type" : "keyword"
+        },
+        "created" : {
+          "type" : "date",
+          "format" : "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
+        },
+        "description" : {
+          "type" : "text"
+        },
+        "name" : {
+          "type" : "text"
+        },
+        "price" : {
+          "type" : "float"
+        },
+        "reference" : {
+          "type" : "text"
+        },
+        "reviews" : {
+          "properties" : {
+            "comment" : {
+              "type" : "text"
+            },
+            "created" : {
+              "type" : "date",
+              "format" : "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
+            },
+            "stars" : {
+              "type" : "short"
+            }
           }
         }
       }
@@ -304,14 +329,14 @@ It should return
 [source]
 ----
 curl -X POST localhost:9200/_aliases -H 'Content-Type: application/json' \
-     -d '{ "actions": [{ "add": {"alias": "ecommerce.products", "index": "ecommerce.products.v1" }}]}'
+    -d '{ "actions": [{ "add": {"alias": "ecommerce.products", "index": "ecommerce.products.v1" }}]}'
 ----
 +
 It should return
 +
 [source]
 ----
-{ "acknowledged":true }
+{"acknowledged":true}
 ----
 
 * Check aliases
@@ -325,7 +350,13 @@ It should return
 +
 [source]
 ----
-{ "ecommerce.products.v1": { "aliases": { "ecommerce.products": {} } } }
+{
+  "ecommerce.products.v1" : {
+    "aliases" : {
+      "ecommerce.products" : { }
+    }
+  }
+}
 ----
 
 * Create `ecommerce.products.v2` index
@@ -339,7 +370,7 @@ It should return
 +
 [source]
 ----
-{ "acknowledged":true, "shards_acknowledged":true, "index":"ecommerce.products.v2" }
+{"acknowledged":true,"shards_acknowledged":true,"index":"ecommerce.products.v2"}
 ----
 +
 Checking indexes again
@@ -354,8 +385,8 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-yellow open   ecommerce.products.v2 Iq0adLgEQSaCTIOISIW4DA   1   1          0            0       230b           230b
-yellow open   ecommerce.products.v1 1B3JXm6zQnKolob4mtwRUg   1   1          0            0       283b           283b
+yellow open   ecommerce.products.v2 yAC8FWpcRH28YkDux9EQYA   1   1          0            0       208b           208b
+yellow open   ecommerce.products.v1 1cgjRUxQQVW_uFfc3nYFcg   1   1          0            0       208b           208b
 ----
 
 * Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -370,22 +401,7 @@ It should return something like
 +
 [source]
 ----
-{
-  "took": 86,
-  "timed_out": false,
-  "total": 0,
-  "updated": 0,
-  "created": 0,
-  "deleted": 0,
-  "batches": 0,
-  "version_conflicts": 0,
-  "noops": 0,
-  "retries": { "bulk": 0, "search": 0 },
-  "throttled_millis": 0,
-  "requests_per_second": -1.0,
-  "throttled_until_millis": 0,
-  "failures": []
-}
+{"took":77,"timed_out":false,"total":0,"updated":0,"created":0,"deleted":0,"batches":0,"version_conflicts":0,"noops":0,"retries":{"bulk":0,"search":0},"throttled_millis":0,"requests_per_second":-1.0,"throttled_until_millis":0,"failures":[]}
 ----
 
 * Adjust alias after reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -400,7 +416,7 @@ It should return
 +
 [source]
 ----
-{ "acknowledged":true }
+{"acknowledged":true}
 ----
 +
 Checking aliases again
@@ -415,8 +431,14 @@ It should return something like
 [source]
 ----
 {
-  "ecommerce.products.v1": { "aliases": {} },
-  "ecommerce.products.v2": { "aliases": { "ecommerce.products": {} } }
+  "ecommerce.products.v1" : {
+    "aliases" : { }
+  },
+  "ecommerce.products.v2" : {
+    "aliases" : {
+      "ecommerce.products" : { }
+    }
+  }
 }
 ----
 
@@ -431,7 +453,7 @@ It should return
 +
 [source]
 ----
-{ "acknowledged":true }
+{"acknowledged":true}
 ----
 +
 Checking aliases again
@@ -445,7 +467,13 @@ It should return
 +
 [source]
 ----
-{ "ecommerce.products.v2": { "aliases": { "ecommerce.products": {} } } }
+{
+  "ecommerce.products.v2" : {
+    "aliases" : {
+      "ecommerce.products" : { }
+    }
+  }
+}
 ----
 
 * Simple search
@@ -460,13 +488,21 @@ It should return something like
 [source]
 ----
 {
-  "took": 1,
-  "timed_out": false,
-  "_shards": { "total": 1, "successful": 1, "skipped": 0, "failed": 0 },
-  "hits": {
-    "total": { "value": 0, "relation": "eq" },
-    "max_score": null,
-    "hits": []
+  "took" : 14,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 0,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
   }
 }
 ----
