@@ -173,7 +173,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |http://localhost:9081
 |===
 
-*Note:* when accessing `product-ui`, if you get the exception shown in the picture below, wait a bit.
+NOTE: when accessing `product-ui`, if you get the exception shown in the picture below, wait a bit.
 
 image::images/load-balancer-error.png[]
 
@@ -185,21 +185,24 @@ image::images/demo-user-interaction.gif[]
 
 == Shutdown
 
-* Stop applications
+* To stop applications
 ** If they were started with `Maven`, go to `eureka-server`, `product-api` and `product-ui` terminals and press `Ctrl+C`
-** If they were started as Docker containers, make sure you are in `springboot-elasticsearch-thymeleaf` and run the script below
+** If they were started as Docker containers, go to a terminal and, inside `springboot-elasticsearch-thymeleaf` root folder, run the script below
 +
 [source]
 ----
 ./stop-apps.sh
 ----
-* Stop and remove docker-compose containers, network and volumes by running the command below. Make sure you are in `springboot-elasticsearch-thymeleaf` root folder
+* To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `springboot-elasticsearch-thymeleaf` root folder, run the following command
 +
 [source]
 ----
 docker-compose down -v
 ----
-* To remove the Docker images created by this project, run
+
+== Cleanup
+
+To remove the Docker images created by this project, go to a terminal and, inside `springboot-elasticsearch-thymeleaf` root folder, run the script below
 [source]
 ----
 ./remove-docker-images.sh
