@@ -43,5 +43,4 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> search(String text, Pageable pageable) {
         return productRepository.findByReferenceOrNameOrDescription(text, text, text, pageable);
     }
-
 }

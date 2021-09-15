@@ -7,8 +7,7 @@ public class DateTimeUtil {
     private DateTimeUtil() {
     }
 
-    public static String createCurrentDateAsString(){
+    public static String createCurrentDateAsString() {
         return Instant.ofEpochSecond(Instant.now().getEpochSecond()).toString();
     }
-
 }

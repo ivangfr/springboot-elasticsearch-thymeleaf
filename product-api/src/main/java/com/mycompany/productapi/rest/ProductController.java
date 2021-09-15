@@ -2,9 +2,9 @@ package com.mycompany.productapi.rest;
 
 import com.mycompany.productapi.mapper.ProductMapper;
 import com.mycompany.productapi.model.Product;
-import com.mycompany.productapi.rest.dto.CreateProductDto;
-import com.mycompany.productapi.rest.dto.SearchDto;
-import com.mycompany.productapi.rest.dto.UpdateProductDto;
+import com.mycompany.productapi.rest.dto.CreateProductRequest;
+import com.mycompany.productapi.rest.dto.SearchRequest;
+import com.mycompany.productapi.rest.dto.UpdateProductRequest;
 import com.mycompany.productapi.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -47,16 +47,16 @@ public class ProductController {
     @Operation(summary = "Create Product")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Product createProduct(@Valid @RequestBody CreateProductDto createProductDto) {
-        Product product = productMapper.toProduct(createProductDto);
+    public Product createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
+        Product product = productMapper.toProduct(createProductRequest);
         return productService.saveProduct(product);
     }
 
     @Operation(summary = "Update Product")
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto) {
+    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
         Product product = productService.validateAndGetProductById(id);
-        productMapper.updateProductFromDto(updateProductDto, product);
+        productMapper.updateProductFromRequest(updateProductRequest, product);
         return productService.saveProduct(product);
     }
 
@@ -72,8 +72,7 @@ public class ProductController {
             summary = "Search for Products",
             description = "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'")
     @PutMapping("/search")
-    public Page<Product> searchProducts(@Valid @RequestBody SearchDto searchDto, @ParameterObject Pageable pageable) {
-        return productService.search(searchDto.getText(), pageable);
+    public Page<Product> searchProducts(@Valid @RequestBody SearchRequest searchRequest, @ParameterObject Pageable pageable) {
+        return productService.search(searchRequest.getText(), pageable);
     }
-
 }

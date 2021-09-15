@@ -18,5 +18,4 @@ public class Product {
     private Set<String> categories;
     private List<Review> reviews;
     private Date created;
-
 }

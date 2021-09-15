@@ -83,5 +83,4 @@ public class ProductController {
         productApiClient.updateProduct(id, productDto);
         return "redirect:/";
     }
-
 }

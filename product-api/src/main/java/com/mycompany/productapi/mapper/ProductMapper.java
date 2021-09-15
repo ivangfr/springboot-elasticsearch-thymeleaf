@@ -2,9 +2,9 @@ package com.mycompany.productapi.mapper;
 
 import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.model.Review;
-import com.mycompany.productapi.rest.dto.AddReviewDto;
-import com.mycompany.productapi.rest.dto.CreateProductDto;
-import com.mycompany.productapi.rest.dto.UpdateProductDto;
+import com.mycompany.productapi.rest.dto.AddReviewRequest;
+import com.mycompany.productapi.rest.dto.CreateProductRequest;
+import com.mycompany.productapi.rest.dto.UpdateProductRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -15,10 +15,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 )
 public interface ProductMapper {
 
-    Product toProduct(CreateProductDto createProductDto);
+    Product toProduct(CreateProductRequest createProductRequest);
 
-    void updateProductFromDto(UpdateProductDto updateProductDto, @MappingTarget Product product);
+    void updateProductFromRequest(UpdateProductRequest updateProductRequest, @MappingTarget Product product);
 
-    Review toReview(AddReviewDto addReviewDto);
-
+    Review toReview(AddReviewRequest addReviewRequest);
 }

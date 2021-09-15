@@ -31,7 +31,7 @@ The goal of this project is to implement an application called `product-app`. It
 docker-compose up -d
 ----
 
-* Wait until `Elasticsearch` docker container is up and healthy. To check it, run
+* Wait for `Elasticsearch` Docker container to be with status `running (healthy)`. To check it, run
 +
 [source]
 ----
@@ -107,7 +107,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 ----
 ./docker-build.sh
 ----
-*** Native (it's not working yet)
+*** Native (it's not implemented yet)
 +
 [source]
 ----
@@ -514,9 +514,9 @@ It should return something like
 
 == TODO
 
-* add some Ajax calls, for example, when adding a comment, so the page doesn't need to be refreshed (https://grokonez.com/java-integration/integrate-jquery-ajax-post-get-spring-boot-web-service);
-* add pagination. now, it is just returning all products;
-* add functionality to delete products;
+* Add some Ajax calls, for example, when adding a comment, so the page doesn't need to be refreshed (https://grokonez.com/java-integration/integrate-jquery-ajax-post-get-spring-boot-web-service);
+* Add pagination. Currently, it's returning all products;
+* Add functionality to delete product;
 
 == Reference
 

@@ -35,5 +35,4 @@ public interface ProductApiClient {
 
     @PostMapping("/api/products/{id}/reviews")
     Product addProductReview(@PathVariable String id, @RequestBody Review review);
-
 }

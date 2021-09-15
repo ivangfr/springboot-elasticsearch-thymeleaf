@@ -15,5 +15,4 @@ public interface ProductService {
     void deleteProduct(Product product);
 
     Page<Product> search(String text, Pageable pageable);
-
 }

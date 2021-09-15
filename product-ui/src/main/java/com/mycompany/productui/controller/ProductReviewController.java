@@ -19,5 +19,4 @@ public class ProductReviewController {
         productApiClient.addProductReview(id, review);
         return String.format("redirect:/products/%s/view", id);
     }
-
 }

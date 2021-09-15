@@ -12,5 +12,4 @@ public class ProductDto {
     private String description;
     private BigDecimal price;
     private Set<String> categories;
-
 }

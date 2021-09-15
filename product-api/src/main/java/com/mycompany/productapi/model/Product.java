@@ -27,5 +27,4 @@ public class Product {
     private Set<String> categories;
     private List<Review> reviews = new ArrayList<>();
     private String created;
-
 }

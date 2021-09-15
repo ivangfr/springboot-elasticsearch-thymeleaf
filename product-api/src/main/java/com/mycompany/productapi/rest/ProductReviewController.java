@@ -3,7 +3,7 @@ package com.mycompany.productapi.rest;
 import com.mycompany.productapi.mapper.ProductMapper;
 import com.mycompany.productapi.model.Product;
 import com.mycompany.productapi.model.Review;
-import com.mycompany.productapi.rest.dto.AddReviewDto;
+import com.mycompany.productapi.rest.dto.AddReviewRequest;
 import com.mycompany.productapi.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -37,14 +37,13 @@ public class ProductReviewController {
     @Operation(summary = "Add review about product")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewDto addReviewDto) {
+    public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewRequest addReviewRequest) {
         Product product = productService.validateAndGetProductById(id);
 
-        Review review = productMapper.toReview(addReviewDto);
+        Review review = productMapper.toReview(addReviewRequest);
         product.getReviews().add(review);
         productService.saveProduct(product);
 
         return review;
     }
-
 }

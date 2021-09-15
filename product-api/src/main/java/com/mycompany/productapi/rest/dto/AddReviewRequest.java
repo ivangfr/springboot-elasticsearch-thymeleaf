@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class AddReviewDto {
+public class AddReviewRequest {
 
     @Schema(title = "comment about product", example = "This product is very good!")
     @NotBlank
@@ -20,5 +20,4 @@ public class AddReviewDto {
     @Min(0)
     @Max(5)
     private Integer stars;
-
 }

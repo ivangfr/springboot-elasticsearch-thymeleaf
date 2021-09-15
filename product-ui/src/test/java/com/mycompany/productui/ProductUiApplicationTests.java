@@ -11,5 +11,4 @@ class ProductUiApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
