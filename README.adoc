@@ -18,7 +18,7 @@ The goal of this project is to implement an application called `product-app`. It
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/javase-jdk11-downloads.html[`Java 11+`]
+* https://www.oracle.com/java/technologies/downloads/#java11[`Java 11+`]
 * https://www.docker.com/[`Docker`]
 * https://docs.docker.com/compose/install/[`Docker-Compose`]
 
@@ -31,7 +31,7 @@ The goal of this project is to implement an application called `product-app`. It
 docker-compose up -d
 ----
 
-* Wait for `Elasticsearch` Docker container to be with status `running (healthy)`. To check it, run
+* Wait for `Elasticsearch` Docker container to be up and running. To check it, run
 +
 [source]
 ----
@@ -175,13 +175,13 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 
 NOTE: when accessing `product-ui`, if you get the exception shown in the picture below, wait a bit.
 
-image::images/load-balancer-error.png[]
+image::documentation/load-balancer-error.png[]
 
 == Demo
 
 * Below is a simple demo that shows a user interacting with `product-ui`
 +
-image::images/demo-user-interaction.gif[]
+image::documentation/demo-user-interaction.gif[]
 
 == Shutdown
 
