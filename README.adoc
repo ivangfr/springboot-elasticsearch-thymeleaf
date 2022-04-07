@@ -101,17 +101,10 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 * Build Docker Images
 ** In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder
 ** Run the following script
-*** JVM
 +
 [source]
 ----
 ./docker-build.sh
-----
-*** Native (it's not implemented yet)
-+
-[source]
-----
-./build-docker.sh native
 ----
 
 * Environment Variables
