@@ -151,7 +151,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 ./start-apps.sh
 ----
 
-== Application URLs
+== Application's URL
 
 |===
 |Application |URL
@@ -160,7 +160,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |http://localhost:8761
 
 |product-api
-|http://localhost:9080/swagger-ui.html
+|http://localhost:9080/swagger-ui/index.html
 
 |product-ui
 |http://localhost:9081
@@ -168,7 +168,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 
 NOTE: when accessing `product-ui`, if you get the exception shown in the picture below, wait a bit.
 
-image::documentation/load-balancer-error.png[]
+image::documentation/load-balancer-error.jpeg[]
 
 == Demo
 
@@ -510,9 +510,3 @@ It should return something like
 * Add some Ajax calls, for example, when adding a comment, so the page doesn't need to be refreshed (https://grokonez.com/java-integration/integrate-jquery-ajax-post-get-spring-boot-web-service);
 * Add pagination. Currently, it's returning all products;
 * Add functionality to delete product;
-
-== Reference
-
-* https://www.baeldung.com/spring-cloud-netflix-eureka
-* https://dzone.com/articles/microservice-architecture-with-spring-cloud-and-do
-* https://www.digit.in/laptops-reviews
