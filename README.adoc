@@ -18,7 +18,7 @@ The goal of this project is to implement an application called `product-app`. It
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/downloads/#java11[`Java 11+`]
+* https://www.oracle.com/java/technologies/downloads/#java17[`Java 17+`]
 * https://www.docker.com/[`Docker`]
 * https://docs.docker.com/compose/install/[`Docker-Compose`]
 
@@ -219,17 +219,17 @@ It should return something like
 [source]
 ----
 {
-  "name" : "e7f07cc75f5c",
-  "cluster_name" : "docker-es-cluster",
-  "cluster_uuid" : "RthzZuf2QHKxPX--9cLWtg",
+  "name" : "8cbb430221c5",
+  "cluster_name" : "docker-cluster",
+  "cluster_uuid" : "Qf1RvbzXQKimAUR0z_erYA",
   "version" : {
-    "number" : "7.12.1",
+    "number" : "7.17.4",
     "build_flavor" : "default",
     "build_type" : "docker",
-    "build_hash" : "3186837139b9c6b6d23c3200870651f10d3343b7",
-    "build_date" : "2021-04-20T20:56:39.040728659Z",
+    "build_hash" : "79878662c54c886ae89206c685d9f1051a9d6411",
+    "build_date" : "2022-05-18T18:04:20.964345128Z",
     "build_snapshot" : false,
-    "lucene_version" : "8.8.0",
+    "lucene_version" : "8.11.1",
     "minimum_wire_compatibility_version" : "6.8.0",
     "minimum_index_compatibility_version" : "6.0.0-beta1"
   },
@@ -263,7 +263,8 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-yellow open   ecommerce.products.v1 1cgjRUxQQVW_uFfc3nYFcg   1   1          0            0       208b           208b
+green  open   .geoip_databases      r_GGDT_iSdm6lr_j1GjfRw   1   0         24            0       25mb           25mb
+yellow open   ecommerce.products.v1 Z1zkiWaIRAWNaQaa1-RWDQ   1   1          0            0       226b           226b
 ----
 
 * Check `ecommerce.products.v1` index mapping
@@ -381,8 +382,9 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-yellow open   ecommerce.products.v2 yAC8FWpcRH28YkDux9EQYA   1   1          0            0       208b           208b
-yellow open   ecommerce.products.v1 1cgjRUxQQVW_uFfc3nYFcg   1   1          0            0       208b           208b
+yellow open   ecommerce.products.v2 Oms0rQN4RQ-oi-yyqWvJ9Q   1   1          0            0       226b           226b
+green  open   .geoip_databases      r_GGDT_iSdm6lr_j1GjfRw   1   0         39            0       37mb           37mb
+yellow open   ecommerce.products.v1 Z1zkiWaIRAWNaQaa1-RWDQ   1   1          0            0       226b           226b
 ----
 
 * Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -397,7 +399,7 @@ It should return something like
 +
 [source]
 ----
-{"took":77,"timed_out":false,"total":0,"updated":0,"created":0,"deleted":0,"batches":0,"version_conflicts":0,"noops":0,"retries":{"bulk":0,"search":0},"throttled_millis":0,"requests_per_second":-1.0,"throttled_until_millis":0,"failures":[]}
+{"took":4,"timed_out":false,"total":0,"updated":0,"created":0,"deleted":0,"batches":0,"version_conflicts":0,"noops":0,"retries":{"bulk":0,"search":0},"throttled_millis":0,"requests_per_second":-1.0,"throttled_until_millis":0,"failures":[]}
 ----
 
 * Adjust alias after reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -484,7 +486,7 @@ It should return something like
 [source]
 ----
 {
-  "took" : 14,
+  "took" : 5,
   "timed_out" : false,
   "_shards" : {
     "total" : 1,
