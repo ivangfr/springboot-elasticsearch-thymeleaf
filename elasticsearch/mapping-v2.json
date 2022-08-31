@@ -1,17 +1,48 @@
 {
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_analyzer": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "edge_ngram_filter"
+          ]
+        },
+        "my_search_analyzer": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      },
+      "filter": {
+        "edge_ngram_filter": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 20
+        }
+      }
+    }
+  },
   "mappings": {
     "properties": {
       "categories": {
         "type": "keyword"
       },
       "created": {
-        "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
+        "type": "date",
+        "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
       },
       "description": {
-        "type": "text"
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "search_analyzer": "my_search_analyzer"
       },
       "name": {
-        "type": "text"
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "search_analyzer": "my_search_analyzer"
       },
       "price": {
         "type": "float"
@@ -25,7 +56,8 @@
             "type": "text"
           },
           "created": {
-            "type": "date", "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
+            "type": "date",
+            "format": "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
           },
           "stars": {
             "type": "short"

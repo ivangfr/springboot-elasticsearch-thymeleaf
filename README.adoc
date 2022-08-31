@@ -65,11 +65,11 @@ docker-compose ps
 
 === Reindex
 
-The script `./reindex.sh` is used to reindex from an index to another index. The default will reindex from `ecommerce.products.v1` to `ecommerce.products.v2`. The only difference between `elasticsearch/mapping-v1.json` (used by `ecommerce.products.v1`) to `elasticsearch/mapping-v2.json` (used by `ecommerce.products.v2`) is the `type` of the `reference` property. In the former is set `text` and in the latter, `keyword`.
+The script `./reindex.sh` is used to reindex an index to another. The default will reindex from `ecommerce.products.v1` to `ecommerce.products.v2`. The only difference between `elasticsearch/mapping-v1.json` (used by `ecommerce.products.v1`) to `elasticsearch/mapping-v2.json` (used by `ecommerce.products.v2`) is the `type` of the `reference` property. In the former, it is set the type `text` and, in the latter, the type `keyword`.
 
-It's interesting because the `reference` property has some special characters. An example of `reference` code is `SBES@DDR4-10000`. As it is a `text`, ES (using the `standard` analyzer) splits the content in tokens ['SBES', 'DDR4', 10000]. So, for example, if you are looking for a product with `DDR4` RAM and, for some reason, the string `DDR4` is present in the reference code of some product X, the product X will be selected, even if it doesn't have `DDR4` in its description. It is an error.
+It's interesting because the `reference` property has some special characters. An example of `reference` code is `SBES@DDR4-10000`. As it has the type `text`, ES (using the `standard` analyzer) splits the content in tokens ['SBES', 'DDR4', 10000]. So, for example, if you are looking for a product with `DDR4` RAM and, for some reason, the string `DDR4` is present in the reference code of some product X, the product X will be selected, even if it doesn't have `DDR4` in its description.
 
-So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to `reference` property. The `DDR4` problem won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
+So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to the `reference` property. The `DDR4` search issue won't happen again because, from now on, ES won't tokenize the content present in the `reference` property.
 
 == Running applications using Maven
 
@@ -219,9 +219,9 @@ It should return something like
 [source]
 ----
 {
-  "name" : "8cbb430221c5",
+  "name" : "5f932864548a",
   "cluster_name" : "docker-cluster",
-  "cluster_uuid" : "Qf1RvbzXQKimAUR0z_erYA",
+  "cluster_uuid" : "J8k8aa6eSkOHlgJSZPl8kA",
   "version" : {
     "number" : "7.17.4",
     "build_flavor" : "default",
@@ -263,8 +263,8 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-green  open   .geoip_databases      r_GGDT_iSdm6lr_j1GjfRw   1   0         24            0       25mb           25mb
-yellow open   ecommerce.products.v1 Z1zkiWaIRAWNaQaa1-RWDQ   1   1          0            0       226b           226b
+green  open   .geoip_databases      Ud5Jc_p1SZav1G5CPd6X6g   1   0         40            0     38.3mb         38.3mb
+yellow open   ecommerce.products.v1 rmL6pbPMQyKroHl9_KXTVQ   1   1          0            0       226b           226b
 ----
 
 * Check `ecommerce.products.v1` index mapping
@@ -290,10 +290,14 @@ It should return
           "format" : "strict_date_time_no_millis||yyyy-MM-dd'T'HH:mmZZ"
         },
         "description" : {
-          "type" : "text"
+          "type" : "text",
+          "analyzer" : "my_analyzer",
+          "search_analyzer" : "my_search_analyzer"
         },
         "name" : {
-          "type" : "text"
+          "type" : "text",
+          "analyzer" : "my_analyzer",
+          "search_analyzer" : "my_search_analyzer"
         },
         "price" : {
           "type" : "float"
@@ -382,9 +386,9 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-yellow open   ecommerce.products.v2 Oms0rQN4RQ-oi-yyqWvJ9Q   1   1          0            0       226b           226b
-green  open   .geoip_databases      r_GGDT_iSdm6lr_j1GjfRw   1   0         39            0       37mb           37mb
-yellow open   ecommerce.products.v1 Z1zkiWaIRAWNaQaa1-RWDQ   1   1          0            0       226b           226b
+green  open   .geoip_databases      Ud5Jc_p1SZav1G5CPd6X6g   1   0         40            0     38.3mb         38.3mb
+yellow open   ecommerce.products.v2 j9zvCjkbQM6ME-h2L5CxJA   1   1          0            0       226b           226b
+yellow open   ecommerce.products.v1 rmL6pbPMQyKroHl9_KXTVQ   1   1          0            0       226b           226b
 ----
 
 * Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -505,7 +509,7 @@ It should return something like
 }
 ----
 +
-> As I don't have any products, the `hits` array field is empty
+> As we don't have any products, the `hits` array field is empty
 
 == TODO
 
