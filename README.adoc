@@ -1,4 +1,4 @@
-= springboot-elasticsearch-thymeleaf
+*= springboot-elasticsearch-thymeleaf*
 
 The goal of this project is to implement an application called `product-app`. It consists of two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`Spring Boot`] services: `product-api` (backend) and `product-ui` (frontend). Data will be stored in https://www.elastic.co/products/elasticsearch[`Elasticsearch`].
 
@@ -160,7 +160,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |http://localhost:8761
 
 |product-api
-|http://localhost:9080/swagger-ui/index.html
+|http://localhost:9080/swagger-ui.html
 
 |product-ui
 |http://localhost:9081
@@ -223,7 +223,7 @@ It should return something like
   "cluster_name" : "docker-cluster",
   "cluster_uuid" : "J8k8aa6eSkOHlgJSZPl8kA",
   "version" : {
-    "number" : "7.17.4",
+    "number" : "7.17.6",
     "build_flavor" : "default",
     "build_type" : "docker",
     "build_hash" : "79878662c54c886ae89206c685d9f1051a9d6411",
