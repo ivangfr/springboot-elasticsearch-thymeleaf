@@ -18,7 +18,7 @@
 <body>
 
 <!-- Header -->
-<div th:insert="fragments/header :: header"></div>
+<div th:insert="~{fragments/header :: header}"></div>
 
 <main>
     <div class="container">
@@ -114,7 +114,7 @@
 </main>
 
 <!-- Footer -->
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
 <!-- JavaScript at end of body for optimized loading -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

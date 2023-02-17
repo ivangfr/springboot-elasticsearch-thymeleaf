@@ -2,13 +2,14 @@ package com.ivanfranchin.productapi.rest;
 
 import com.ivanfranchin.productapi.mapper.ProductMapper;
 import com.ivanfranchin.productapi.model.Product;
-import com.ivanfranchin.productapi.service.ProductService;
 import com.ivanfranchin.productapi.rest.dto.CreateProductRequest;
 import com.ivanfranchin.productapi.rest.dto.SearchRequest;
 import com.ivanfranchin.productapi.rest.dto.UpdateProductRequest;
+import com.ivanfranchin.productapi.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.annotations.ParameterObject;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController

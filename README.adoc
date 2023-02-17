@@ -219,19 +219,19 @@ It should return something like
 [source]
 ----
 {
-  "name" : "5f932864548a",
+  "name" : "99fdd70d5915",
   "cluster_name" : "docker-cluster",
-  "cluster_uuid" : "J8k8aa6eSkOHlgJSZPl8kA",
+  "cluster_uuid" : "1HUDp8N3SF2WLtzZYOGgxA",
   "version" : {
-    "number" : "7.17.6",
+    "number" : "8.5.3",
     "build_flavor" : "default",
     "build_type" : "docker",
-    "build_hash" : "79878662c54c886ae89206c685d9f1051a9d6411",
-    "build_date" : "2022-05-18T18:04:20.964345128Z",
+    "build_hash" : "4ed5ee9afac63de92ec98f404ccbed7d3ba9584e",
+    "build_date" : "2022-12-05T18:22:22.226119656Z",
     "build_snapshot" : false,
-    "lucene_version" : "8.11.1",
-    "minimum_wire_compatibility_version" : "6.8.0",
-    "minimum_index_compatibility_version" : "6.0.0-beta1"
+    "lucene_version" : "9.4.2",
+    "minimum_wire_compatibility_version" : "7.17.0",
+    "minimum_index_compatibility_version" : "7.0.0"
   },
   "tagline" : "You Know, for Search"
 }
@@ -263,8 +263,7 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-green  open   .geoip_databases      Ud5Jc_p1SZav1G5CPd6X6g   1   0         40            0     38.3mb         38.3mb
-yellow open   ecommerce.products.v1 rmL6pbPMQyKroHl9_KXTVQ   1   1          0            0       226b           226b
+yellow open   ecommerce.products.v1 qgIIfyD1TUCN2s0wiDlmzA   1   1          0            0       225b           225b
 ----
 
 * Check `ecommerce.products.v1` index mapping
@@ -386,9 +385,8 @@ It should return something like
 [source]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-green  open   .geoip_databases      Ud5Jc_p1SZav1G5CPd6X6g   1   0         40            0     38.3mb         38.3mb
-yellow open   ecommerce.products.v2 j9zvCjkbQM6ME-h2L5CxJA   1   1          0            0       226b           226b
-yellow open   ecommerce.products.v1 rmL6pbPMQyKroHl9_KXTVQ   1   1          0            0       226b           226b
+yellow open   ecommerce.products.v2 pGzs5rfCR32aBVukwmEu6Q   1   1          0            0       225b           225b
+yellow open   ecommerce.products.v1 qgIIfyD1TUCN2s0wiDlmzA   1   1          0            0       225b           225b
 ----
 
 * Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -403,7 +401,7 @@ It should return something like
 +
 [source]
 ----
-{"took":4,"timed_out":false,"total":0,"updated":0,"created":0,"deleted":0,"batches":0,"version_conflicts":0,"noops":0,"retries":{"bulk":0,"search":0},"throttled_millis":0,"requests_per_second":-1.0,"throttled_until_millis":0,"failures":[]}
+{"took":13,"timed_out":false,"total":0,"updated":0,"created":0,"deleted":0,"batches":0,"version_conflicts":0,"noops":0,"retries":{"bulk":0,"search":0},"throttled_millis":0,"requests_per_second":-1.0,"throttled_until_millis":0,"failures":[]}
 ----
 
 * Adjust alias after reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
@@ -433,13 +431,13 @@ It should return something like
 [source]
 ----
 {
-  "ecommerce.products.v1" : {
-    "aliases" : { }
-  },
   "ecommerce.products.v2" : {
     "aliases" : {
       "ecommerce.products" : { }
     }
+  },
+  "ecommerce.products.v1" : {
+    "aliases" : { }
   }
 }
 ----

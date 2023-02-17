@@ -19,7 +19,7 @@
 <body>
 
 <!-- Header -->
-<div th:insert="fragments/header :: header"></div>
+<div th:insert="~{fragments/header :: header}"></div>
 
 <main>
     <div class="container">
@@ -48,7 +48,7 @@
 </main>
 
 <!-- Footer -->
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>
