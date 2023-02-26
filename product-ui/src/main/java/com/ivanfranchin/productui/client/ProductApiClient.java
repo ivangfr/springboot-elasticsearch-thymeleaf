@@ -1,38 +1,41 @@
 package com.ivanfranchin.productui.client;
 
 import com.ivanfranchin.productui.client.dto.MyPage;
+import com.ivanfranchin.productui.client.dto.Product;
 import com.ivanfranchin.productui.client.dto.ProductDto;
 import com.ivanfranchin.productui.client.dto.Review;
 import com.ivanfranchin.productui.client.dto.SearchDto;
-import com.ivanfranchin.productui.client.dto.Product;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
+import org.springframework.web.service.annotation.PutExchange;
 
-@FeignClient("product-api")
+@HttpExchange("/api/products")
 public interface ProductApiClient {
 
-    @GetMapping("/api/products")
-    MyPage<Product> listProductsByPage(@RequestParam Integer page, @RequestParam Integer size,
-                                       @RequestParam String sort);
+    @GetExchange
+    MyPage<Product> listProductsByPage(@RequestParam(required = false) Integer page,
+                                       @RequestParam(required = false) Integer size,
+                                       @RequestParam(required = false) String sort);
 
-    @PutMapping("/api/products/search")
-    MyPage<Product> searchProductsByPage(@RequestBody SearchDto searchDto, @RequestParam Integer page,
-                                         @RequestParam Integer size, @RequestParam String sort);
+    @PutExchange("/search")
+    MyPage<Product> searchProductsByPage(@RequestBody SearchDto searchDto,
+                                         @RequestParam(required = false) Integer page,
+                                         @RequestParam(required = false) Integer size,
+                                         @RequestParam(required = false) String sort);
 
-    @GetMapping("/api/products/{id}")
+    @GetExchange("/{id}")
     Product getProduct(@PathVariable String id);
 
-    @PostMapping("/api/products")
+    @PostExchange
     Product createProduct(@RequestBody ProductDto productDto);
 
-    @PutMapping("/api/products/{id}")
+    @PutExchange("/{id}")
     Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
 
-    @PostMapping("/api/products/{id}/reviews")
+    @PostExchange("/{id}/reviews")
     Product addProductReview(@PathVariable String id, @RequestBody Review review);
 }

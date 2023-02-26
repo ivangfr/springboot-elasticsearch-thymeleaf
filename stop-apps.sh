@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker stop eureka product-api product-ui
+docker stop product-api product-ui
