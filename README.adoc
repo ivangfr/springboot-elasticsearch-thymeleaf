@@ -4,7 +4,7 @@ The goal of this project is to implement an application called `product-app`. It
 
 == Project diagram
 
-image::documentation/project-diagram.png[]
+image::documentation/project-diagram.jpeg[]
 
 == Applications
 

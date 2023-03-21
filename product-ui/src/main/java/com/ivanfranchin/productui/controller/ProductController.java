@@ -1,12 +1,11 @@
 package com.ivanfranchin.productui.controller;
 
+import com.ivanfranchin.productui.client.ProductApiClient;
 import com.ivanfranchin.productui.client.dto.MyPage;
+import com.ivanfranchin.productui.client.dto.Product;
 import com.ivanfranchin.productui.client.dto.ProductDto;
 import com.ivanfranchin.productui.client.dto.Review;
 import com.ivanfranchin.productui.client.dto.SearchDto;
-import com.ivanfranchin.productui.mapper.ProductMapper;
-import com.ivanfranchin.productui.client.ProductApiClient;
-import com.ivanfranchin.productui.client.dto.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductController {
 
     private final ProductApiClient productApiClient;
-    private final ProductMapper productMapper;
 
     @GetMapping(value = {"/products", "/"})
     public String getProducts(@RequestParam(required = false) Integer page,
@@ -49,7 +47,7 @@ public class ProductController {
     @GetMapping("/products/{id}/edit")
     public String editProductForm(@PathVariable String id, Model model) {
         Product product = productApiClient.getProduct(id);
-        ProductDto productDto = productMapper.toProductDto(product);
+        ProductDto productDto = new ProductDto(product.name(), product.description(), product.price(), product.categories());
 
         model.addAttribute("productDto", productDto);
         model.addAttribute("product", product);
