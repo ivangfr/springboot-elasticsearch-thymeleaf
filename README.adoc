@@ -2,6 +2,10 @@
 
 The goal of this project is to implement an application called `product-app`. It consists of two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`Spring Boot`] services: `product-api` (backend) and `product-ui` (frontend). The data will be stored in https://www.elastic.co/products/elasticsearch[`Elasticsearch`].
 
+== Proof-of-Concepts & Articles
+
+On https://ivangfr.github.io[ivangfr.github.io], I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
+
 == Project diagram
 
 image::documentation/project-diagram.jpeg[]
