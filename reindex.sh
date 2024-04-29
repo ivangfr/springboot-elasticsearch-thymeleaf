@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+echo "-------------------"
+echo "Applying reindexing"
+echo "-------------------"
+
 read -p "Type the index alias (ecommerce.products): " index_alias
 index_alias=${index_alias:-ecommerce.products}
 

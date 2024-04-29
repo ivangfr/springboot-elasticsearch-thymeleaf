@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+echo "------------------"
+echo "Inserting products"
+echo "------------------"
+
 read -p "Type index name or alias (ecommerce.products): " index_name_alias
 index_name_alias=${index_name_alias:-ecommerce.products}
 
