@@ -1,6 +1,6 @@
 = springboot-elasticsearch-thymeleaf
 
-The goal of this project is to implement an application called `product-app`. It consists of two https://spring.io/projects/spring-boot[`Spring Boot`] services: `product-api` (backend) and `product-ui` (frontend). The data will be stored in https://www.elastic.co/products/elasticsearch[`Elasticsearch`].
+The goal of this project is to implement an application called `product-app`. It consists of two https://docs.spring.io/spring-boot/index.html[`Spring Boot`] services: `product-api` (backend) and `product-ui` (frontend). The data will be stored in https://www.elastic.co/elasticsearch[`Elasticsearch`].
 
 == Proof-of-Concepts & Articles
 
@@ -14,11 +14,11 @@ image::documentation/project-diagram.jpeg[]
 
 * **product-api**
 +
-`Spring Boot` Web Java application that exposes a REST API to manages products. The information about products is stored in `Elasticsearch`. `product-api` uses https://docs.spring.io/spring-data/elasticsearch/reference/[`Spring Data Elasticsearch`] to persist/query/delete data in https://www.elastic.co/products/elasticsearch[`Elasticsearch`].
+`Spring Boot` Web Java application that exposes a REST API to manages products. The information about products is stored in `Elasticsearch`. `product-api` uses https://docs.spring.io/spring-data/elasticsearch/reference/[`Spring Data Elasticsearch`] to persist/query/delete data in `Elasticsearch`.
 
 * **product-ui**
 +
-`Spring Boot` Web application that was implemented using https://www.thymeleaf.org/[`Thymeleaf`] as HTML template. Also, it uses https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#rest-http-interface[`Http Interfaces`] to simplify HTTP remote access to `product-api`.
+`Spring Boot` Web application that was implemented using https://www.thymeleaf.org/[`Thymeleaf`] as HTML template. Also, it uses https://docs.spring.io/spring-framework/reference/integration/rest-clients.html#rest-http-interface[`Http Interfaces`] to simplify HTTP remote access to `product-api`.
 
 == Prerequisites
 
