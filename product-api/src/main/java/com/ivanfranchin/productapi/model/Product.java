@@ -33,10 +33,10 @@ public class Product {
 
     public static Product from(CreateProductRequest createProductRequest) {
         Product product = new Product();
-        product.setName(createProductRequest.getName());
-        product.setDescription(createProductRequest.getDescription());
-        product.setPrice(createProductRequest.getPrice());
-        Set<String> set = createProductRequest.getCategories();
+        product.setName(createProductRequest.name());
+        product.setDescription(createProductRequest.description());
+        product.setPrice(createProductRequest.price());
+        Set<String> set = createProductRequest.categories();
         if (set != null) {
             product.setCategories(new LinkedHashSet<>(set));
         }
@@ -44,23 +44,23 @@ public class Product {
     }
 
     public static void updateFrom(UpdateProductRequest updateProductRequest, Product product) {
-        if (updateProductRequest.getName() != null) {
-            product.setName(updateProductRequest.getName());
+        if (updateProductRequest.name() != null) {
+            product.setName(updateProductRequest.name());
         }
-        if (updateProductRequest.getDescription() != null) {
-            product.setDescription(updateProductRequest.getDescription());
+        if (updateProductRequest.description() != null) {
+            product.setDescription(updateProductRequest.description());
         }
-        if (updateProductRequest.getPrice() != null) {
-            product.setPrice(updateProductRequest.getPrice());
+        if (updateProductRequest.price() != null) {
+            product.setPrice(updateProductRequest.price());
         }
         if (product.getCategories() != null) {
-            Set<String> set = updateProductRequest.getCategories();
+            Set<String> set = updateProductRequest.categories();
             if (set != null) {
                 product.getCategories().clear();
                 product.getCategories().addAll(set);
             }
         } else {
-            Set<String> set = updateProductRequest.getCategories();
+            Set<String> set = updateProductRequest.categories();
             if (set != null) {
                 product.setCategories(new LinkedHashSet<>(set));
             }

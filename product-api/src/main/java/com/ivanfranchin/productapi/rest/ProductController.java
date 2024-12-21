@@ -70,6 +70,6 @@ public class ProductController {
             description = "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'")
     @PutMapping("/search")
     public Page<Product> searchProducts(@Valid @RequestBody SearchRequest searchRequest, @ParameterObject Pageable pageable) {
-        return productService.search(searchRequest.getText(), pageable);
+        return productService.search(searchRequest.text(), pageable);
     }
 }

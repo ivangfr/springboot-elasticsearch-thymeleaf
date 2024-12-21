@@ -17,9 +17,9 @@ public class Review {
 
     public static Review from(AddReviewRequest addReviewRequest) {
         Review review = new Review();
-        review.setComment(addReviewRequest.getComment());
-        if (addReviewRequest.getStars() != null) {
-            review.setStars(addReviewRequest.getStars().shortValue());
+        review.setComment(addReviewRequest.comment());
+        if (addReviewRequest.stars() != null) {
+            review.setStars(addReviewRequest.stars().shortValue());
         }
         return review;
     }
