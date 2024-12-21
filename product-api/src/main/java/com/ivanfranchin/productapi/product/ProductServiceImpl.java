@@ -1,15 +1,13 @@
-package com.ivanfranchin.productapi.service;
+package com.ivanfranchin.productapi.product;
 
-import com.ivanfranchin.productapi.model.Product;
-import com.ivanfranchin.productapi.exception.ProductNotFoundException;
-import com.ivanfranchin.productapi.repository.ProductRepository;
+import com.ivanfranchin.productapi.product.exception.ProductNotFoundException;
+import com.ivanfranchin.productapi.product.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
+import static org.apache.commons.lang3.RandomStringUtils.secure;
 
 @RequiredArgsConstructor
 @Service
@@ -29,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(Product product) {
-        String reference = String.format("SBES@%s-%s", randomAlphanumeric(4), randomNumeric(5));
-        product.setReference(reference);
+        product.setReference("SBES@%s-%s"
+                .formatted(secure().nextAlphanumeric(4), secure().nextNumeric(5)));
         return productRepository.save(product);
     }
 

@@ -1,4 +1,4 @@
-package com.ivanfranchin.productapi.exception;
+package com.ivanfranchin.productapi.product.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

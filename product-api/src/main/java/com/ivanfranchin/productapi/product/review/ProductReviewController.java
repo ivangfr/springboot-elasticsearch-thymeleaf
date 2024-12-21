@@ -1,9 +1,7 @@
-package com.ivanfranchin.productapi.rest;
+package com.ivanfranchin.productapi.product.review;
 
-import com.ivanfranchin.productapi.model.Product;
-import com.ivanfranchin.productapi.model.Review;
-import com.ivanfranchin.productapi.rest.dto.AddReviewRequest;
-import com.ivanfranchin.productapi.service.ProductService;
+import com.ivanfranchin.productapi.product.ProductService;
+import com.ivanfranchin.productapi.product.model.Product;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

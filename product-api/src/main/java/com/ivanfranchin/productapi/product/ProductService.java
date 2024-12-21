@@ -1,6 +1,6 @@
-package com.ivanfranchin.productapi.service;
+package com.ivanfranchin.productapi.product;
 
-import com.ivanfranchin.productapi.model.Product;
+import com.ivanfranchin.productapi.product.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

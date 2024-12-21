@@ -1,6 +1,5 @@
-package com.ivanfranchin.productapi.model;
+package com.ivanfranchin.productapi.product.review;
 
-import com.ivanfranchin.productapi.rest.dto.AddReviewRequest;
 import com.ivanfranchin.productapi.util.DateTimeUtil;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.ivanfranchin.productapi.rest.dto;
+package com.ivanfranchin.productapi.product.review;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;

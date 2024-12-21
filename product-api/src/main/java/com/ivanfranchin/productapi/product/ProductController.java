@@ -1,10 +1,9 @@
-package com.ivanfranchin.productapi.rest;
+package com.ivanfranchin.productapi.product;
 
-import com.ivanfranchin.productapi.model.Product;
-import com.ivanfranchin.productapi.rest.dto.CreateProductRequest;
-import com.ivanfranchin.productapi.rest.dto.SearchRequest;
-import com.ivanfranchin.productapi.rest.dto.UpdateProductRequest;
-import com.ivanfranchin.productapi.service.ProductService;
+import com.ivanfranchin.productapi.product.model.Product;
+import com.ivanfranchin.productapi.product.dto.CreateProductRequest;
+import com.ivanfranchin.productapi.product.dto.SearchRequest;
+import com.ivanfranchin.productapi.product.dto.UpdateProductRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

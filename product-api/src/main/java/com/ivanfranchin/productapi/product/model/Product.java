@@ -1,7 +1,8 @@
-package com.ivanfranchin.productapi.model;
+package com.ivanfranchin.productapi.product.model;
 
-import com.ivanfranchin.productapi.rest.dto.CreateProductRequest;
-import com.ivanfranchin.productapi.rest.dto.UpdateProductRequest;
+import com.ivanfranchin.productapi.product.dto.CreateProductRequest;
+import com.ivanfranchin.productapi.product.dto.UpdateProductRequest;
+import com.ivanfranchin.productapi.product.review.Review;
 import com.ivanfranchin.productapi.util.DateTimeUtil;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
