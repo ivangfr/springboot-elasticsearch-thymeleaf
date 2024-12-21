@@ -23,11 +23,11 @@ image::documentation/project-diagram.jpeg[]
 == Prerequisites
 
 * https://www.oracle.com/java/technologies/downloads/#java21[`Java 21+`]
-* https://www.docker.com/[`Docker`]
+* Some containerization tool https://www.docker.com[`Docker`], https://podman.io[`Podman`], etc.
 
 == Start Environment
 
-* Open a terminal and navigate to `springboot-elasticsearch-thymeleaf` root folder run:
+* Open a terminal and navigate to the `springboot-elasticsearch-thymeleaf` root folder run:
 +
 [source]
 ----
@@ -38,14 +38,14 @@ docker compose up -d
 +
 [source]
 ----
-docker compose ps
+docker ps -a
 ----
 
 == Initialize Elasticsearch
 
 NOTE: In the following steps, we will create an index, an alias and do a reindex using pre-defined scripts. In case you prefer to do it step-by-step calling `Elasticsearch` API, refer to link:create-index-alias-reindex.adoc[Creating indexes, alias and reindexing using Elasticsearch API].
 
-* In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder;
+* In a terminal, make sure you are in the `springboot-elasticsearch-thymeleaf` root folder;
 
 * Run the following script to create the index `ecommerce.products.v1` with the alias `ecommerce.products` (you can use the default values by just pressing `Enter` on every user input):
 +
@@ -76,7 +76,7 @@ So, the script `./reindex.sh` aims to fix it, setting the type `keyword` to the 
 
 == Running applications using Maven
 
-Below are the steps to start and run the applications using `Maven`. We will need to open a terminal for each one. Make sure you are in `springboot-elasticsearch-thymeleaf` root folder while running the commands.
+Below are the steps to start and run the applications using `Maven`. We will need to open a terminal for each one. Make sure you are in the `springboot-elasticsearch-thymeleaf` root folder while running the commands.
 
 * **product-api**
 +
@@ -95,12 +95,12 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 == Running applications as Docker containers
 
 * Build Docker Images
-** In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder;
+** In a terminal, make sure you are in the `springboot-elasticsearch-thymeleaf` root folder;
 ** Run the following script:
 +
 [source]
 ----
-./docker-build.sh
+./build-docker-images.sh
 ----
 
 * Environment Variables
@@ -126,7 +126,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 |===
 
 * Run Docker containers
-** In a terminal, make sure you are in `springboot-elasticsearch-thymeleaf` root folder;
+** In a terminal, make sure you are in the `springboot-elasticsearch-thymeleaf` root folder;
 ** Run the following script:
 +
 [source]
@@ -156,13 +156,13 @@ image::documentation/demo-user-interaction.gif[]
 
 * To stop applications:
 ** If they were started with `Maven`, go to `product-api` and `product-ui` terminals and press `Ctrl+C`;
-** If they were started as Docker containers, go to a terminal and, inside `springboot-elasticsearch-thymeleaf` root folder, run the script below:
+** If they were started as Docker containers, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the script below:
 +
 [source]
 ----
 ./stop-apps.sh
 ----
-* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-elasticsearch-thymeleaf` root folder, run the following command:
+* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the following command:
 +
 [source]
 ----
@@ -171,7 +171,7 @@ docker compose down -v
 
 == Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `springboot-elasticsearch-thymeleaf` root folder, run the script below:
+To remove the Docker images created by this project, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the script below:
 [source]
 ----
 ./remove-docker-images.sh
