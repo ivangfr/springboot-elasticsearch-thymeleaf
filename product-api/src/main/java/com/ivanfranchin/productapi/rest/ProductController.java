@@ -1,6 +1,5 @@
 package com.ivanfranchin.productapi.rest;
 
-import com.ivanfranchin.productapi.mapper.ProductMapper;
 import com.ivanfranchin.productapi.model.Product;
 import com.ivanfranchin.productapi.rest.dto.CreateProductRequest;
 import com.ivanfranchin.productapi.rest.dto.SearchRequest;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductMapper productMapper;
 
     @Operation(summary = "Get Products")
     @GetMapping
@@ -47,7 +45,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Product createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
-        Product product = productMapper.toProduct(createProductRequest);
+        Product product = Product.from(createProductRequest);
         return productService.saveProduct(product);
     }
 
@@ -55,7 +53,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
         Product product = productService.validateAndGetProductById(id);
-        productMapper.updateProductFromRequest(updateProductRequest, product);
+        Product.updateFrom(updateProductRequest, product);
         return productService.saveProduct(product);
     }
 

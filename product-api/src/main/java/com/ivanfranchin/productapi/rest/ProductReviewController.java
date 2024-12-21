@@ -1,6 +1,5 @@
 package com.ivanfranchin.productapi.rest;
 
-import com.ivanfranchin.productapi.mapper.ProductMapper;
 import com.ivanfranchin.productapi.model.Product;
 import com.ivanfranchin.productapi.model.Review;
 import com.ivanfranchin.productapi.rest.dto.AddReviewRequest;
@@ -25,7 +24,6 @@ import java.util.List;
 public class ProductReviewController {
 
     private final ProductService productService;
-    private final ProductMapper productMapper;
 
     @Operation(summary = "Get reviews about product")
     @GetMapping
@@ -40,7 +38,7 @@ public class ProductReviewController {
     public Review addProductReview(@PathVariable String id, @Valid @RequestBody AddReviewRequest addReviewRequest) {
         Product product = productService.validateAndGetProductById(id);
 
-        Review review = productMapper.toReview(addReviewRequest);
+        Review review = Review.from(addReviewRequest);
         product.getReviews().add(review);
         productService.saveProduct(product);
 
