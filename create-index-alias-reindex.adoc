@@ -1,19 +1,19 @@
 == Creating indexes, alias and reindexing using Elasticsearch API
 
-In the following steps, we are going to, manually and using `Elasticsearch` API, create an index called `ecommerce.products.v1`, associate an alias called `ecommerce.products` for it and then reindex to another index called `ecommerce.products.v2`.
+In the following steps, we are going to manually create an index called `ecommerce.products.v1` using the `Elasticsearch` API, associate an alias called `ecommerce.products` with it, and then reindex to another index called `ecommerce.products.v2`.
 
-Make sure you have a clean `Elasticsearch` without the indexes and alias mentioned previously. Also, the following `curl` commands must be executed in `springboot-elasticsearch-thymeleaf` root folder.
+Make sure your `Elasticsearch` instance is clean and does not contain the previously mentioned indexes or alias. Also, the following `curl` commands must be executed in `springboot-elasticsearch-thymeleaf` root folder.
 
-* Check ES is up and running
+* Check `Elasticsearch` is up and running
 +
-[source]
+[,bash]
 ----
 curl localhost:9200
 ----
 +
-It should return something like
+It should return something similar to:
 +
-[source]
+[,json]
 ----
 {
   "name" : "99fdd70d5915",
@@ -36,28 +36,28 @@ It should return something like
 
 * Create `ecommerce.products.v1` index
 +
-[source]
+[,bash]
 ----
 curl -X PUT localhost:9200/ecommerce.products.v1 -H "Content-Type: application/json" -d @elasticsearch/mapping-v1.json
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {"acknowledged":true,"shards_acknowledged":true,"index":"ecommerce.products.v1"}
 ----
 
 * Check indexes
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/_cat/indices?v"
 ----
 +
-It should return something like
+It should return something like:
 +
-[source]
+[,text]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 yellow open   ecommerce.products.v1 qgIIfyD1TUCN2s0wiDlmzA   1   1          0            0       225b           225b
@@ -65,14 +65,14 @@ yellow open   ecommerce.products.v1 qgIIfyD1TUCN2s0wiDlmzA   1   1          0   
 
 * Check `ecommerce.products.v1` index mapping
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/ecommerce.products.v1/_mapping?pretty"
 ----
 +
-It should return
+It should return:
 +
-[source]
+[, json]
 ----
 {
   "ecommerce.products.v1" : {
@@ -123,29 +123,29 @@ It should return
 
 * Create alias for `ecommerce.products.v1` index
 +
-[source]
+[,bash]
 ----
 curl -X POST localhost:9200/_aliases -H 'Content-Type: application/json' \
     -d '{ "actions": [{ "add": {"alias": "ecommerce.products", "index": "ecommerce.products.v1" }}]}'
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {"acknowledged":true}
 ----
 
 * Check aliases
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/_aliases?pretty"
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {
   "ecommerce.products.v1" : {
@@ -158,28 +158,28 @@ It should return
 
 * Create `ecommerce.products.v2` index
 +
-[source]
+[,bash]
 ----
 curl -X PUT localhost:9200/ecommerce.products.v2 -H "Content-Type: application/json" -d @elasticsearch/mapping-v2.json
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {"acknowledged":true,"shards_acknowledged":true,"index":"ecommerce.products.v2"}
 ----
 +
-Checking indexes again
+Check the indexes again
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/_cat/indices?v"
 ----
 +
-It should return something like
+It should return something like:
 +
-[source]
+[,text]
 ----
 health status index                 uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 yellow open   ecommerce.products.v2 pGzs5rfCR32aBVukwmEu6Q   1   1          0            0       225b           225b
@@ -188,44 +188,44 @@ yellow open   ecommerce.products.v1 qgIIfyD1TUCN2s0wiDlmzA   1   1          0   
 
 * Reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
 +
-[source]
+[,bash]
 ----
 curl -X POST localhost:9200/_reindex -H 'Content-Type: application/json' \
      -d '{ "source": { "index": "ecommerce.products.v1" }, "dest": { "index": "ecommerce.products.v2" }}'
 ----
 +
-It should return something like
+It should return something like:
 +
-[source]
+[,json]
 ----
 {"took":13,"timed_out":false,"total":0,"updated":0,"created":0,"deleted":0,"batches":0,"version_conflicts":0,"noops":0,"retries":{"bulk":0,"search":0},"throttled_millis":0,"requests_per_second":-1.0,"throttled_until_millis":0,"failures":[]}
 ----
 
-* Adjust alias after reindex from `ecommerce.products.v1` to `ecommerce.products.v2`
+* Adjust the alias after reindexing from `ecommerce.products.v1` to `ecommerce.products.v2`
 +
-[source]
+[,bash]
 ----
 curl -X POST localhost:9200/_aliases -H 'Content-Type: application/json' \
      -d '{ "actions": [{ "remove": {"alias": "ecommerce.products", "index": "ecommerce.products.v1" }}, { "add": {"alias": "ecommerce.products", "index": "ecommerce.products.v2" }}]}'
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {"acknowledged":true}
 ----
 +
-Checking aliases again
+Check the aliases again
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/_aliases?pretty"
 ----
 +
-It should return something like
+It should return something like:
 +
-[source]
+[,json]
 ----
 {
   "ecommerce.products.v2" : {
@@ -241,28 +241,28 @@ It should return something like
 
 * Delete `ecommerce.products.v1` index
 +
-[source]
+[,bash]
 ----
 curl -X DELETE localhost:9200/ecommerce.products.v1
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {"acknowledged":true}
 ----
 +
-Checking aliases again
+Check the aliases again
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/_aliases?pretty"
 ----
 +
-It should return
+It should return:
 +
-[source]
+[,json]
 ----
 {
   "ecommerce.products.v2" : {
@@ -275,14 +275,14 @@ It should return
 
 * Simple search
 +
-[source]
+[,bash]
 ----
 curl "localhost:9200/ecommerce.products/_search?pretty"
 ----
 +
-It should return something like
+It should return something like:
 +
-[source]
+[,json]
 ----
 {
   "took" : 5,
@@ -304,4 +304,4 @@ It should return something like
 }
 ----
 +
-> As we don't have any products, the `hits` array field is empty
+> Since there are no products, the `hits` array field is empty.

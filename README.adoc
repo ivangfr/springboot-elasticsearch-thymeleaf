@@ -14,7 +14,7 @@ image::documentation/project-diagram.jpeg[]
 
 * **product-api**
 +
-`Spring Boot` Web Java application that exposes a REST API to manages products. The information about products is stored in `Elasticsearch`. `product-api` uses https://docs.spring.io/spring-data/elasticsearch/reference/[`Spring Data Elasticsearch`] to persist/query/delete data in `Elasticsearch`.
+`Spring Boot` Web Java application that exposes a REST API to manage products. Product information is stored in `Elasticsearch`. `product-api` uses https://docs.spring.io/spring-data/elasticsearch/reference/[`Spring Data Elasticsearch`] to persist/query/delete data in `Elasticsearch`.
 
 * **product-ui**
 +
@@ -22,21 +22,21 @@ image::documentation/project-diagram.jpeg[]
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/downloads/#java21[`Java 21+`]
-* Some containerization tool https://www.docker.com[`Docker`], https://podman.io[`Podman`], etc.
+* https://www.oracle.com/java/technologies/downloads/#java21[`Java 21`] or higher;
+* A containerization tool (e.g., https://www.docker.com[`Docker`], https://podman.io[`Podman`], etc.)
 
 == Start Environment
 
 * Open a terminal and navigate to the `springboot-elasticsearch-thymeleaf` root folder run:
 +
-[source]
+[,bash]
 ----
 docker compose up -d
 ----
 
-* Wait for `Elasticsearch` Docker container to be up and running. To check it, run:
+* Wait for `Elasticsearch` Docker container to be up and running. To verify it, run:
 +
-[source]
+[,bash]
 ----
 docker ps -a
 ----
@@ -49,26 +49,26 @@ NOTE: In the following steps, we will create an index, an alias and do a reindex
 
 * Run the following script to create the index `ecommerce.products.v1` with the alias `ecommerce.products` (you can use the default values by just pressing `Enter` on every user input):
 +
-[source]
+[,bash]
 ----
 ./create-index.sh
 ----
 
 * If you want to insert some products, run:
 +
-[source]
+[,bash]
 ----
 ./insert-products.sh
 ----
 
 * If you want to fix the `reference` property mapping error (explained below), run:
 +
-[source]
+[,bash]
 ----
 ./reindex.sh
 ----
 +
-The script `./reindex.sh` is used to reindex an index to another. The default will reindex from `ecommerce.products.v1` to `ecommerce.products.v2`. The only difference between `elasticsearch/mapping-v1.json` (used by `ecommerce.products.v1`) to `elasticsearch/mapping-v2.json` (used by `ecommerce.products.v2`) is the `type` of the `reference` property. In the former, it is set the type `text` and, in the latter, the type `keyword`.
+The script `./reindex.sh` is used to reindex one index to another. The default will reindex from `ecommerce.products.v1` to `ecommerce.products.v2`. The only difference between `elasticsearch/mapping-v1.json` (used by `ecommerce.products.v1`) and `elasticsearch/mapping-v2.json` (used by `ecommerce.products.v2`) is the `type` of the `reference` property. In the former, it is set the type `text` and, in the latter, the type `keyword`.
 +
 It's interesting because the `reference` property has some special characters. An example of `reference` code is `SBES@DDR4-10000`. As it has the type `text`, `Elasticsearch` (using the `standard` analyzer) splits the content in tokens ['SBES', 'DDR4', 10000]. So, for example, if you are looking for a product with `DDR4` RAM and, for some reason, the string `DDR4` is present in the reference code of some product X, the product X will be selected, even if it doesn't have `DDR4` in its description.
 +
@@ -80,14 +80,14 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 
 * **product-api**
 +
-[source]
+[,bash]
 ----
 ./mvnw clean spring-boot:run --projects product-api
 ----
 
 * **product-ui**
 +
-[source]
+[,bash]
 ----
 ./mvnw clean spring-boot:run --projects product-ui -Dspring-boot.run.jvmArguments="-Dserver.port=9080"
 ----
@@ -98,7 +98,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 ** In a terminal, make sure you are in the `springboot-elasticsearch-thymeleaf` root folder;
 ** Run the following script:
 +
-[source]
+[,bash]
 ----
 ./build-docker-images.sh
 ----
@@ -129,7 +129,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 ** In a terminal, make sure you are in the `springboot-elasticsearch-thymeleaf` root folder;
 ** Run the following script:
 +
-[source]
+[,bash]
 ----
 ./start-apps.sh
 ----
@@ -148,7 +148,7 @@ Below are the steps to start and run the applications using `Maven`. We will nee
 
 == Demo
 
-* Below is a simple demo that shows a user interacting with `product-ui`:
+* Below is a simple demo showing a user interacting with `product-ui`:
 +
 image::documentation/demo-user-interaction.gif[]
 
@@ -158,13 +158,13 @@ image::documentation/demo-user-interaction.gif[]
 ** If they were started with `Maven`, go to `product-api` and `product-ui` terminals and press `Ctrl+C`;
 ** If they were started as Docker containers, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the script below:
 +
-[source]
+[,bash]
 ----
 ./stop-apps.sh
 ----
 * To stop and remove docker compose containers, network and volumes, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the following command:
 +
-[source]
+[,bash]
 ----
 docker compose down -v
 ----
@@ -172,7 +172,7 @@ docker compose down -v
 == Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the script below:
-[source]
+[,bash]
 ----
 ./remove-docker-images.sh
 ----
