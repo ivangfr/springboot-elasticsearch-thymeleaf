@@ -9,7 +9,6 @@ docker run -d --rm --name product-api \
   -p 8080:8080 \
   -e ELASTICSEARCH_URIS=elasticsearch:9200 \
   --network springboot-elasticsearch-thymeleaf_default \
-  --health-cmd='[ -z "$(echo "" > /dev/tcp/localhost/8080)" ] || exit 1' \
   ivanfranchin/product-api:1.0.0
 
 wait_for_container_log "product-api" "Started"
@@ -21,7 +20,6 @@ docker run -d --rm --name product-ui \
   -p 9080:8080 \
   -e PRODUCT_API_URL=http://product-api:8080 \
   --network springboot-elasticsearch-thymeleaf_default \
-  --health-cmd='[ -z "$(echo "" > /dev/tcp/localhost/9080)" ] || exit 1' \
   ivanfranchin/product-ui:1.0.0
 
 wait_for_container_log "product-ui" "Started"

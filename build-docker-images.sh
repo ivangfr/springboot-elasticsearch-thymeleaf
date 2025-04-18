@@ -11,12 +11,12 @@ PRODUCT_UI_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${PRODUCT_UI_APP_NAME}:${AP
 
 SKIP_TESTS="true"
 
-./mvnw clean compile jib:dockerBuild \
+./mvnw clean spring-boot:build-image \
   --projects "$PRODUCT_API_APP_NAME" \
   -DskipTests="$SKIP_TESTS" \
-  -Dimage="$PRODUCT_API_DOCKER_IMAGE_NAME"
+  -Dspring-boot.build-image.imageName="$PRODUCT_API_DOCKER_IMAGE_NAME"
 
-./mvnw clean compile jib:dockerBuild \
+./mvnw clean spring-boot:build-image \
   --projects "$PRODUCT_UI_APP_NAME" \
   -DskipTests="$SKIP_TESTS" \
-  -Dimage="$PRODUCT_UI_DOCKER_IMAGE_NAME"
+  -Dspring-boot.build-image.imageName="$PRODUCT_UI_DOCKER_IMAGE_NAME"
