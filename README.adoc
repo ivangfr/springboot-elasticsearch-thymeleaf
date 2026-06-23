@@ -1,5 +1,8 @@
 = springboot-elasticsearch-thymeleaf
 
+image:https://img.shields.io/badge/License-MIT-green.svg[License: MIT, link="LICENSE"]
+image:https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ivan.franchin-FFDD00?logo=buymeacoffee&logoColor=black[Buy Me A Coffee, link="https://buymeacoffee.com/ivan.franchin"]
+
 The goal of this project is to implement an application called `product-app`. It consists of two https://docs.spring.io/spring-boot/index.html[`Spring Boot`] services: `product-api` (backend) and `product-ui` (frontend). The data will be stored in https://www.elastic.co/elasticsearch[`Elasticsearch`].
 
 == Proof-of-Concepts & Articles
@@ -196,3 +199,13 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ----
 ./remove-docker-images.sh
 ----
+
+== Support
+
+If you find this useful, consider buying me a coffee:
+
+image::https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png[Buy Me A Coffee, width=200, link="https://buymeacoffee.com/ivan.franchin"]
+
+== License
+
+This project is licensed under the link:LICENSE[MIT License].
