@@ -23,9 +23,13 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
-    public Product saveProduct(Product product) {
+    public Product createProduct(Product product) {
         product.setReference("SBES@%s-%s"
                 .formatted(secure().nextAlphanumeric(4), secure().nextNumeric(5)));
+        return productRepository.save(product);
+    }
+
+    public Product updateProduct(Product product) {
         return productRepository.save(product);
     }
 

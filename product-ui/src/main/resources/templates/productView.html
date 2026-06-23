@@ -6,10 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style>
-        body { display: flex; min-height: 100vh; flex-direction: column; }
-        main { flex: 1 0 auto; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -28,7 +25,9 @@
                             <label for="id">Id</label>
                         </div>
                         <div class="input-field col s8">
-                            <input placeholder="Placeholder" id="categories" type="text" readonly>
+                            <input id="categories" type="text"
+                                   th:value="${product.categories != null ? #strings.setJoin(product.categories, ', ') : ''}"
+                                   readonly>
                             <label for="categories">Categories</label>
                         </div>
                     </div>
@@ -112,17 +111,6 @@
 <div th:insert="~{fragments/footer :: footer}"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-<script th:inline="javascript">
-/*<![CDATA[*/
-document.addEventListener('DOMContentLoaded', function() {
-  var product = /*[[${product}]]*/;
-  var categoriesStr = product.categories.join(', ');
-
-  document.getElementById('categories').value = categoriesStr;
-});
-/*]]>*/
-</script>
 
 </body>
 </html>

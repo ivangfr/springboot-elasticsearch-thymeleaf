@@ -6,10 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style>
-        body { display: flex; min-height: 100vh; flex-direction: column; }
-        main { flex: 1 0 auto; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -39,19 +36,19 @@
                             <label for="reference">Reference</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="name" type="text" th:value="${product.name}" th:field="*{name}" class="validate"
+                            <input id="name" type="text" th:field="*{name}" class="validate"
                                    required>
                             <label for="name">Name</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="price" type="number" th:value="${product.price}" th:field="*{price}" min="0"
+                            <input id="price" type="number" th:field="*{price}" min="0"
                                    step="any" class="validate" required>
                             <label for="price">Price (€)</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                        <textarea id="description" th:text="${product.description}" th:field="*{description}"
+                        <textarea id="description" th:field="*{description}"
                                   class="materialize-textarea" required></textarea>
                             <label for="description">Description</label>
                         </div>

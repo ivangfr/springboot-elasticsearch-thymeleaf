@@ -38,7 +38,7 @@ public class ProductReviewController {
 
         Review review = Review.from(addReviewRequest);
         product.getReviews().add(review);
-        productService.saveProduct(product);
+        productService.updateProduct(product);
 
         return review;
     }

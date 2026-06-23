@@ -11,6 +11,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,7 @@ public class ProductController {
     @PostMapping
     public Product createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
         Product product = createProductRequest.toDomain();
-        return productService.saveProduct(product);
+        return productService.createProduct(product);
     }
 
     @Operation(summary = "Update Product")
@@ -53,15 +54,15 @@ public class ProductController {
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
         Product product = productService.validateAndGetProductById(id);
         updateProductRequest.update(product);
-        return productService.saveProduct(product);
+        return productService.updateProduct(product);
     }
 
     @Operation(summary = "Delete Product")
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable String id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
         Product product = productService.validateAndGetProductById(id);
         productService.deleteProduct(product);
-        return id;
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(
