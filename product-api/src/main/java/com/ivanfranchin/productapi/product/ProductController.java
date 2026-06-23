@@ -44,7 +44,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Product createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
-        Product product = Product.from(createProductRequest);
+        Product product = createProductRequest.toDomain();
         return productService.saveProduct(product);
     }
 
@@ -52,7 +52,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
         Product product = productService.validateAndGetProductById(id);
-        Product.updateFrom(updateProductRequest, product);
+        updateProductRequest.update(product);
         return productService.saveProduct(product);
     }
 

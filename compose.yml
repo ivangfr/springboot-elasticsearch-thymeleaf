@@ -1,7 +1,7 @@
 services:
 
   elasticsearch:
-    image: 'docker.elastic.co/elasticsearch/elasticsearch:9.2.1'
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:9.4.2'
     container_name: 'elasticsearch'
     ports:
     - '9200:9200'
@@ -11,4 +11,7 @@ services:
       - 'xpack.security.enabled=false'
       - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
     healthcheck:
-      test: 'curl -f http://localhost:9200 || exit 1'
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
