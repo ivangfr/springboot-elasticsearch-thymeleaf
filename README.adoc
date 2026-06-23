@@ -169,6 +169,25 @@ image::documentation/demo-user-interaction.gif[]
 docker compose down -v
 ----
 
+== Running Tests
+
+In a terminal, make sure you are inside the `springboot-elasticsearch-thymeleaf` root folder:
+
+* **product-api**
++
+[,bash]
+----
+./mvnw clean test --projects product-api
+----
+
+* **product-ui**
++
+[,bash]
+----
+./mvnw clean test --projects product-ui
+----
+
+
 == Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-elasticsearch-thymeleaf` root folder, run the script below:

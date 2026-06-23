@@ -101,8 +101,9 @@ public class ProductController {
 
     @PostMapping("/products/{id}")
     public String updateProduct(@PathVariable String id, @Valid @ModelAttribute ProductDto productDto,
-                                BindingResult result) {
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("product", productApiClient.getProduct(id));
             return "productEdit";
         }
         productApiClient.updateProduct(id, productDto);
