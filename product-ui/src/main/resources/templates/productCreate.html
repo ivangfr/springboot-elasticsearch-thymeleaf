@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Product-UI</title>
+    <title>Create Product | Product-UI</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,10 +13,19 @@
 
 <div th:insert="~{fragments/header :: header}"></div>
 
+<nav class="grey lighten-2" style="height:40px;line-height:40px;margin-bottom:0">
+    <div class="nav-wrapper container" style="height:40px;line-height:40px">
+        <div class="col s12">
+            <a th:href="@{/}" class="breadcrumb grey-text text-darken-3">Home</a>
+            <a class="breadcrumb grey-text text-darken-3">Create Product</a>
+        </div>
+    </div>
+</nav>
+
 <main>
     <div class="container">
         <div class="section">
-            <h5>Details</h5>
+            <h5>Create Product</h5>
             <div class="row">
                 <form class="col s12" th:action="@{/products}" th:object="${productDto}" method="post"
                       onsubmit="return beforeSubmit()">
@@ -27,28 +36,32 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s9">
+                        <div class="input-field col s9" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
                             <input id="name" type="text" th:field="*{name}" class="validate" required>
                             <label for="name">Name</label>
+                            <span class="helper-text red-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</span>
                         </div>
-                        <div class="input-field col s3">
-                            <input id="price" type="number" th:field="*{price}" min="0" step="any" class="validate"
-                                   required>
+                        <div class="input-field col s3" th:classappend="${#fields.hasErrors('price')} ? 'has-error' : ''">
+                            <input id="price" type="number" th:field="*{price}" min="0" step="any" class="validate" required>
                             <label for="price">Price (€)</label>
+                            <span class="helper-text red-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">price error</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <textarea id="description" th:field="*{description}" class="materialize-textarea"
-                                      required></textarea>
+                        <div class="input-field col s12" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">
+                            <textarea id="description" th:field="*{description}" class="materialize-textarea" required></textarea>
                             <label for="description">Description</label>
+                            <span class="helper-text red-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">description error</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12">
-                            <a class="btn waves-effect waves-light right" style="margin-left:10px"
-                               th:href="@{/products}">Cancel</a>
-                            <button class="btn waves-effect waves-light right" type="submit">Save</button>
+                        <div class="col s12" style="margin-top:20px">
+                            <button class="btn waves-effect waves-light blue darken-3" type="submit">
+                                <i class="material-icons left">save</i> Save
+                            </button>
+                            <a class="btn waves-effect waves-light grey" th:href="@{/products}">
+                                <i class="material-icons left">cancel</i> Cancel
+                            </a>
                         </div>
                     </div>
                 </form>

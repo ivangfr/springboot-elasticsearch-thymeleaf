@@ -7,3 +7,43 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+.row-equal-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row-equal-height > .col {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0 !important;
+    left: auto !important;
+    right: auto !important;
+}
+
+.row-equal-height > .col .card {
+    flex: 1;
+}
+
+.card.hoverable {
+    cursor: pointer;
+}
+
+.star-filled {
+    color: #ffb300;
+    font-size: 1.2rem;
+}
+
+.star-empty {
+    color: #ccc;
+    font-size: 1.2rem;
+}
+
+.has-error input,
+.has-error textarea {
+    border-bottom: 2px solid #e53935 !important;
+}
+
+.has-error .prefix {
+    color: #e53935 !important;
+}

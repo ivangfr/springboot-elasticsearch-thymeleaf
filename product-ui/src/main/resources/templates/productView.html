@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Product-UI</title>
+    <title>Product Details | Product-UI</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,10 +13,23 @@
 
 <div th:insert="~{fragments/header :: header}"></div>
 
+<nav class="grey lighten-2" style="height:40px;line-height:40px;margin-bottom:0">
+    <div class="nav-wrapper container" style="height:40px;line-height:40px">
+        <div class="col s12">
+            <a th:href="@{/}" class="breadcrumb grey-text text-darken-3">Home</a>
+            <a class="breadcrumb grey-text text-darken-3" th:text="${product.name}">Product Name</a>
+        </div>
+    </div>
+</nav>
+
 <main>
     <div class="container">
         <div class="section">
-            <h5>Details</h5>
+            <div class="row">
+                <div class="col s12">
+                    <h5>Product Details</h5>
+                </div>
+            </div>
             <div class="row">
                 <div class="col s12">
                     <div class="row">
@@ -47,40 +60,52 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                        <textarea id="description" th:text="${product.description}" class="materialize-textarea"
-                                  readonly></textarea>
+                            <textarea id="description" th:text="${product.description}" class="materialize-textarea"
+                                      readonly></textarea>
                             <label for="description">Description</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12" style="margin-top:20px">
+                            <a class="btn waves-effect waves-light grey" th:href="@{/}">
+                                <i class="material-icons left">arrow_back</i> Back
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="divider"></div>
 
             <div class="section">
                 <h5>Reviews</h5>
                 <div class="row">
                     <form class="col s12" th:action="@{/products/{id}/review(id=${product.id})}" th:object="${review}"
                           method="post">
-                        <div class="row grey lighten-5 valign-wrapper">
-                            <div class="input-field col s9">
+                        <div class="row grey lighten-5 valign-wrapper" style="padding:16px;border-radius:4px;margin-bottom:0">
+                            <div class="input-field col s9" th:classappend="${#fields.hasErrors('comment')} ? 'has-error' : ''">
                                 <i class="material-icons prefix">comment</i>
                                 <input id="comment" type="text" th:field="*{comment}" class="validate" required>
                                 <label for="comment">Comment</label>
+                                <span class="helper-text red-text" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">comment error</span>
                             </div>
-                            <div class="input-field col s2">
+                            <div class="input-field col s2" th:classappend="${#fields.hasErrors('stars')} ? 'has-error' : ''">
                                 <i class="material-icons prefix">star</i>
-                                <input id="stars" type="number" min="0" max="5" th:field="*{stars}" class="validate"
-                                       required>
+                                <input id="stars" type="number" min="0" max="5" th:field="*{stars}" class="validate" required>
                                 <label for="stars">Stars</label>
+                                <span class="helper-text red-text" th:if="${#fields.hasErrors('stars')}" th:errors="*{stars}">stars error</span>
                             </div>
                             <div class="input-field col s1">
-                                <button class="btn waves-effect waves-light right" type="submit">Add</button>
+                                <button class="btn waves-effect waves-light blue darken-3" type="submit">
+                                    <i class="material-icons">add</i>
+                                </button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <table class="highlight">
+                        <table class="highlight responsive-table">
                             <thead>
                             <tr>
                                 <th>Comment</th>
@@ -90,14 +115,15 @@
                             </thead>
                             <tbody>
                             <tr th:if="${product.reviews.empty}">
-                                <td colspan="3"> No Reviews</td>
+                                <td colspan="3" class="center-align grey-text">No Reviews</td>
                             </tr>
                             <tr th:each="review : ${product.reviews}">
-                                <td><span th:text="${review.comment}">Comment</span></td>
-                                <td><span th:text="${review.stars}">Stars</span></td>
-                                <td><span
-                                        th:text="${#dates.format(review.created,'dd-MMM-yyyy HH:mm:ss')}">Created</span>
+                                <td th:text="${review.comment}">Comment</td>
+                                <td>
+                                    <span th:each="star : ${#numbers.sequence(1, review.stars)}" class="star-filled">&#9733;</span>
+                                    <span th:each="star : ${#numbers.sequence(review.stars + 1, 5)}" class="star-empty">&#9734;</span>
                                 </td>
+                                <td th:text="${#dates.format(review.created, 'dd-MMM-yyyy HH:mm:ss')}">Created</td>
                             </tr>
                             </tbody>
                         </table>
@@ -111,6 +137,12 @@
 <div th:insert="~{fragments/footer :: footer}"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script th:if="${toast != null}">
+document.addEventListener('DOMContentLoaded', function() {
+    M.toast({html: '[[${toast}]]', classes: 'green rounded'});
+});
+</script>
 
 </body>
 </html>

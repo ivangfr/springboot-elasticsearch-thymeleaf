@@ -45,7 +45,8 @@ class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("products"))
                 .andExpect(model().attributeExists("products"))
-                .andExpect(model().attributeExists("searchDto"));
+                .andExpect(model().attributeExists("searchDto"))
+                .andExpect(model().attributeExists("currentPage"));
     }
 
     @Test
@@ -63,7 +64,7 @@ class ProductControllerTest {
         MyPage<Product> page = new MyPage<>(List.of(), 0, 0, 10, 0, true, true);
         when(productApiClient.searchProductsByPage(any(), isNull(), isNull(), eq("created,desc"))).thenReturn(page);
 
-        mockMvc.perform(post("/products/search").param("text", "laptop"))
+        mockMvc.perform(get("/").param("text", "laptop"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("products"))
                 .andExpect(model().attributeExists("products"));
@@ -76,7 +77,7 @@ class ProductControllerTest {
         MyPage<Product> page = new MyPage<>(List.of(), 0, 0, 10, 0, true, true);
         when(productApiClient.listProductsByPage(isNull(), isNull(), eq("created,desc"))).thenReturn(page);
 
-        mockMvc.perform(post("/products/search"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("products"))
                 .andExpect(model().attributeExists("products"));
@@ -164,5 +165,14 @@ class ProductControllerTest {
                         .param("price", "10"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("productEdit"));
+    }
+
+    @Test
+    void deleteProductShouldRedirect() throws Exception {
+        mockMvc.perform(post("/products/123/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        verify(productApiClient).deleteProduct("123");
     }
 }

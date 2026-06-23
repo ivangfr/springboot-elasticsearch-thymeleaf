@@ -8,6 +8,7 @@ import com.ivanfranchin.productui.client.dto.SearchDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.annotation.PostExchange;
@@ -35,6 +36,9 @@ public interface ProductApiClient {
 
     @PutExchange("/{id}")
     Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
+
+    @DeleteExchange("/{id}")
+    void deleteProduct(@PathVariable String id);
 
     @PostExchange("/{id}/reviews")
     Product addProductReview(@PathVariable String id, @RequestBody Review review);
