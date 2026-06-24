@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 source scripts/my-functions.sh
 
 echo
