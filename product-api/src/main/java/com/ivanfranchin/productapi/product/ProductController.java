@@ -1,9 +1,9 @@
 package com.ivanfranchin.productapi.product;
 
-import com.ivanfranchin.productapi.product.model.Product;
 import com.ivanfranchin.productapi.product.dto.CreateProductRequest;
 import com.ivanfranchin.productapi.product.dto.SearchRequest;
 import com.ivanfranchin.productapi.product.dto.UpdateProductRequest;
+import com.ivanfranchin.productapi.product.model.Product;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,49 +27,52 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductService productService;
+  private final ProductService productService;
 
-    @Operation(summary = "Get Products")
-    @GetMapping
-    public Page<Product> getProducts(@ParameterObject Pageable pageable) {
-        return productService.listProductsByPage(pageable);
-    }
+  @Operation(summary = "Get Products")
+  @GetMapping
+  public Page<Product> getProducts(@ParameterObject Pageable pageable) {
+    return productService.listProductsByPage(pageable);
+  }
 
-    @Operation(summary = "Get Product")
-    @GetMapping("/{id}")
-    public Product getProduct(@PathVariable String id) {
-        return productService.validateAndGetProductById(id);
-    }
+  @Operation(summary = "Get Product")
+  @GetMapping("/{id}")
+  public Product getProduct(@PathVariable String id) {
+    return productService.validateAndGetProductById(id);
+  }
 
-    @Operation(summary = "Create Product")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public Product createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
-        Product product = createProductRequest.toDomain();
-        return productService.createProduct(product);
-    }
+  @Operation(summary = "Create Product")
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping
+  public Product createProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
+    Product product = createProductRequest.toDomain();
+    return productService.createProduct(product);
+  }
 
-    @Operation(summary = "Update Product")
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
-        Product product = productService.validateAndGetProductById(id);
-        updateProductRequest.update(product);
-        return productService.updateProduct(product);
-    }
+  @Operation(summary = "Update Product")
+  @PutMapping("/{id}")
+  public Product updateProduct(
+      @PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
+    Product product = productService.validateAndGetProductById(id);
+    updateProductRequest.update(product);
+    return productService.updateProduct(product);
+  }
 
-    @Operation(summary = "Delete Product")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
-        Product product = productService.validateAndGetProductById(id);
-        productService.deleteProduct(product);
-        return ResponseEntity.noContent().build();
-    }
+  @Operation(summary = "Delete Product")
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+    Product product = productService.validateAndGetProductById(id);
+    productService.deleteProduct(product);
+    return ResponseEntity.noContent().build();
+  }
 
-    @Operation(
-            summary = "Search for Products",
-            description = "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'")
-    @PutMapping("/search")
-    public Page<Product> searchProducts(@Valid @RequestBody SearchRequest searchRequest, @ParameterObject Pageable pageable) {
-        return productService.search(searchRequest.text(), pageable);
-    }
+  @Operation(
+      summary = "Search for Products",
+      description =
+          "This endpoint queries for a 'text' informed in the following fields: 'reference', 'name' and 'description'")
+  @PutMapping("/search")
+  public Page<Product> searchProducts(
+      @Valid @RequestBody SearchRequest searchRequest, @ParameterObject Pageable pageable) {
+    return productService.search(searchRequest.text(), pageable);
+  }
 }

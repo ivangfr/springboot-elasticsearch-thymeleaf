@@ -17,29 +17,31 @@ import org.springframework.web.service.annotation.PutExchange;
 @HttpExchange("/api/products")
 public interface ProductApiClient {
 
-    @GetExchange
-    MyPage<Product> listProductsByPage(@RequestParam(required = false) Integer page,
-                                       @RequestParam(required = false) Integer size,
-                                       @RequestParam(required = false) String sort);
+  @GetExchange
+  MyPage<Product> listProductsByPage(
+      @RequestParam(required = false) Integer page,
+      @RequestParam(required = false) Integer size,
+      @RequestParam(required = false) String sort);
 
-    @PutExchange("/search")
-    MyPage<Product> searchProductsByPage(@RequestBody SearchDto searchDto,
-                                         @RequestParam(required = false) Integer page,
-                                         @RequestParam(required = false) Integer size,
-                                         @RequestParam(required = false) String sort);
+  @PutExchange("/search")
+  MyPage<Product> searchProductsByPage(
+      @RequestBody SearchDto searchDto,
+      @RequestParam(required = false) Integer page,
+      @RequestParam(required = false) Integer size,
+      @RequestParam(required = false) String sort);
 
-    @GetExchange("/{id}")
-    Product getProduct(@PathVariable String id);
+  @GetExchange("/{id}")
+  Product getProduct(@PathVariable String id);
 
-    @PostExchange
-    Product createProduct(@RequestBody ProductDto productDto);
+  @PostExchange
+  Product createProduct(@RequestBody ProductDto productDto);
 
-    @PutExchange("/{id}")
-    Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
+  @PutExchange("/{id}")
+  Product updateProduct(@PathVariable String id, @RequestBody ProductDto productDto);
 
-    @DeleteExchange("/{id}")
-    void deleteProduct(@PathVariable String id);
+  @DeleteExchange("/{id}")
+  void deleteProduct(@PathVariable String id);
 
-    @PostExchange("/{id}/reviews")
-    Product addProductReview(@PathVariable String id, @RequestBody Review review);
+  @PostExchange("/{id}/reviews")
+  Product addProductReview(@PathVariable String id, @RequestBody Review review);
 }

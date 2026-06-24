@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends ElasticsearchRepository<Product, String> {
 
-    Page<Product> findByReferenceOrNameOrDescription(String reference, String name, String description, Pageable pageable);
+  Page<Product> findByReferenceOrNameOrDescription(
+      String reference, String name, String description, Pageable pageable);
 }

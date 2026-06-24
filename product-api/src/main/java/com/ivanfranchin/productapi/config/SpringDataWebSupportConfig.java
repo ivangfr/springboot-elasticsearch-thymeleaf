@@ -1,9 +1,9 @@
 package com.ivanfranchin.productapi.config;
 
+import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-
-import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
 /*
 The reason this configuration class was added is to prevent the following WARN message from occurring.
@@ -14,5 +14,4 @@ WARN Serializing PageImpl instances as-is is not supported, meaning that there i
 */
 @Configuration
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
-public class SpringDataWebSupportConfig {
-}
+public class SpringDataWebSupportConfig {}

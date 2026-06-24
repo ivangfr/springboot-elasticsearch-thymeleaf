@@ -2,30 +2,28 @@ package com.ivanfranchin.productapi.product.model;
 
 import com.ivanfranchin.productapi.product.review.Review;
 import com.ivanfranchin.productapi.util.DateTimeUtil;
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 @Data
 @Document(indexName = "ecommerce.products", createIndex = false)
 public class Product {
 
-    public Product() {
-        this.created = DateTimeUtil.createCurrentDateAsString();
-    }
+  public Product() {
+    this.created = DateTimeUtil.createCurrentDateAsString();
+  }
 
-    @Id
-    private String id;
-    private String reference;
-    private String name;
-    private String description;
-    private BigDecimal price;
-    private Set<String> categories;
-    private List<Review> reviews = new ArrayList<>();
-    private String created;
+  @Id private String id;
+  private String reference;
+  private String name;
+  private String description;
+  private BigDecimal price;
+  private Set<String> categories;
+  private List<Review> reviews = new ArrayList<>();
+  private String created;
 }

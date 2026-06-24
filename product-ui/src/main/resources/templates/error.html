@@ -1,58 +1,66 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Error | Product-UI</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
 
-<body>
+  <body>
+    <div th:insert="~{fragments/header :: header}"></div>
 
-<div th:insert="~{fragments/header :: header}"></div>
-
-<main>
-    <div class="container">
+    <main>
+      <div class="container">
         <div class="section center-align">
-            <i class="material-icons large red-text" style="font-size: 80px;">error_outline</i>
-            <h5>Something went wrong!</h5>
-            <p class="grey-text">An unexpected error has occurred. Please try again later.</p>
+          <i class="material-icons large red-text" style="font-size: 80px"
+            >error_outline</i
+          >
+          <h5>Something went wrong!</h5>
+          <p class="grey-text">
+            An unexpected error has occurred. Please try again later.
+          </p>
         </div>
         <div class="row">
-            <div class="col s12">
-                <table class="striped responsive-table">
-                    <tbody>
-                    <tr>
-                        <td><strong>Date</strong></td>
-                        <td th:text="${timestamp}"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Status</strong></td>
-                        <td th:text="${status}"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Error</strong></td>
-                        <td th:text="${error}"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Message</strong></td>
-                        <td th:text="${message}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+          <div class="col s12">
+            <table class="striped responsive-table">
+              <tbody>
+                <tr>
+                  <td><strong>Date</strong></td>
+                  <td th:text="${timestamp}"></td>
+                </tr>
+                <tr>
+                  <td><strong>Status</strong></td>
+                  <td th:text="${status}"></td>
+                </tr>
+                <tr>
+                  <td><strong>Error</strong></td>
+                  <td th:text="${error}"></td>
+                </tr>
+                <tr>
+                  <td><strong>Message</strong></td>
+                  <td th:text="${message}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="row center-align">
-            <a th:href="@{/}" class="btn blue darken-3 waves-effect waves-light">
-                <i class="material-icons left">home</i> Go Home
-            </a>
+          <a th:href="@{/}" class="btn blue darken-3 waves-effect waves-light">
+            <i class="material-icons left">home</i> Go Home
+          </a>
         </div>
-    </div>
-</main>
+      </div>
+    </main>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
-
-</body>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+  </body>
 </html>
