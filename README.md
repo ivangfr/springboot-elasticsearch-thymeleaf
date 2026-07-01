@@ -9,6 +9,10 @@ The goal of this project is to implement an application called `product-app`. It
 
 On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
 
+## Additional Readings
+
+- \[**Medium**\] [**Spring Data Elasticsearch vs Spring Data JPA: Same Syntax, Completely Different Worlds**](https://medium.com/@ivangfr/spring-data-elasticsearch-vs-spring-data-jpa-same-syntax-completely-different-worlds-3cf8ddc31f50)
+
 ## Project Overview
 
 ```mermaid
